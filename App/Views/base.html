@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta charset="UTF-8"/>
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="description" content="Zbuduj oszczędności życia z pomocą tej aplikacji."/>
+        <meta name ="keywords" content="oszczędności, oszczędzanie, bilans przychodów i wydatków"/>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Oswald:500&display=swap&subset=latin-ext" rel="stylesheet">
+        <link rel="stylesheet" href="fontello/css/menu.css">
+        <!-- Bootstrap CSS -->
+	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+    <div class="container-fluid entryPage">
+        <div class="container entryPage align-items-center"> 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="d-flex flex-column banner-wrapper justify-content-center text-center">     
+                        <img src="img/coiny.png" class="d-block mx-auto">
+                        <h1>Oszczędzaj razem z Coiny</h1>
+                        <div class="d-none d-md-block banner-text mt-4">
+                            <p>Skorzystaj z możliwości jakie daje Coiny.</p> 
+                            <p>Prowadź rejestr przychodów i wydatków.</p>
+                            <p>Przeglądaj analizę budżetu w wygodnej formie.</p>
+                            <p>Personalizuj kategorie.</p>
+                            <p>Oszczędzaj i spełniaj swoje marzenia!</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-wrapper pt-5 mx-4 ml-md-0">
+                        {% block body %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div> 
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% block footer %}
+    {% endblock %}
+</body>
+</html>
