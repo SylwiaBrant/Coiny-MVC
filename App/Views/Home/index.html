@@ -6,4 +6,9 @@
 
     <h1>Welcome</h1>
 
+    {% if is_logged_in %}
+    <a href="/login/destroy">Log out</a>
+    {% else %}
+    <a href="/signup/new">Sign up</a> or <a href="/login">log in</a>
+    {% endif %}
 {% endblock %}

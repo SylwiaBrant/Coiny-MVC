@@ -14,30 +14,225 @@
         <link rel="stylesheet" href="style1.css">
 </head>
 <body>
-    <div class="container-fluid entryPage">
-        <div class="container entryPage align-items-center"> 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="d-flex flex-column banner-wrapper justify-content-center text-center">     
-                        <img src="img/coiny.png" class="d-block mx-auto">
-                        <h1>Oszczędzaj razem z Coiny</h1>
-                        <div class="d-none d-md-block banner-text mt-4">
-                            <p>Skorzystaj z możliwości jakie daje Coiny.</p> 
-                            <p>Prowadź rejestr przychodów i wydatków.</p>
-                            <p>Przeglądaj analizę budżetu w wygodnej formie.</p>
-                            <p>Personalizuj kategorie.</p>
-                            <p>Oszczędzaj i spełniaj swoje marzenia!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-wrapper pt-5 mx-4 ml-md-0">
+    <div class="d-flex justify-content-center main-menu" id="sidebar">
+        <nav>
+            <div>
+                <img class="d-block mx-auto logo" src="img/coiny.png">
+            </div>
+            <div class="d-flex justify-content-center" id="navCollapse">
+                <h2>MENU</h2>
+                <div class="d-flex arrow"></div>
+            </div>
+            <ul class="nav text-center">
+                <li class="nav-item">
+                    <a class="nav-link" href="mainpage.php">Strona główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#incomeModal" data-target="#incomeModal"
+                     data-toggle="modal">Dodaj przychód</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#expenseModal" data-target="#expenseModal"
+                     data-toggle="modal">Dodaj wydatek</a>
+                </li>
+                <li class="nav-item currentPage">
+                    <a href="#incomesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Przeglądaj przychody</a>
+                    <ul class="collapse list-unstyled" id="incomesSubmenu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="showThisWeekIncomes.php">Bieżący tydzień</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="showThisMonthIncomes.php">Bieżący miesiąc</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="showLastMonthIncomes.php">Poprzedni miesiąc</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="showChosenPeriodIncomes.php">Wybrany okres</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#expensesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Przeglądaj wydatki</a>
+                    <ul class="collapse list-unstyled" id="expensesSubmenu">
+                        <li>
+                            <a class="nav-link" href="showThisWeekExpenses.php">Bieżący tydzień</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="showThisMonthExpenses.php">Bieżący miesiąc</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="showLastMonthExpenses.php">Poprzedni miesiąc</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="showChosenPeriodExpenses.php">Wybrany okres</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="showBalance.php">Przeglądaj bilans</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="settings.php">Przeglądaj faktury</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="settings.php">Ustawienia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.php">Wyloguj</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
                         {% block body %}
                         {% endblock %}
                     </div>
                 </div>
             </div>
         </div> 
+    </div> 
+    <!-- Add Income Modal -->
+    <div class="modal" id="incomeModal">
+        <div class="modal-dialog">
+            <div class="modal-content px-2 px-sm-4">
+                <!-- Modal Header -->
+                <div class="modal-header justify-content-center ml-2">
+                    <h4 class="modal-title">Dodaj przychód</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body mx-2">
+                    <form action="addIncome.php" method="post">
+                        <div class="form-group">
+                            <label>Podaj wysokość przychodu</label>
+                            <input class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
+                            <?php
+                                if (isset($_SESSION['e_money'])){
+                                    echo '<div class="error">'.$_SESSION['e_money'].'</div>';
+                                    unset($_SESSION['e_money']);
+                                }
+                            ?>  
+                        </div>
+                        <div class="form-group">
+                            <label>Podaj datę uzyskania przychodu</label>
+                            <input class="form-control inputSlot" id="incomeDate" type="date" name="date">
+                            <?php
+                                if (isset($_SESSION['e_date'])){
+                                    echo '<div class="error">'.$_SESSION['e_date'].'</div>';
+                                    unset($_SESSION['e_date']);
+                                }
+                            ?>  
+                        </div>
+                        <div class="form-group">
+                            <label>Wybierz z listy rodzaj przychodu</label>
+                            <select class="form-control inputSlot" id="incomeCategory" name="category">
+                                <?php foreach ($income_options as $option): ?>
+                                            <option value="<?=$option['name']?>"><?=$option['name']?></option>
+                                <?php endforeach?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Dodaj komentarz (opcjonalnie)</label>
+                            <textarea class="form-control inputSlot" rows="4" name="comment">
+                                <?php
+                                    if (isset($_SESSION['e_comment'])){
+                                        echo '<div class="error">'.$_SESSION['e_comment'].'</div>';
+                                        unset($_SESSION['e_comment']);
+                                    }
+                                ?> 
+                            </textarea> 
+                        </div>
+                        <div class="form-check">
+                            <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
+                            <input type="checkbox" id="invoiceCheckbox" name="invoice">
+                        </div>
+                        <div class="hidden" id="invoiceDropdown">
+                            <div class="form-group">
+                                <label>Podaj nazwę nabywcy</label>
+                                <input class="form-control inputSlot" type="text" name="recipientName">
+                            </div>
+                            <div class="form-group">
+                                <label>Podaj datę płatności faktury</label>
+                                <input class="form-control inputSlot" type="date" name="invoicePayDate">
+                                <?php
+                                    if (isset($_SESSION['e_idate'])){
+                                        echo '<div class="error">'.$_SESSION['e_idate'].'</div>';
+                                        unset($_SESSION['e_idate']);
+                                    }
+                                ?>  
+                            </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer justify-content-between py-4">
+                            <input type="submit" class="mainBtn" name="submit" value="Dodaj">
+                            <button type="button" class="mainBtn" data-dismiss="modal">Anuluj</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <!-- Add Expense Modal --> 
+    <div class="modal" id="expenseModal">
+        <div class="modal-dialog">
+            <div class="modal-content px-2 px-sm-4">
+                <!-- Modal Header -->
+                <div class="modal-header justify-content-center ml-2">
+                    <h4 class="modal-title">Dodaj wydatek</h4>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body mx-2">
+                    <form action="addExpense.php" method="post">
+                        <div class="form-group">
+                            <label>Podaj wysokość wydatku:</label>
+                            <input class="form-control" type="number" min='0'step='0.01' name='money'>
+                            <?php
+                                if (isset($_SESSION['e_money'])){
+                                    echo '<div class="error">'.$_SESSION['e_money'].'</div>';
+                                    unset($_SESSION['e_money']);
+                                }
+                            ?>  
+                        </div>
+                        <div class="form-group">
+                            <label>Podaj datę uzyskania przychodu:</label>
+                            <input class="form-control" type="date" name='date'>
+                        </div>
+                        <div class="form-group">
+                            <label >Wybierz sposób płatności:</label>
+                            <select class="form-control" name='paymentMethod'>
+                                <?php foreach ($payment_methods as $option): ?>
+                                            <option value="<?=$option['name']?>"><?=$option['name']?></option>
+                                <?php endforeach?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Kategoria:</label>
+                            <select class="form-control" name='category'>
+                                <?php foreach ($expense_categories as $option): ?>
+                                            <option value="<?=$option['name']?>"><?=$option['name']?></option>
+                                <?php endforeach?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Dodaj komentarz (opcjonalnie):</label>
+                            <textarea class="form-control" rows="3" name='comment'></textarea>
+                            <?php
+                                if (isset($_SESSION['e_comment'])){
+                                    echo '<div class="error">'.$_SESSION['e_comment'].'</div>';
+                                    unset($_SESSION['e_comment']);
+                                }
+                            ?> 
+                        </div>
+                        <div class="form-group">
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer justify-content-between py-4">
+                            <input type="submit" class="mainBtn" name="submit" value="Dodaj">
+                            <button type="button" class="mainBtn" data-dismiss="modal">Anuluj</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div> 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

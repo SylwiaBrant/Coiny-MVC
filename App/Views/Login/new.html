@@ -1,0 +1,48 @@
+{% extends 'sign-base.html' %}
+{% block title %}Coiny - Zaloguj się{% endblock %}
+{% block footer %}
+{% endblock %}
+{% block body %}
+<div class="form-wrapper pt-5 mx-4 ml-md-0">
+    <div class="d-flex flex-row justify-content-between">
+        <h2>Zaloguj się</h2>
+        <div>
+            <p>Nie masz konta?</p>
+            <a class="link" href="register.php">Zarejestruj się</a>
+        </div>
+    </div>
+    <div class="mt-3">
+        <form action="/login/create" method="post">
+            <div class="form-group">
+                <div class="py-2">
+                    <label>Podaj email</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><img src="img/114-user.png"></span>
+                        </div>
+                        <input class="form-control inputSlot" name="email" type="email" placeholder="Email" value= "{{email}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="pb-4">
+                    <label>Podaj hasło:</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><img src="img/144-lock.png"></span>
+                        </div>
+                        <input class="form-control inputSlot" name="password" type="password" placeholder="Hasło">
+                    </div>
+                    <div class="invalid-feedback">To pole musi być wypełnione.</div>
+                </div>
+            </div> 
+            <div class="d-flex justify-content-center mt-3">
+                <input class="mainBtn" type="submit" name="submit" value="Zaloguj sie">
+            </div> 
+        </form>
+    </div>
+    <div class="justify-content-center">
+    </div>
+</div>
+{% endblock %}
+ 

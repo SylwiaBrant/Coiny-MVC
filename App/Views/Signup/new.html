@@ -1,5 +1,5 @@
-{% extends 'base.html' %}
-{% block title %}Coiny - Zaloguj się{% endblock %}
+{% extends 'sign-base.html' %}
+{% block title %}Coiny - Zarejestruj się{% endblock %}
 {% block footer %}
 <script src="/js/hideShowPassword.min.js"></script>
 <script>
@@ -21,7 +21,6 @@
     $(document).ready(function(){
         $('#registerForm').validate({
             rules: {
-                login: 'required',
                 email: {
                     required: true,
                     email: true,
@@ -54,7 +53,6 @@
     <h1>Zarejestruj się</h1>
 </div>
 <div class="mx-lg-2 mt-3">
-    
     {% if user.errors is not empty %}
     <p>Błędy:</p>
     <ul>
@@ -64,11 +62,6 @@
     </ul>
     {% endif %}
     <form class="needs-validation" method="post" action="/signup/create" id="registerForm">
-        <div class="form-group">
-            <label>Podaj login:</label>
-            <input class="form-control inputSlot" type="text" name="login" value="{{user.login}}" required>
-            <div class="invalid-feedback">To pole musi być wypełnione.</div>
-        </div>
         <div class="form-group">
             <label>Podaj email:</label>
             <input class="form-control inputSlot" type="email" name="email" value="{{user.email}}" required>
