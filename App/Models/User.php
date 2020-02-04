@@ -115,4 +115,13 @@ class User extends \Core\Model
         }
         return false;
     }
+    public static function findByID($id){
+        $sql_check_id_existence = 'SELECT * FROM users WHERE id = :id';
+        $db = static::getDB();
+        $stmt= $db->prepare($sql_check_id_existence);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $stmt->execute();
+        return $stmt->fetch();
+    }
 }
