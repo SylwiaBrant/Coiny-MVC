@@ -1,77 +1,77 @@
 {% extends 'base.html' %}
 {% block title %}Coiny - Przychody{% endblock %}
 {% block body %}
-        <div class="container-fluid mainContent justify-content-center">
-            <div class="info-board d-flex justify-content-between text-center mb-3 ml-3">
-                <div class="totalIncomesBox">
-                    <h3>SUMA PRZYCHODÓW</h3>
-                    <p class="incomeBox">w poprzednim miesiącu</p>
-                    <?php echo "<p class='incomeBoxInt'>$sum</p>" ?>
-                </div>
-            </div>
-            <div class="info-board ml-3">
-                <div class="d-flex row justify-content-between">
-                    <button class="mainBtn showTransactionsBtn" type="button" onclick="location.href='showThisWeekIncomes.php'">Bieżący tydzień</button>
-                    <button class="mainBtn showTransactionsBtn" type="button" onclick="location.href='showThisMonthIncomes.php'">Bieżący miesiąc</button>
-                    <button class="mainBtn showTransactionsBtn" type="button" onclick="location.href='showThisMonthIncomes.php'">Poprzedni miesiąc</button>
-                    <button class="mainBtn showTransactionsBtn" type="button" data-toggle="collapse" data-target="#collapseChoosePeriod" aria-expanded="false" aria-controls="collapseChoosePeriod">Wybierz okres</button>
-                </div>
-                <div class="collapse" id="collapseChoosePeriod">
-                    <div class="card card-body mt-2">
-                        <form action="showChosenPeriodIncomes.php" method="post">
-                            <div class="form-group">
-                                <label>Podaj datę początkową</label>
-                                <input class="form-control" type="date" name="startingDate">
-                                <?php
-                                    if (isset($_SESSION['e_date'])){
-                                        echo '<div class="error">'.$_SESSION['e_date'].'</div>';
-                                        unset($_SESSION['e_date']);
-                                    }
-                                ?>  
-                            </div>
-                            <div class="form-group">
-                                <label>Podaj datę końcową</label>
-                                <input class="form-control" type="date" name="endingDate">
-                                <?php
-                                    if (isset($_SESSION['e_date'])){
-                                        echo '<div class="error">'.$_SESSION['e_date'].'</div>';
-                                        unset($_SESSION['e_date']);
-                                    }
-                                ?>  
-                            </div>
-                            <input class="mainBtn" type="submit" name="submit" value="Wybierz">
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex incomesTable my-5 mr-3">
-                <table class="table bg-light table-striped ml-3">
-                    <thead>
-                        <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Wysokość przychodu</th>
-                        <th scope="col">Data</th>
-                        <th scope="col">Rodzaj przychodu</th>
-                        <th scope="col">Komentarz</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+<div class="container-fluid mainContent justify-content-center">
+    <div class="info-board d-flex justify-content-between text-center mb-3 ml-3">
+        <div class="totalIncomesBox">
+            <h3>SUMA PRZYCHODÓW</h3>
+            <p class="incomeBox">w poprzednim miesiącu</p>
+            <?php echo "<p class='incomeBoxInt'>$sum</p>" ?>
+        </div>
+    </div>
+    <div class="info-board ml-3">
+        <div class="d-flex row justify-content-between">
+            <button class="mainBtn showTransactionsBtn" type="button" onclick="location.href='showThisWeekIncomes.php'">Bieżący tydzień</button>
+            <button class="mainBtn showTransactionsBtn" type="button" onclick="location.href='showThisMonthIncomes.php'">Bieżący miesiąc</button>
+            <button class="mainBtn showTransactionsBtn" type="button" onclick="location.href='showThisMonthIncomes.php'">Poprzedni miesiąc</button>
+            <button class="mainBtn showTransactionsBtn" type="button" data-toggle="collapse" data-target="#collapseChoosePeriod" aria-expanded="false" aria-controls="collapseChoosePeriod">Wybierz okres</button>
+        </div>
+        <div class="collapse" id="collapseChoosePeriod">
+            <div class="card card-body mt-2">
+                <form action="showChosenPeriodIncomes.php" method="post">
+                    <div class="form-group">
+                        <label>Podaj datę początkową</label>
+                        <input class="form-control" type="date" name="startingDate">
                         <?php
-                            $recordNumber=1;
-                            foreach ($incomes as $income)
-                            {
-                                echo "<tr>";
-                                echo "<th scope='row'>$recordNumber</th>";
-                                echo "<td>" . $income['money'] ."</td>";
-                                echo "<td>" . $income['date'] . "</td>";
-                                echo "<td>" . $income['name'] . "</td>";
-                                echo "<td>" . $income['comment'] . "</td>";
-                                echo "</tr>";
-                            $recordNumber++;
+                            if (isset($_SESSION['e_date'])){
+                                echo '<div class="error">'.$_SESSION['e_date'].'</div>';
+                                unset($_SESSION['e_date']);
                             }
-                        ?>
-                    </tbody>
-                </table>
+                        ?>  
+                    </div>
+                    <div class="form-group">
+                        <label>Podaj datę końcową</label>
+                        <input class="form-control" type="date" name="endingDate">
+                        <?php
+                            if (isset($_SESSION['e_date'])){
+                                echo '<div class="error">'.$_SESSION['e_date'].'</div>';
+                                unset($_SESSION['e_date']);
+                            }
+                        ?>  
+                    </div>
+                    <input class="mainBtn" type="submit" name="submit" value="Wybierz">
+                </form>
             </div>
         </div>
+    </div>
+    <div class="d-flex incomesTable my-5 mr-3">
+        <table class="table bg-light table-striped ml-3">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Wysokość przychodu</th>
+                <th scope="col">Data</th>
+                <th scope="col">Rodzaj przychodu</th>
+                <th scope="col">Komentarz</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $recordNumber=1;
+                    foreach ($incomes as $income)
+                    {
+                        echo "<tr>";
+                        echo "<th scope='row'>$recordNumber</th>";
+                        echo "<td>" . $income['money'] ."</td>";
+                        echo "<td>" . $income['date'] . "</td>";
+                        echo "<td>" . $income['name'] . "</td>";
+                        echo "<td>" . $income['comment'] . "</td>";
+                        echo "</tr>";
+                    $recordNumber++;
+                    }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

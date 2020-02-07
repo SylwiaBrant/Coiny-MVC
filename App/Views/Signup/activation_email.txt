@@ -1,0 +1,3 @@
+--Aktywacja konta w serwisie Coiny--
+
+Dziękujemy za rejestrację. W celu aktywacji konta, prosimy kliknąć w link: {{ url }}

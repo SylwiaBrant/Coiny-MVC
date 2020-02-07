@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use \Core\View;
+use \App\Auth;
 
 /**
  * Home controller
@@ -19,6 +20,7 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
+        //\App\Mail::send('sylwia.brant.programista@gmail.com', 'Test', 'This is a test', '<h1>This is a test</h1>');
         View::renderTemplate('Home/index.html');
     }
 }

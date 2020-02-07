@@ -1,0 +1,3 @@
+--Reset hasła w serwisie Coiny--
+
+Aby zresetować hasło, kliknij w link: {{ url }}

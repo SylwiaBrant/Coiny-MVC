@@ -11,13 +11,13 @@
         <link rel="stylesheet" href="fontello/css/menu.css">
         <!-- Bootstrap CSS -->
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="style1.css">
+        <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <div class="d-flex justify-content-center main-menu" id="sidebar">
         <nav>
             <div>
-                <img class="d-block mx-auto logo" src="img/coiny.png">
+                <img class="d-block mx-auto logo" src="/img/coiny.png">
             </div>
             <div class="d-flex justify-content-center" id="navCollapse">
                 <h2>MENU</h2>
@@ -76,21 +76,16 @@
                     <a class="nav-link" href="settings.php">Przeglądaj faktury</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="settings.php">Ustawienia</a>
+                <a class="nav-link" href="/profile/showSettings">Ustawienia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="logout.php">Wyloguj</a>
+                    <a class="nav-link" href="/logout">Wyloguj</a>
                 </li>
             </ul>
         </nav>
     </div>
-                        {% block body %}
-                        {% endblock %}
-                    </div>
-                </div>
-            </div>
-        </div> 
-    </div> 
+    {% block body %}
+    {% endblock %}
     <!-- Add Income Modal -->
     <div class="modal" id="incomeModal">
         <div class="modal-dialog">
@@ -105,40 +100,20 @@
                         <div class="form-group">
                             <label>Podaj wysokość przychodu</label>
                             <input class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
-                            <?php
-                                if (isset($_SESSION['e_money'])){
-                                    echo '<div class="error">'.$_SESSION['e_money'].'</div>';
-                                    unset($_SESSION['e_money']);
-                                }
-                            ?>  
                         </div>
                         <div class="form-group">
                             <label>Podaj datę uzyskania przychodu</label>
-                            <input class="form-control inputSlot" id="incomeDate" type="date" name="date">
-                            <?php
-                                if (isset($_SESSION['e_date'])){
-                                    echo '<div class="error">'.$_SESSION['e_date'].'</div>';
-                                    unset($_SESSION['e_date']);
-                                }
-                            ?>  
+                            <input class="form-control inputSlot" id="incomeDate" type="date" name="date"> 
                         </div>
                         <div class="form-group">
                             <label>Wybierz z listy rodzaj przychodu</label>
                             <select class="form-control inputSlot" id="incomeCategory" name="category">
-                                <?php foreach ($income_options as $option): ?>
-                                            <option value="<?=$option['name']?>"><?=$option['name']?></option>
-                                <?php endforeach?>
+                                <option value="<?=$option['name']?>"><?=$option['name']?></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Dodaj komentarz (opcjonalnie)</label>
                             <textarea class="form-control inputSlot" rows="4" name="comment">
-                                <?php
-                                    if (isset($_SESSION['e_comment'])){
-                                        echo '<div class="error">'.$_SESSION['e_comment'].'</div>';
-                                        unset($_SESSION['e_comment']);
-                                    }
-                                ?> 
                             </textarea> 
                         </div>
                         <div class="form-check">
@@ -153,12 +128,6 @@
                             <div class="form-group">
                                 <label>Podaj datę płatności faktury</label>
                                 <input class="form-control inputSlot" type="date" name="invoicePayDate">
-                                <?php
-                                    if (isset($_SESSION['e_idate'])){
-                                        echo '<div class="error">'.$_SESSION['e_idate'].'</div>';
-                                        unset($_SESSION['e_idate']);
-                                    }
-                                ?>  
                             </div>
                         </div>
                         <!-- Modal footer -->
@@ -184,13 +153,7 @@
                     <form action="addExpense.php" method="post">
                         <div class="form-group">
                             <label>Podaj wysokość wydatku:</label>
-                            <input class="form-control" type="number" min='0'step='0.01' name='money'>
-                            <?php
-                                if (isset($_SESSION['e_money'])){
-                                    echo '<div class="error">'.$_SESSION['e_money'].'</div>';
-                                    unset($_SESSION['e_money']);
-                                }
-                            ?>  
+                            <input class="form-control" type="number" min='0'step='0.01' name='money'> 
                         </div>
                         <div class="form-group">
                             <label>Podaj datę uzyskania przychodu:</label>
@@ -199,28 +162,18 @@
                         <div class="form-group">
                             <label >Wybierz sposób płatności:</label>
                             <select class="form-control" name='paymentMethod'>
-                                <?php foreach ($payment_methods as $option): ?>
-                                            <option value="<?=$option['name']?>"><?=$option['name']?></option>
-                                <?php endforeach?>
+                                <option value="<?=$option['name']?>"><?=$option['name']?></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Kategoria:</label>
                             <select class="form-control" name='category'>
-                                <?php foreach ($expense_categories as $option): ?>
-                                            <option value="<?=$option['name']?>"><?=$option['name']?></option>
-                                <?php endforeach?>
+                                <option value="<?=$option['name']?>"><?=$option['name']?></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Dodaj komentarz (opcjonalnie):</label>
                             <textarea class="form-control" rows="3" name='comment'></textarea>
-                            <?php
-                                if (isset($_SESSION['e_comment'])){
-                                    echo '<div class="error">'.$_SESSION['e_comment'].'</div>';
-                                    unset($_SESSION['e_comment']);
-                                }
-                            ?> 
                         </div>
                         <div class="form-group">
                         </div>
@@ -238,6 +191,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="/js/script.js"></script>
     {% block footer %}
     {% endblock %}
 </body>
