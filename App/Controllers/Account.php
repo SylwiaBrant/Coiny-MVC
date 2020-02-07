@@ -11,8 +11,9 @@
          * @return void
          */
         public function validateEmailAction(){
-            $is_valid = ! User::emailExists($GET['email']);
-            header('COntent-Type: application/json');
+            $is_valid = ! User::emailExists($_GET['email']);
+            header('Content-Type: application/json');
+            echo json_encode($is_valid);
         }
     }
 ?>

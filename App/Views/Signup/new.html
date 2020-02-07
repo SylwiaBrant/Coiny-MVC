@@ -2,21 +2,8 @@
 {% block title %}Coiny - Zarejestruj się{% endblock %}
 {% block footer %}
 <script src="/js/hideShowPassword.min.js"></script>
+<script src="/js/validatePassword.js"></script>
 <script>
-    $.validator.addMethod('validPassword',
-        function(value, element, param){
-            if (value != ''){
-                if (value.match(/.*[a-z]+.*/i) == null){
-                    return false;
-                }
-                if (value.match(/.*\d+.*/) == null){
-                    return false;
-                }
-            }
-            return true;
-        },
-        'Must contain at least one letter and one number'
-    );
 
     $(document).ready(function(){
         $('#registerForm').validate({
@@ -24,17 +11,17 @@
                 email: {
                     required: true,
                     email: true,
-                    remote: '/account/validate-email'
+                 //   remote: "/account/validate-email"
                 },
                 password: {
                     required: true,
                     minlength: 6,
                     validPassword: true
-                }
-            },
+                } 
+            }, 
             messages: {
                 email: {
-                    remote: 'email already taken'
+                    remote: "email already taken"
                 }
             }
         });
@@ -50,7 +37,7 @@
 {% endblock %}
 {% block body %}
 <div class="d-flex flex-row">
-    <h1>Zarejestruj się</h1>
+    <h2>Zarejestruj się</h2>
 </div>
 <div class="mx-lg-2 mt-3">
     {% if user.errors is not empty %}
@@ -61,22 +48,28 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <form class="needs-validation" method="post" action="/signup/create" id="registerForm">
+    <form method="post" action="/signup/create" id="registerForm">
         <div class="form-group">
             <label>Podaj email:</label>
-            <input class="form-control inputSlot" type="email" name="email" value="{{user.email}}" required>
-            <div class="invalid-feedback">To pole musi być wypełnione.</div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="/img/114-user.png"></span>
+                </div>
+                <input class="form-control inputSlot" type="email" name="email" value="{{user.email}}" required>
+            </div>
         </div>
         <div class="form-group">
             <label>Podaj hasło:</label>
-            <input class="form-control inputSlot" type="password" name="password" id="inputPassword" required>
-            <div class="invalid-feedback">To pole musi być wypełnione.</div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><img src="/img/144-lock.png"></span>
+                </div>
+                <input class="form-control inputSlot" type="password" name="password" id="inputPassword" required>
+            </div>
         </div>
         <div class="d-flex justify-content-center mt-5">
             <input class="mainBtn" type="submit" name="submit" value="Zarejestruj się">
         </div>
     </form>
-</div>
-<div class="justify-content-center">
 </div>
 {% endblock %}
