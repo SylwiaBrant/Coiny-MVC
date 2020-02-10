@@ -33,7 +33,7 @@ class User extends \Core\Model
     }
 
     /**
-     * Save the user model with the current propery values
+     * Save the user model with the current property values
      *
      * @return void
      */
@@ -131,9 +131,9 @@ class User extends \Core\Model
         return false;
     }
     public static function findByID($id){
-        $sql_check_id_existence = 'SELECT * FROM users WHERE user_id = :id';
+        $sql = 'SELECT * FROM users WHERE user_id = :id';
         $db = static::getDB();
-        $stmt= $db->prepare($sql_check_id_existence);
+        $stmt= $db->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $stmt->execute();

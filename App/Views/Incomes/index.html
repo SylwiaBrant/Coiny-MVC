@@ -6,7 +6,7 @@
         <div class="totalIncomesBox">
             <h3>SUMA PRZYCHODÓW</h3>
             <p class="incomeBox">w poprzednim miesiącu</p>
-            <?php echo "<p class='incomeBoxInt'>$sum</p>" ?>
+            <p class='incomeBoxInt'>{{ totalAmount }}</p>
         </div>
     </div>
     <div class="info-board ml-3">
@@ -22,22 +22,10 @@
                     <div class="form-group">
                         <label>Podaj datę początkową</label>
                         <input class="form-control" type="date" name="startingDate">
-                        <?php
-                            if (isset($_SESSION['e_date'])){
-                                echo '<div class="error">'.$_SESSION['e_date'].'</div>';
-                                unset($_SESSION['e_date']);
-                            }
-                        ?>  
                     </div>
                     <div class="form-group">
                         <label>Podaj datę końcową</label>
                         <input class="form-control" type="date" name="endingDate">
-                        <?php
-                            if (isset($_SESSION['e_date'])){
-                                echo '<div class="error">'.$_SESSION['e_date'].'</div>';
-                                unset($_SESSION['e_date']);
-                            }
-                        ?>  
                     </div>
                     <input class="mainBtn" type="submit" name="submit" value="Wybierz">
                 </form>
@@ -48,7 +36,6 @@
         <table class="table bg-light table-striped ml-3">
             <thead>
                 <tr>
-                <th scope="col">#</th>
                 <th scope="col">Wysokość przychodu</th>
                 <th scope="col">Data</th>
                 <th scope="col">Rodzaj przychodu</th>
@@ -56,20 +43,16 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                    $recordNumber=1;
-                    foreach ($incomes as $income)
-                    {
-                        echo "<tr>";
-                        echo "<th scope='row'>$recordNumber</th>";
-                        echo "<td>" . $income['money'] ."</td>";
-                        echo "<td>" . $income['date'] . "</td>";
-                        echo "<td>" . $income['name'] . "</td>";
-                        echo "<td>" . $income['comment'] . "</td>";
-                        echo "</tr>";
-                    $recordNumber++;
-                    }
-                ?>
+                {% if incomes is not empty %}
+                    {% for income in incomes %}
+                    <tr>
+                        <td>{{ income.money }}</td>
+                        <td>{{ income.date }}</td>
+                        <td>{{ income.category_name }}</td>
+                        <td>{{ income.comment }}</td>
+                    </tr>
+                    {% endfor %}
+                {% endif %}
             </tbody>
         </table>
     </div>
