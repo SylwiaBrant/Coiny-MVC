@@ -3,12 +3,17 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-
-    <h1>Welcome</h1>
-
-    {% if current_user %}
-    <a href="/login/destroy">Log out</a>
-    {% else %}
-    <a href="/signup/new">Sign up</a> or <a href="/login">log in</a>
-    {% endif %}
+<div class="container-fluid mainContent justify-content-center">
+    <div class="info-board justify-content-between text-center mb-3 ml-3">
+        <h3>Faktury do zapłacenia</h3>
+        {% if incomes is empty %}
+        <p class="incomeBox">W tym tygodniu nie masz do zapłacenia żadnych należności</p>
+        {% else %}
+        <p class="incomeBox">W tym tygodniu przypada termin płatności faktur:</p>
+        {% for invoice in invoices %}
+        <p>{invoice}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

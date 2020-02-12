@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}Coiny - Przychody{% endblock %}
+{% block body %}
+<div class="container-fluid mainContent justify-content-center">
+    <div class="d-flex justify-content-between">
+        <button class="mainBtn showTransactionsBtn" type="button"
+            onclick="location.href='showThisWeekIncomes.php'">Bieżący tydzień</button>
+        <button class="mainBtn showTransactionsBtn" type="button"
+            onclick="location.href='showThisMonthIncomes.php'">Bieżący miesiąc</button>
+        <button class="mainBtn showTransactionsBtn" type="button"
+            onclick="location.href='showThisMonthIncomes.php'">Poprzedni miesiąc</button>
+        <button class="mainBtn showTransactionsBtn" type="button" data-toggle="collapse"
+            data-target="#collapseChoosePeriod" aria-expanded="false" aria-controls="collapseChoosePeriod">Wybierz
+            okres</button>
+    </div>
+    <div class="collapse" id="collapseChoosePeriod">
+        <div class="card card-body mt-2">
+            <form action="showChosenPeriodIncomes.php" method="post">
+                <div class="form-group">
+                    <label>Podaj datę początkową</label>
+                    <input class="form-control" type="date" name="startingDate">
+                </div>
+                <div class="form-group">
+                    <label>Podaj datę końcową</label>
+                    <input class="form-control" type="date" name="endingDate">
+                </div>
+                <input class="mainBtn" type="submit" name="submit" value="Wybierz">
+            </form>
+        </div>
+    </div>
+    <div class="d-flex incomesTable my-5">
+        <table class="table bg-light table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Kwota</th>
+                    <th scope="col">Numer faktury</th>
+                    <th scope="col">Data wystawienia</th>
+                    <th scope="col">Data płatności</th>
+                    <th scope="col">Kontrahent</th>
+                    <th scope="col">Komentarz</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if invoices is not empty %}
+                {% for invoice in invoices %}
+                <tr>
+                    <td>{{ invoice.money }}</td>
+                    <td>{{ invoice.number }}</td>
+                    <td>{{ invoice.date }}</td>
+                    <td>{{ invoice.payment_date }}</td>
+                    <td>{{ invoice.contractor }}</td>
+                    <td>{{ invoice.comment }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

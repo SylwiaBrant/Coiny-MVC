@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="pl">
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-        <meta charset="UTF-8"/>
-        <title>{% block title %}{% endblock %}</title>
-        <meta name="description" content="Zbuduj oszczędności życia z pomocą tej aplikacji."/>
-        <meta name ="keywords" content="oszczędności, oszczędzanie, bilans przychodów i wydatków"/>
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link href="https://fonts.googleapis.com/css?family=Oswald:500&display=swap&subset=latin-ext" rel="stylesheet">
-        <link rel="stylesheet" href="fontello/css/menu.css">
-        <!-- Bootstrap CSS -->
-	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/style.css">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="Zbuduj oszczędności życia z pomocą tej aplikacji." />
+    <meta name="keywords" content="oszczędności, oszczędzanie, bilans przychodów i wydatków" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:500&display=swap&subset=latin-ext" rel="stylesheet">
+    <link rel="stylesheet" href="fontello/css/menu.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
     <div class="d-flex justify-content-center main-menu" id="sidebar">
         <nav>
@@ -25,18 +27,17 @@
             </div>
             <ul class="nav text-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="mainpage.php">Strona główna</a>
+                    <a class="nav-link" href="/home/index">Strona główna</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#incomeModal" data-target="#incomeModal"
-                     data-toggle="modal">Dodaj przychód</a>
+                    <a class="nav-link" href="/incomes/new">Dodaj przychód</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#expenseModal" data-target="#expenseModal"
-                     data-toggle="modal">Dodaj wydatek</a>
+                <li class=" nav-item">
+                    <a class="nav-link" href="/expenses/new">Dodaj wydatek</a>
                 </li>
                 <li class="nav-item currentPage">
-                    <a href="#incomesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Przeglądaj przychody</a>
+                    <a href="#incomesSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Przeglądaj przychody</a>
                     <ul class="collapse list-unstyled" id="incomesSubmenu">
                         <li class="nav-item">
                             <a class="nav-link" href="showThisWeekIncomes.php">Bieżący tydzień</a>
@@ -53,7 +54,8 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="#expensesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Przeglądaj wydatki</a>
+                    <a href="#expensesSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Przeglądaj wydatki</a>
                     <ul class="collapse list-unstyled" id="expensesSubmenu">
                         <li>
                             <a class="nav-link" href="showThisWeekExpenses.php">Bieżący tydzień</a>
@@ -73,10 +75,19 @@
                     <a class="nav-link" href="showBalance.php">Przeglądaj bilans</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="settings.php">Przeglądaj faktury</a>
+                    <a href="#invoiceSubmenu" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle">Przeglądaj faktury</a>
+                    <ul class="collapse list-unstyled" id="invoiceSubmenu">
+                        <li>
+                            <a class="nav-link" href="/invoices/index">Wystawione</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="/invoices/showExpenseInvoices">Otrzymane</a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="/profile/showSettings">Ustawienia</a>
+                    <a class="nav-link" href="/profile/showSettings">Ustawienia</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Wyloguj</a>
@@ -103,27 +114,33 @@
                         </div>
                         <div class="form-group">
                             <label>Podaj datę uzyskania przychodu</label>
-                            <input class="form-control inputSlot" id="incomeDate" type="date" name="date"> 
+                            <input class="form-control inputSlot" id="incomeDate" type="date" name="date">
                         </div>
                         <div class="form-group">
                             <label>Wybierz z listy rodzaj przychodu</label>
                             <select class="form-control inputSlot" id="incomeCategory" name="category">
-                                <option value="<?=$option['name']?>"><?=$option['name']?></option>
+                                <option>Wynagrodzenie</option>
+                                <option>Odsetki</option>
+                                <option>Sprzedaż</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Dodaj komentarz (opcjonalnie)</label>
                             <textarea class="form-control inputSlot" rows="4" name="comment">
-                            </textarea> 
+                            </textarea>
                         </div>
                         <div class="form-check">
                             <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
-                            <input type="checkbox" id="invoiceCheckbox" name="invoice">
+                            <input type="checkbox" id="invoiceCheckbox" name="incomeInvoice">
                         </div>
                         <div class="hidden" id="invoiceDropdown">
                             <div class="form-group">
-                                <label>Podaj nazwę nabywcy</label>
-                                <input class="form-control inputSlot" type="text" name="recipientName">
+                                <label>Podaj numer faktury</label>
+                                <input class="form-control inputSlot" type="text" name="invoiceNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>Podaj nazwę kontrahenta</label>
+                                <input class="form-control inputSlot" type="text" name="contractor">
                             </div>
                             <div class="form-group">
                                 <label>Podaj datę płatności faktury</label>
@@ -139,8 +156,8 @@
                 </div>
             </div>
         </div>
-    </div>  
-    <!-- Add Expense Modal --> 
+    </div>
+    <!-- Add Expense Modal -->
     <div class="modal" id="expenseModal">
         <div class="modal-dialog">
             <div class="modal-content px-2 px-sm-4">
@@ -153,14 +170,14 @@
                     <form action="addExpense.php" method="post">
                         <div class="form-group">
                             <label>Podaj wysokość wydatku:</label>
-                            <input class="form-control" type="number" min='0'step='0.01' name='money'> 
+                            <input class="form-control" type="number" min='0' step='0.01' name='money'>
                         </div>
                         <div class="form-group">
                             <label>Podaj datę uzyskania przychodu:</label>
                             <input class="form-control" type="date" name='date'>
                         </div>
                         <div class="form-group">
-                            <label >Wybierz sposób płatności:</label>
+                            <label>Wybierz sposób płatności:</label>
                             <select class="form-control" name='paymentMethod'>
                                 <option value="<?=$option['name']?>"><?=$option['name']?></option>
                             </select>
@@ -168,14 +185,31 @@
                         <div class="form-group">
                             <label>Kategoria:</label>
                             <select class="form-control" name='category'>
-                                <option value="<?=$option['name']?>"><?=$option['name']?></option>
+
+                                <option></option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Dodaj komentarz (opcjonalnie):</label>
                             <textarea class="form-control" rows="3" name='comment'></textarea>
                         </div>
-                        <div class="form-group">
+                        <div class="form-check">
+                            <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
+                            <input type="checkbox" id="invoiceCheckbox" name="incomeInvoice">
+                        </div>
+                        <div class="hidden" id="invoiceDropdown">
+                            <div class="form-group">
+                                <label>Podaj numer faktury</label>
+                                <input class="form-control inputSlot" type="text" name="invoiceNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>Podaj nazwę kontrahenta</label>
+                                <input class="form-control inputSlot" type="text" name="contractor">
+                            </div>
+                            <div class="form-group">
+                                <label>Podaj datę płatności faktury</label>
+                                <input class="form-control inputSlot" type="date" name="invoicePayDate">
+                            </div>
                         </div>
                         <!-- Modal footer -->
                         <div class="modal-footer justify-content-between py-4">
@@ -186,13 +220,15 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
+
     {% block footer %}
     {% endblock %}
 </body>
+
 </html>

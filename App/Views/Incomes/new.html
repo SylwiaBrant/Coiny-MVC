@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="modal-dialog">
+    <div class="modal-content px-2 px-sm-4">
+        <!-- Modal Header -->
+        {% if IncomeWithInvoice.errors is not empty %}
+        <p>Błędy:</p>
+        <ul>
+            {% for error in IncomeWithInvoice.errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="modal-header justify-content-center ml-2">
+            <h4 class="modal-title">Dodaj przychód</h4>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body mx-2">
+            <form action="/IncomeManager/create" method="post">
+                <div class="form-group">
+                    <label>Podaj wysokość przychodu</label>
+                    <input class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
+                </div>
+                <div class="form-group">
+                    <label>Podaj datę uzyskania przychodu</label>
+                    <input class="form-control inputSlot" id="incomeDate" type="date" name="date">
+                </div>
+                <div class="form-group">
+                    <label>Wybierz z listy rodzaj przychodu</label>
+                    <select class="form-control inputSlot" id="incomeCategory" name="category">
+                        {% for category in incomeCategories %}
+                        <option>{{category}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Dodaj komentarz (opcjonalnie)</label>
+                    <textarea class="form-control inputSlot" rows="4" name="comment">
+                            </textarea>
+                </div>
+                <div class="form-check">
+                    <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
+                    <input type="checkbox" id="invoiceCheckbox" name="incomeInvoice">
+                </div>
+                <div class="hidden" id="invoiceDropdown">
+                    <div class="form-group">
+                        <label>Podaj numer faktury</label>
+                        <input class="form-control inputSlot" type="text" name="invoiceNumber">
+                    </div>
+                    <div class="form-group">
+                        <label>Podaj nazwę kontrahenta</label>
+                        <input class="form-control inputSlot" type="text" name="contractor">
+                    </div>
+                    <div class="form-group">
+                        <label>Podaj datę płatności faktury</label>
+                        <input class="form-control inputSlot" type="date" name="invoicePayDate">
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer justify-content-between py-4">
+                    <input type="submit" class="mainBtn" name="submit" value="Dodaj">
+                    <button type="button" class="mainBtn" data-dismiss="modal">Anuluj</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
