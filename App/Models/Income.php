@@ -3,7 +3,6 @@
 namespace App\Models;
 use PDO;
 use \Core\View;
-use \App\Models\User;
 
 /**
  * Signup controller
@@ -11,6 +10,11 @@ use \App\Models\User;
  * PHP version 7.0
  */
 class Income extends \Core\Model{
+    /**
+     * Error messages
+     * @var array
+     */
+    public $errors = [];
     /**
      * Class constructor
      * @param array $data Initial property values
@@ -31,17 +35,17 @@ class Income extends \Core\Model{
         if(empty($this->errors)){
             $user_id= $_SESSION['user_id'];
             $sql = "INSERT INTO incomes VALUES ('', :user_id, :money, :date,
-            (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
+            (SELECT id FROM income_categories WHERE category_name=:category AND user_id=:user_id), :comment, :invoice_id)";  
             $db = static::getDB();
             $stmt = $db->prepare($sql);
-            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
             $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);            
             $stmt->bindValue(':category', $this->category);
-            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
             $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
-            return $sql->execute();
+            return $stmt->execute();
         }
         return false;
     }
@@ -62,18 +66,6 @@ class Income extends \Core\Model{
         if(strlen($this->comment) > 400){
             $this->errors[] = "Pole może zawierać maksymalnie 400 znaków.";
         }
-/*        if(isset($_POST['invoice'])){
-            if(!isset($_POST['recipientName'])){
-                $ok = false;               
-            }else{
-                $recipientName = $_POST['recipientName'];
-            }
-            if(!isset($_POST['invoicePayDate'])){
-                $ok = false;
-            }else{
-                $invoicePayDate = $_POST['invoicePayDate'];
-            }
-        }*/
     }
 
     public static function getIncomesFromDB(){

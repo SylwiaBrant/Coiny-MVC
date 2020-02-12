@@ -48,7 +48,7 @@ a.link{
     height: 100vh;
     padding: 10px 20px;
     background-color: rgb(222, 227, 233);
-    padding-left: 250px;
+    padding-left: 270px;
     box-sizing: border-box;
 }
 
@@ -97,7 +97,7 @@ h1{
     background-position: center;
     background-image: fixed;
     background-repeat: no-repeat;
-    background-image: linear-gradient(rgb(51, 69, 90, 0.9), rgb(4, 11, 26, 0.9)), url("img/change.jpg");
+    background-image: linear-gradient(rgb(51, 69, 90, 0.9), rgb(4, 11, 26, 0.9)), url("/img/change.jpg");
 }
 
 li, li ul li{
@@ -183,6 +183,11 @@ ul li.currentPage{
         border-right: 0;
       }
 }
+/*----------------------TABLES NAVIGATION STYLES------------------------*/
+.tableNav a.nav-link{
+    display: inline-block;
+}
+/*----------------------TRANSACTIONS DISPLAY STYLES------------------------*/
 
 .totalIncomesBox{
     background-image: linear-gradient(to bottom right, rgb(231, 193, 68), rgb(231, 68, 95));
@@ -232,7 +237,6 @@ ul li.currentPage{
 
 .showTransactionsBtn{
     background-image: linear-gradient(rgb(43, 59, 80), rgb(8, 17, 34));
-    min-width: 250px;
     min-height: 50px;
     max-height: 90px;
 }
@@ -313,6 +317,3 @@ input.form-control.inputSlot:focus, input.form-control.inputSlot.active:focus, i
 display: none;
 }
 
-table{
-    margin: 0 15px;
-}

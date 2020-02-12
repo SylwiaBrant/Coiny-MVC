@@ -22,7 +22,7 @@ class RememberedLogin extends \Core\Model{
         $stmt->bindValue(':token_hash', $token_hash, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

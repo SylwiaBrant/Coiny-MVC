@@ -19,7 +19,7 @@ class User extends \Core\Model
      * @var array
      */
     public $errors = [];
-
+     
     /**
      * Class constructor
      * @param array $data Initial property values
@@ -41,21 +41,41 @@ class User extends \Core\Model
     {
         $this->validate();
         if(empty($this->errors)){
+            $user_id=0;
             $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
             $token = new Token();
             $hashed_token = $token->getHash();
             $this->activation_token = $token->getValue();
-            $sql = 'INSERT INTO users (email, password, activation_hash) 
-            VALUES (:email, :password_hash, :activation_hash)';
-    
             $db = static::getDB();
-            $stmt = $db->prepare($sql);
-    
-            $stmt->bindValue(':email', $this->email, PDO::PARAM_STR); 
-            $stmt->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
-            $stmt->bindValue(':activation_hash', $hashed_token, PDO::PARAM_STR);  
-
-            return $stmt->execute();
+            //try saving a user and populating their categories with default values in a transaction
+            try {
+                $db->beginTransaction();
+                $sql_add_user = $db->prepare(
+                    'INSERT INTO users (email, password, activation_hash) 
+                    VALUES (:email, :password_hash, :activation_hash)');
+                $sql_add_user->bindValue(':email', $this->email, PDO::PARAM_STR); 
+                $sql_add_user->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
+                $sql_add_user->bindValue(':activation_hash', $hashed_token, PDO::PARAM_STR);
+                $sql_add_user ->execute();     
+                $user_id = $db->lastInsertId(); 
+                $sql_populate_income_categories = $db->prepare(
+                    "INSERT INTO income_categories (user_id, name) 
+                    SELECT $user_id, name FROM default_income_categories");
+                $sql_populate_expense_categories= $db->prepare(
+                    "INSERT INTO expense_categories (user_id, name) 
+                    SELECT $user_id, name FROM default_expense_categories");
+                $sql_populate_payment_methods = $db->prepare(
+                    "INSERT INTO payment_methods (user_id, name) 
+                    SELECT $user_id, name FROM default_payment_methods");
+                $sql_populate_income_categories->execute();
+                $sql_populate_expense_categories->execute();
+                $sql_populate_payment_methods->execute();
+                $db->commit();
+                return true;
+            }
+            catch (PDOException $e) { 
+                $db->rollback();
+            }
         }
         return false;
     }
@@ -250,7 +270,7 @@ class User extends \Core\Model
      * Send an email to the user containing the activation link
      * @return void
      */
-    public function sendActivationEmail(){
+  /*  public function sendActivationEmail(){
         $url = 'http://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
         $text = View::getTemplate('Signup/activation_email.txt', ['url' => $url]);
         $html = View::getTemplate('Signup/activation_email.html', ['url' => $url]);
@@ -262,7 +282,7 @@ class User extends \Core\Model
      * @param string $value Activation token from the URL
      * @return void
      */
-    public static function activate($value){
+/*    public static function activate($value){
         $token = new Token($value);
         $hashed_token = $token->getHash();
         $sql = 'UPDATE users
@@ -273,5 +293,5 @@ class User extends \Core\Model
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':hashed_token', $hashed_token, PDO::PARAM_STR);   
         $stmt->execute();
-    }
+    } */
 }

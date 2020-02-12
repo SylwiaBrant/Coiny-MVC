@@ -3,14 +3,23 @@
 namespace App\Models;
 use PDO;
 use \Core\View;
-use \App\Models\User;
+use \App\Models\Income;
+use \App\Models\Invoice;
+use \App\Flash;
 
 /**
  * Signup controller
  *
  * PHP version 7.0
  */
-class Income extends \Core\Model{
+class IncomeWithInvoice extends \Core\Model{
+    /**
+     * Error messages
+     * @var array
+     */
+    public $errors = [];
+    public $income;
+    public $invoice;
     /**
      * Class constructor
      * @param array $data Initial property values
@@ -18,31 +27,44 @@ class Income extends \Core\Model{
      */
     public function __construct($data=[])
     {
-        foreach ($data as $key =>$value){
-            $this->$key = $value;
-        };
+        $this->income = new Income([
+            'money' => $_POST['money'], 
+            'date' => $_POST['date'], 
+            'category' => $_POST['category'], 
+            'comment' => $_POST['comment']
+        ]);
+        $this->invoice= new Invoice([
+            'invoiceNumber' => $_POST['invoiceNumber'],
+            'invoicePayDate' => $_POST['invoicePayDate'],
+            'contractor' => $_POST['contractor']
+        ]);
     }
     /**
      * Save the income model with the current property values
      * @return void
      */
     public function save(){
-        $this->validate();
-        if(empty($this->errors)){
-            $user_id= $_SESSION['user_id'];
-            $sql = "INSERT INTO incomes VALUES ('', :user_id, :money, :date,
-            (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
-            $stmt->bindValue(':money', $this->money);
-            $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);            
-            $stmt->bindValue(':category', $this->category);
-            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
-            $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
-            $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
-            return $sql->execute();
-        }
+            $lel = $this->income->validate();
+            var_dump($lel);
+            $this->invoice->validate();
+            if(empty($this->income->errors) && empty($this->invoice->errors)){
+                $last_id = $this->invoice->save();
+                if($last_id){
+                    $user_id= $_SESSION['user_id'];
+                    $sql = "INSERT INTO incomes VALUES ('', :user_id, :money, :date,
+                    (SELECT id FROM income_categories WHERE category_name=:category AND user_id=:user_id), :comment, :last_id)";  
+                    $db = static::getDB();
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+                    $stmt->bindValue(':money', $this->income->money);
+                    $stmt->bindValue(':date', $this->income->date, PDO::PARAM_STR);            
+                    $stmt->bindValue(':category', $this->income->category, PDO::PARAM_STR);
+                    $stmt->bindValue(':comment', $this->income->comment, PDO::PARAM_STR);
+                    $stmt->bindValue(':last_id', $last_id, PDO::PARAM_INT);
+                    $stmt->execute();
+                }
+                
+            }
         return false;
     }
 
@@ -62,18 +84,6 @@ class Income extends \Core\Model{
         if(strlen($this->comment) > 400){
             $this->errors[] = "Pole może zawierać maksymalnie 400 znaków.";
         }
-/*        if(isset($_POST['invoice'])){
-            if(!isset($_POST['recipientName'])){
-                $ok = false;               
-            }else{
-                $recipientName = $_POST['recipientName'];
-            }
-            if(!isset($_POST['invoicePayDate'])){
-                $ok = false;
-            }else{
-                $invoicePayDate = $_POST['invoicePayDate'];
-            }
-        }*/
     }
 
     public static function getIncomesFromDB(){

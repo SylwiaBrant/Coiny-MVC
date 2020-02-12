@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Coiny - Przychody{% endblock %}
+{% block title %}Coiny - Wydatki{% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
     <div class="info-board d-flex justify-content-between text-center mb-3">
         <div class="totalIncomesBox">
-            <h3>SUMA PRZYCHODÓW</h3>
+            <h3>SUMA WYDATKÓW</h3>
             <p class="incomeBox">w poprzednim miesiącu</p>
             <p class='incomeBoxInt'>{{ totalAmount }}</p>
         </div>
@@ -48,13 +48,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% if incomes is not empty %}
-                {% for income in incomes %}
+                {% if expenses is not empty %}
+                {% for expense in expenses %}
                 <tr>
-                    <td>{{ income.money }}</td>
-                    <td>{{ income.date }}</td>
-                    <td>{{ income.category_name }}</td>
-                    <td>{{ income.comment }}</td>
+                    <td>{{ expense.money }}</td>
+                    <td>{{ expense.date }}</td>
+                    <td>{{ expense.payment_method }}</td>
+                    <td>{{ expense.category_name }}</td>
+                    <td>{{ expense.comment }}</td>
                 </tr>
                 {% endfor %}
                 {% endif %}

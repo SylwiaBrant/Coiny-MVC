@@ -7,8 +7,8 @@
     use \App\Flash;
     /**
      * Login controller
-    * PHP version 7.4.2
-    */
+     * PHP version 7.4.2
+     */
     class Login extends \Core\Controller{
         /**
          * Show the login page
@@ -17,8 +17,9 @@
         public function newAction(){
             View::renderTemplate('Login/new.html');
         }
+
         /**
-         * log in a user
+         * Log in a user
          * @return void
          */
         public function createAction(){
