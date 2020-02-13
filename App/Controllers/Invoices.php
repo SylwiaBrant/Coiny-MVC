@@ -49,25 +49,25 @@ class Invoices extends Authenticated{
      */
     public function showThisWeekExpenseInvoicesAction(){
       $period = Date::getThisWeek();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showThisMonthExpenseInvoicesAction(){
       $period = Date::getThisMonth();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showLastMonthExpenseInvoicesAction(){
       $period = Date::getLastMonth();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showChosenPeriodExpenseInvoicesAction(){
       $period = Date::getLastMonth();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 }

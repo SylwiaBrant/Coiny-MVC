@@ -2,33 +2,39 @@
 {% block title %}Coiny - Przychody{% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
-    <div class="d-flex justify-content-between">
-        <button class="mainBtn showTransactionsBtn" type="button"
-            onclick="location.href='showThisWeekIncomes.php'">Bieżący tydzień</button>
-        <button class="mainBtn showTransactionsBtn" type="button"
-            onclick="location.href='showThisMonthIncomes.php'">Bieżący miesiąc</button>
-        <button class="mainBtn showTransactionsBtn" type="button"
-            onclick="location.href='showThisMonthIncomes.php'">Poprzedni miesiąc</button>
-        <button class="mainBtn showTransactionsBtn" type="button" data-toggle="collapse"
-            data-target="#collapseChoosePeriod" aria-expanded="false" aria-controls="collapseChoosePeriod">Wybierz
-            okres</button>
-    </div>
-    <div class="collapse" id="collapseChoosePeriod">
-        <div class="card card-body mt-2">
-            <form action="showChosenPeriodIncomes.php" method="post">
-                <div class="form-group">
-                    <label>Podaj datę początkową</label>
-                    <input class="form-control" type="date" name="startingDate">
-                </div>
-                <div class="form-group">
-                    <label>Podaj datę końcową</label>
-                    <input class="form-control" type="date" name="endingDate">
-                </div>
-                <input class="mainBtn" type="submit" name="submit" value="Wybierz">
-            </form>
+    <div class="info-board">
+        <ul class="nav nav-tabs" id="tableTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="theWeekTab" href="/invoices/showThisWeekIncomeInvoices" role="tab"
+                    aria-controls="nav-home" aria-selected="true">Bieżący tydzień</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/invoices/showThisMonthIncomeInvoices">Bieżący miesiąc</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/invoices/showLastMonthIncomeInvoices">Poprzedni miesiąc</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" data-target="#collapseChoosePeriod" aria-expanded="false"
+                    aria-controls="collapseChoosePeriod">Wybierz okres</a>
+            </li>
+        </ul>
+        <div class="collapse" id="collapseChoosePeriod">
+            <div class="card card-body mt-2">
+                <form action="/invoices/showChosenPeriodIncomeInvoices" method="post">
+                    <div class="form-group">
+                        <label>Podaj datę początkową</label>
+                        <input class="form-control" type="date" name="startingDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Podaj datę końcową</label>
+                        <input class="form-control" type="date" name="endingDate">
+                    </div>
+                    <input class="mainBtn" type="submit" name="submit" value="Wybierz">
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="d-flex incomesTable my-5">
+
         <table class="table bg-light table-striped">
             <thead>
                 <tr>
@@ -56,5 +62,8 @@
             </tbody>
         </table>
     </div>
+</div>
+</div>
+</div>
 </div>
 {% endblock %}
