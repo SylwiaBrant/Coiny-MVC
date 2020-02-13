@@ -49,7 +49,7 @@ class Invoice extends \Core\Model{
         var_dump($this->errors);
     }
 
-    public static function getInvoicesFromDB($period){
+    public static function getIncomeInvoicesFromDB($period){
         $user_id = $_SESSION['user_id'];
         $sql ='SELECT iv.number, ic.money, ic.date, iv.payment_date, iv.contractor, ic.comment 
             FROM income_invoices AS iv INNER JOIN incomes AS ic 
@@ -62,12 +62,18 @@ class Invoice extends \Core\Model{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
-    public static function getThisWeekInvoices($period){
-        $sql ='SELECT iv.number, ic.money, ic.date, iv.payment_date, iv.contractor, ic.comment 
-            FROM income_invoices AS iv INNER JOIN incomes AS ic 
-            ON iv.id = ic.invoice_id 
-            WHERE iv.user_id=:user_id AND date BETWEEN :startingDate AND :endingDate';
+    
+    public static function getExpenseInvoicesFromDB($period){
+        $user_id = $_SESSION['user_id'];
+        $sql ='SELECT ev.number, ec.money, ec.date, ev.payment_date, ev.contractor, ec.comment 
+            FROM expense_invoices AS ev INNER JOIN expenses AS ec 
+            ON ev.id = ec.invoice_id 
+            WHERE ev.user_id=:user_id AND date BETWEEN :startingDate
+            AND :endingDate';
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-
-//INSERT INTO incomes VALUES ('', 1, 430.30, '07-01-2020', (SELECT id FROM income_categories WHERE category_name='Wynagrodzenie' AND user_id=1), '', 1) 

@@ -17,11 +17,10 @@ class Expenses extends Authenticated{
      */
     private $sum;
     public function indexAction(){
-        $this->expenses = $this->getExpenseEntries();
-        $this->sum = Transaction::getTransactionsSumFromDB();;
+        $this->expenses = Expense::getExpensesFromDB();
+        $this->sum = Expense::getExpensesSumFromDB();;
         View::renderTemplate('Expenses/index.html', [
-            'expenseCategories' => Account::getExpenseCategories(),
-            'expenses' => $this->incomes,
+            'expenses' => $this->expenses,
             'totalAmount' => $this->sum]);
        // var_dump($this->incomes);
     }
@@ -42,17 +41,14 @@ class Expenses extends Authenticated{
         }
     }  
 
-    protected function getExpenseEntries(){
-        return $expenses = Expense::getExpensesFromDB();
-    }
-
     /**
      * Expense - add entry
      * @return void
      */
     public function newAction(){
-        View::renderTemplate('Incomes/new.html', [
-            'incomeCategories' => Account::getIncomeCategories()]);
+        View::renderTemplate('Expenses/new.html', [
+            'expenseCategories' => Account::getExpenseCategories(),
+            'paymentMethods' => Account::getPaymentMethods()]);
        // var_dump($this->incomes);
     }
 }

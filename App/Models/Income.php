@@ -22,6 +22,7 @@ class Income extends \Core\Model{
      */
     public function __construct($data=[])
     {
+        $this->user_id = $_SESSION['user_id'];
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
@@ -33,16 +34,15 @@ class Income extends \Core\Model{
     public function save(){
         $this->validate();
         if(empty($this->errors)){
-            $user_id= $_SESSION['user_id'];
             $sql = "INSERT INTO incomes VALUES ('', :user_id, :money, :date,
                 (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
             $db = static::getDB();
             $stmt = $db->prepare($sql);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
             $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);            
             $stmt->bindValue(':category', $this->category);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
             $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
             return $stmt->execute();
@@ -97,6 +97,7 @@ class Income extends \Core\Model{
         $row = $stmt->fetch();
         return $row['totalAmount'];
     }
+
     public static function getSumsByCategory($period){
         $user_id = $_SESSION['user_id'];
         $sql ='SELECT ic.name, ROUND(SUM(i.money),2) FROM incomes 
@@ -112,7 +113,4 @@ class Income extends \Core\Model{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } 
-    
 }
-
-//INSERT INTO incomes VALUES ('', 1, 430.30, '07-01-2020', (SELECT id FROM income_categories WHERE category_name='Wynagrodzenie' AND user_id=1), '', 1) 

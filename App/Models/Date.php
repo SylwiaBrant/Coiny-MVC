@@ -43,7 +43,4 @@ class Date extends \Core\Model{
         return $period;
     }
 }
-
-
-
 ?>
