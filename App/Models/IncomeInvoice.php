@@ -24,7 +24,27 @@ class Invoice extends \Core\Model{
     {
         foreach ($data as $key =>$value){
             $this->$key = $value;
+            $user_id= $_SESSION['user_id'];
         };
+    }
+
+    /**
+     * Save the invoice model with the current property values
+     * @return void
+     */
+    public function save(){
+        if(empty($this->errors)){
+            $sql = "INSERT INTO income_invoices VALUES ('', :user_id, :number, :payment_date, :contractor)";  
+            $db = static::getDB();
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->bindValue(':number', $this->invoiceNumber, PDO::PARAM_STR);
+            $stmt->bindValue(':payment_date', $this->invoicePayDate, PDO::PARAM_STR);            
+            $stmt->bindValue(':contractor', $this->contractor, PDO::PARAM_STR);
+            $stmt->execute();
+            return $db->lastInsertId();
+        }
+        return false;
     }
 
     public function validate(){
@@ -50,23 +70,18 @@ class Invoice extends \Core\Model{
     }
 
     public static function getInvoicesFromDB($period){
-        $user_id = $_SESSION['user_id'];
-        $sql ='SELECT iv.number, ic.money, ic.date, iv.payment_date, iv.contractor, ic.comment 
-            FROM income_invoices AS iv INNER JOIN incomes AS ic 
-            ON iv.id = ic.invoice_id 
-            WHERE iv.user_id=:user_id AND date BETWEEN :startingDate
-            AND :endingDate';
+        $sql ='SELECT iv.number, ic.money, tc.date, iv.payment_date, iv.contractor, ic.comment 
+        FROM income_invoices AS iv INNER JOIN incomes AS ic 
+        ON iv.id = tc.invoice_id 
+        WHERE iv.user_id=:user_id AND date BETWEEN';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
-    public static function getThisWeekInvoices($period){
-        $sql ='SELECT iv.number, ic.money, ic.date, iv.payment_date, iv.contractor, ic.comment 
-            FROM income_invoices AS iv INNER JOIN incomes AS ic 
-            ON iv.id = ic.invoice_id 
-            WHERE iv.user_id=:user_id AND date BETWEEN :startingDate AND :endingDate';
+    
+    public static function getThisWeek($period){
     }
 }
 

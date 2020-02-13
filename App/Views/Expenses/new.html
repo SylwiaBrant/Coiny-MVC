@@ -28,8 +28,8 @@
                 <div class="form-group">
                     <label>Wybierz z listy sposób płatności</label>
                     <select class="form-control inputSlot" id="paymentMethod" name="paymentMethod">
-                        {% for method in paymetMethods %}
-                        <option>{{method}}</option>
+                        {% for method in paymentMethods %}
+                        <option>{{method.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -37,7 +37,7 @@
                     <label>Wybierz z listy rodzaj wydatku</label>
                     <select class="form-control inputSlot" id="incomeCategory" name="category">
                         {% for category in expenseCategories %}
-                        <option>{{category}}</option>
+                        <option>{{category.name}}</option>
                         {% endfor %}
                     </select>
                 </div>
