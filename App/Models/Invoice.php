@@ -35,7 +35,7 @@ class Invoice extends \Core\Model{
             $this->errors[] = 'Ilość znaków nie może przekraczać 16.';
         }
         if(strpos($this->invoiceNumber, '/') === true){
-            $this->$number = preg_filter('/\//', '/\\//', $number);
+            $this->$invoiceNumber = preg_filter('/\//', '/\\//', $invoiceNumber);
         } 
         if($this->invoicePayDate == ''){
             $this->errors[] = 'Należy podać datę uzyskania przychodu.';
@@ -59,6 +59,8 @@ class Invoice extends \Core\Model{
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
+        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
@@ -73,6 +75,8 @@ class Invoice extends \Core\Model{
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
+        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

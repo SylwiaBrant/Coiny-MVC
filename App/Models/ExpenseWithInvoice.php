@@ -69,9 +69,9 @@ class ExpenseWithInvoice extends \Core\Model{
                 $stmt->bindValue(':money', $this->expense->money);
                 $stmt->bindValue(':date', $this->expense->date, PDO::PARAM_STR);   
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
-                $stmt->bindValue(':payment_method', $this->expense->payment_method);
+                $stmt->bindValue(':payment_method', $this->expense->payment_method, PDO::PARAM_STR);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);         
-                $stmt->bindValue(':category', $this->expense->category);
+                $stmt->bindValue(':category', $this->expense->category, PDO::PARAM_STR);
                 $stmt->bindValue(':comment', $this->expense->comment, PDO::PARAM_STR);
                 $stmt->bindValue(':invoice_id', $invoice_id, PDO::PARAM_STR);
                 $stmt->execute();

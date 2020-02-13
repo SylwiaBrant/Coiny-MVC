@@ -73,6 +73,7 @@ h1{
 @media screen and (max-width: 768px) {
     .mainContent {
         padding-left: 80px;
+        padding-right: 0;
     }
 }
 
@@ -100,7 +101,7 @@ h1{
     background-image: linear-gradient(rgb(51, 69, 90, 0.9), rgb(4, 11, 26, 0.9)), url("/img/change.jpg");
 }
 
-li, li ul li{
+.main-menu li, .main-menu li ul li{
     min-width: 100%;
     max-width: 100%;
     border-top: 1px solid rgb(34, 42, 59);
@@ -317,3 +318,44 @@ input.form-control.inputSlot:focus, input.form-control.inputSlot.active:focus, i
 display: none;
 }
 
+/*----------------------GLOBAL TABLE STYLES------------------------*/
+
+@media screen and (max-width: 768px){
+    table, thead, tbody, th, td, tr { 
+		display: block; 
+    }
+    thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+    }
+    tr { 
+        border: 1px solid #ccc; 
+    }
+	td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+    }
+    td:before { 
+		/* Now like a table header 
+		position: absolute;*/
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+    }
+    /*
+	Label the data
+	*/
+	td:nth-of-type(1):before { content: "First Name"; }
+	td:nth-of-type(2):before { content: "Last Name"; }
+	td:nth-of-type(3):before { content: "Job Title"; }
+	td:nth-of-type(4):before { content: "Favorite Color"; }
+	td:nth-of-type(5):before { content: "Wars of Trek"; }
+	td:nth-of-type(6):before { content: "Secret Alias"; }
+}
