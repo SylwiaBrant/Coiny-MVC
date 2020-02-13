@@ -9,7 +9,7 @@ use \Core\View;
  *
  * PHP version 7.0
  */
-class Income extends \Core\Model{
+class Expense extends \Core\Models{
     /**
      * Error messages
      * @var array
@@ -25,6 +25,7 @@ class Income extends \Core\Model{
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
+        $user_id= $_SESSION['user_id'];
     }
     /**
      * Save the income model with the current property values
@@ -35,7 +36,7 @@ class Income extends \Core\Model{
         if(empty($this->errors)){
             $user_id= $_SESSION['user_id'];
             $sql = "INSERT INTO incomes VALUES ('', :user_id, :money, :date,
-                (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
+            (SELECT id FROM income_categories WHERE category_name=:category AND user_id=:user_id), :comment, :invoice_id)";  
             $db = static::getDB();
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
@@ -68,12 +69,13 @@ class Income extends \Core\Model{
         }
     }
 
-    public static function getIncomesFromDB(){
+    public static function getExpensesFromDB($period){
         $user_id = $_SESSION['user_id'];
-        $sql = 'SELECT i.date, i.money, ic.name, i.comment 
-            FROM incomes AS i INNER JOIN income_categories AS ic WHERE i.user_id=:user_id 
-            AND i.user_id = ic.user_id AND i.category_id=ic.id AND date BETWEEN :startingDate 
-            AND :endingDate ORDER BY date DESC';
+        $sql = 'SELECT e.date, e.money, ep.name, ec.name, e.comment 
+            FROM expenses AS e INNER JOIN expense_categories AS ec ON e.user_id = ec.user_id 
+            AND e.expense_type_id=ec.id INNER JOIN payment_methods AS ep ON e.user_id = ep.user_id 
+            AND e.pay_method_id = ep.id WHERE e.user_id=31 AND date BETWEEN
+            :startingDate AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
@@ -83,7 +85,7 @@ class Income extends \Core\Model{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
 
-    public static function getIncomesSumFromDB(){
+    public static function getExpensesSumFromDB(){
         $user_id = $_SESSION['user_id'];
         $sql = 'SELECT ROUND(SUM(money),2) as totalAmount FROM incomes 
             WHERE user_id=:user_id AND date BETWEEN :startingDate 
@@ -96,23 +98,7 @@ class Income extends \Core\Model{
         $stmt->execute();
         $row = $stmt->fetch();
         return $row['totalAmount'];
-    }
-    public static function getSumsByCategory($period){
-        $user_id = $_SESSION['user_id'];
-        $sql ='SELECT ic.name, ROUND(SUM(i.money),2) FROM incomes 
-            AS i INNER JOIN income_categories AS ic WHERE 
-            i.category_id=ic.id AND ic.user_id=i.user_id 
-            AND ic.user_id=:user_id AND date BETWEEN :startingDate 
-            AND :endingDate GROUP BY ic.name DESC'; 
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
-        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
-        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } 
-    
+    }   
 }
 
 //INSERT INTO incomes VALUES ('', 1, 430.30, '07-01-2020', (SELECT id FROM income_categories WHERE category_name='Wynagrodzenie' AND user_id=1), '', 1) 

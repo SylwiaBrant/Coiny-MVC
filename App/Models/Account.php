@@ -14,12 +14,12 @@ class Account extends \Core\Model{
      */
     public static function getIncomeCategories(){
         $user_id = $_SESSION['user_id'];
-        $sql = 'SELECT category_name FROM income_categories WHERE user_id = user_id';
+        $sql = 'SELECT name FROM income_categories WHERE user_id = :user_id';
         $db = static::getDB();
         $stmt= $db->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     /**
      * Get expense categories associated with user from DB
@@ -27,12 +27,12 @@ class Account extends \Core\Model{
      */
     public static function getExpenseCategories(){
         $user_id = $_SESSION['user_id'];
-        $sql = 'SELECT category_name FROM expense_categories WHERE user_id = user_id';
+        $sql = 'SELECT name FROM expense_categories WHERE user_id = :user_id';
         $db = static::getDB();
         $stmt= $db->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     /**
      * Get payment methods associated with user from DB
@@ -40,12 +40,12 @@ class Account extends \Core\Model{
      */
     public static function getPaymentMethods(){
         $user_id = $_SESSION['user_id'];
-        $sql = 'SELECT method_name FROM payment_methods WHERE user_id = user_id';
+        $sql = 'SELECT name FROM payment_methods WHERE user_id = :user_id';
         $db = static::getDB();
         $stmt= $db->prepare($sql);
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     /**
      * Get the user model associated with this remembered login

@@ -10,12 +10,16 @@ use \App\Models\Account;
  */
 class Incomes extends Authenticated{
     
-    public $incomes = [];
+    private $incomes = [];
     /**
      * Incomes index
      * @return void
      */
     private $sum;
+    public function indexAction(){
+        View::renderTemplate('Incomes/index.html', []);
+    }
+
     public function showThisWeekAction(){
         $this->incomes = $this->getIncomeEntries();
         $this->sum = Income::getIncomesSumFromDB();
@@ -38,7 +42,7 @@ class Incomes extends Authenticated{
             View::renderTemplate('Incomes/index.html');
         } else {
             Flash::addMessage('Coś poszło nie tak. Przychód nie dodany.', 'WARNING');
-            View::renderTemplate('Incomes/addIncome.html');
+            View::renderTemplate('Incomes/index.html');
         }
     }  
 
