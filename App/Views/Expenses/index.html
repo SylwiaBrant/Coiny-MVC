@@ -10,20 +10,25 @@
         </div>
     </div>
     <div class="info-board">
-        <div class="d-flex row justify-content-left">
-            <button class="mainBtn showTransactionsBtn" type="button"
-                onclick="location.href='showThisWeekIncomes.php'">Bieżący tydzień</button>
-            <button class="mainBtn showTransactionsBtn" type="button"
-                onclick="location.href='showThisMonthIncomes.php'">Bieżący miesiąc</button>
-            <button class="mainBtn showTransactionsBtn" type="button"
-                onclick="location.href='showThisMonthIncomes.php'">Poprzedni miesiąc</button>
-            <button class="mainBtn showTransactionsBtn" type="button" data-toggle="collapse"
-                data-target="#collapseChoosePeriod" aria-expanded="false" aria-controls="collapseChoosePeriod">Wybierz
-                okres</button>
-        </div>
+        <ul class="nav nav-tabs" id="tableTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="theWeekTab" href="/expenses/showThisWeekExpenses" role="tab"
+                    aria-controls="nav-home" aria-selected="true">Bieżący tydzień</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/expenses/showThisMonthExpenses">Bieżący miesiąc</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/expenses/showLastMonthExpenses">Poprzedni miesiąc</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" data-target="#collapseChoosePeriod" aria-expanded="false"
+                    aria-controls="collapseChoosePeriod">Wybierz okres</a>
+            </li>
+        </ul>
         <div class="collapse" id="collapseChoosePeriod">
             <div class="card card-body mt-2">
-                <form action="showChosenPeriodIncomes.php" method="post">
+                <form action="/expenses/showChosenPeriodExpenses" method="post">
                     <div class="form-group">
                         <label>Podaj datę początkową</label>
                         <input class="form-control" type="date" name="startingDate">
@@ -36,14 +41,12 @@
                 </form>
             </div>
         </div>
-    </div>
-    <div>
         <table class="table bg-light table-striped">
             <thead>
                 <tr>
-                    <th scope="col">Wysokość przychodu</th>
+                    <th scope="col">Wysokość wydatku</th>
                     <th scope="col">Data</th>
-                    <th scope="col">Rodzaj przychodu</th>
+                    <th scope="col">Rodzaj wydatku</th>
                     <th scope="col">Komentarz</th>
                 </tr>
             </thead>

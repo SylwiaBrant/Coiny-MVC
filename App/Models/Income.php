@@ -68,7 +68,7 @@ class Income extends \Core\Model{
         }
     }
 
-    public static function getIncomesFromDB(){
+    public function getIncomesFromDB($period){
         $user_id = $_SESSION['user_id'];
         $sql = 'SELECT i.date, i.money, ic.name, i.comment 
             FROM incomes AS i INNER JOIN income_categories AS ic WHERE i.user_id=:user_id 
@@ -83,7 +83,7 @@ class Income extends \Core\Model{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
 
-    public static function getIncomesSumFromDB(){
+    public function getIncomesSumFromDB($period){
         $user_id = $_SESSION['user_id'];
         $sql = 'SELECT ROUND(SUM(money),2) as totalAmount FROM incomes 
             WHERE user_id=:user_id AND date BETWEEN :startingDate 

@@ -29,8 +29,9 @@ namespace App;
         //Append the message to the array
         $_SESSION['flash_notifications'][] = [
             'body' => $message,
-            'type'=> $type];
+            'type' => $type];            
     }
+    
     public static function getMessages(){
         if(isset($_SESSION['flash_notifications'])){
             $messages = $_SESSION['flash_notifications'];
