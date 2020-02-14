@@ -20,32 +20,37 @@ class Expenses extends Authenticated{
         $period = Date::getThisWeek();
         $expenses = new Expense();
         View::renderTemplate('Expenses/thisWeek.html',[
-            'expenses' => $expenses->getIncomesFromDB($period),
-            'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
+            'expenses' => $expenses->getExpensesFromDB($period),
+            'totalAmount' => $expenses->getExpensesSumFromDB($period)]);
       }
 
     public function showThisMonthExpensesAction(){
         $period = Date::getThisMonth();
         $expenses = new Expense();
         View::renderTemplate('Expenses/thisMonth.html',[
-            'expenses' => $expenses->getIncomesFromDB($period),
-            'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
+            'expenses' => $expenses->getExpensesFromDB($period),
+            'totalAmount' => $expenses->getExpensesSumFromDB($period)]);
     }
 
     public function showLastMonthExpensesAction(){
         $period = Date::getLastMonth();
         $expenses = new Expense();
         View::renderTemplate('Expenses/lastMonth.html',[
-            'expenses' => $expenses->getIncomesFromDB($period),
-            'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
+            'expenses' => $expenses->getExpensesFromDB($period),
+            'totalAmount' => $expenses->getExpensesSumFromDB($period)]);
     }
 
     public function showChosenPeriodExpensesAction(){
     $period = Date::getChosenPeriod($_POST);
-    $expenses = new Expense();
-    View::renderTemplate('Expenses/chosenPeriod.html',[
-        'expenses' => $expenses->getIncomesFromDB($period),
-        'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
+    if($period){
+        $expenses = new Expense();
+        View::renderTemplate('Expenses/chosenPeriod.html',[
+            'expenses' => $expenses->getExpensesFromDB($period),
+            'totalAmount' => $expenses->getExpensesSumFromDB($period)]);
+        } else {
+            Flash::addMessage('Proszę wpisać obie daty w formacie YYYY-MM-DD.', Flash::WARNING);
+            View::renderTemplate('Expenses/chosenPeriod.html',[]);
+        } 
     }
 
     public function createAction(){
@@ -72,7 +77,6 @@ class Expenses extends Authenticated{
         View::renderTemplate('Expenses/new.html', [
             'expenseCategories' => Account::getExpenseCategories(),
             'paymentMethods' => Account::getPaymentMethods()]);
-       // var_dump($this->incomes);
     }
 }
 ?>

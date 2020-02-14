@@ -50,7 +50,6 @@ class Incomes extends Authenticated{
             Flash::addMessage('Proszę wpisać obie daty w formacie YYYY-MM-DD.', Flash::WARNING);
             View::renderTemplate('Incomes/chosenPeriod.html',[]);
         }
-
       }
 
     public function createAction(){

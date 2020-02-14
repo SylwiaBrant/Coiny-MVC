@@ -349,11 +349,17 @@ display: none;
         width: 45%;
         
     }
-/* Headers for incomes and expenses tables*/
-    .transactionTable td:nth-of-type(1):before { content: "Kwota:"; }
-    .transactionTable td:nth-of-type(2):before { content: "Data:"; }
-    .transactionTable td:nth-of-type(3):before { content: "Rodzaj przychodu:"; }
-    .transactionTable td:nth-of-type(4):before { content: "Komentarz:"; }
+/* Headers for incomes tables*/
+    .incomeTable td:nth-of-type(1):before { content: "Kwota:"; }
+    .incomeTable td:nth-of-type(2):before { content: "Data:"; }
+    .incomeTable td:nth-of-type(3):before { content: "Rodzaj przychodu:"; }
+    .incomeTable td:nth-of-type(4):before { content: "Komentarz:"; }
+    /* Headers for expenses tables*/
+    .expenseTable td:nth-of-type(1):before { content: "Kwota:"; }
+    .expenseTable td:nth-of-type(2):before { content: "Data:"; }
+    .expenseTable td:nth-of-type(3):before { content: "Sposób płatności:"; }
+    .expenseTable td:nth-of-type(3):before { content: "Rodzaj wydatku:"; }
+    .expenseTable td:nth-of-type(4):before { content: "Komentarz:"; }
 /* Headers for invoices tables*/
     .invoiceTable td:nth-of-type(1):before { content: "Kwota"; }
     .invoiceTable td:nth-of-type(2):before { content: "Numer faktury"; }

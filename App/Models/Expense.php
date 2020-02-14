@@ -45,7 +45,7 @@ class Expense extends \Core\Model{
             $stmt->bindValue(':date', $this->date, PDO::PARAM_STR); 
             $stmt->bindValue(':payment_method', $this->payment_method, PDO::PARAM_STR);  
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);          
-            $stmt->bindValue(':category', $this->category);
+            $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
             $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
@@ -77,10 +77,10 @@ class Expense extends \Core\Model{
 
     public static function getExpensesFromDB($period){
         $user_id = $_SESSION['user_id'];
-        $sql = 'SELECT e.date, e.money, ep.name, ec.name, e.comment 
-            FROM expenses AS e INNER JOIN expense_categories AS ec ON e.user_id = ec.user_id 
-            AND e.expense_type_id=ec.id INNER JOIN payment_methods AS ep ON e.user_id = ep.user_id 
-            AND e.pay_method_id = ep.id WHERE e.user_id=:user_id AND date BETWEEN
+        $sql = 'SELECT e.date, e.money, ep.name AS method , ec.name AS category, e.comment 
+        FROM expenses AS e INNER JOIN expense_categories AS ec ON e.user_id = ec.user_id 
+        AND e.category_id=ec.id INNER JOIN payment_methods AS ep ON e.user_id = ep.user_id 
+        AND e.payment_method_id = ep.id WHERE e.user_id=:user_id AND date BETWEEN
             :startingDate AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -91,7 +91,7 @@ class Expense extends \Core\Model{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
 
-    public static function getExpensesSumFromDB(){
+    public static function getExpensesSumFromDB($period){
         $user_id = $_SESSION['user_id'];
         $sql = 'SELECT ROUND(SUM(money),2) as totalAmount FROM expenses 
             WHERE user_id=:user_id AND date BETWEEN :startingDate 
