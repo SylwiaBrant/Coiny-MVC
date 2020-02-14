@@ -5,30 +5,53 @@ use \App\Flash;
 use \App\Models\Income;
 use \App\Models\IncomeWithInvoice;
 use \App\Models\Account;
+use \App\Models\Date;
 /**
  * Incomes controller
  */
 class Incomes extends Authenticated{
     
-    private $incomes = [];
-    /**
-     * Incomes index
-     * @return void
-     */
-    private $sum;
-    public function indexAction(){
-        View::renderTemplate('Incomes/index.html', []);
-    }
+      /**
+       * Show incomes
+       * @return void
+       */
+      public function showThisWeekIncomesAction(){
+        $period = Date::getThisWeek();
+        $incomes = new Income();
+        View::renderTemplate('Incomes/thisWeek.html',[
+            'incomes' => $incomes->getIncomesFromDB($period),
+            'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
+      }
+  
+      public function showThisMonthIncomesAction(){
+        $period = Date::getThisMonth();
+        $incomes = new Income();
+        View::renderTemplate('Incomes/thisMonth.html',[
+            'incomes' => $incomes->getIncomesFromDB($period),
+            'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
+      }
+  
+      public function showLastMonthIncomesAction(){
+        $period = Date::getLastMonth();
+        $incomes = new Income();
+        View::renderTemplate('Incomes/lastMonth.html',[
+            'incomes' => $incomes->getIncomesFromDB($period),
+            'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
+      }
+        
+      public function showChosenPeriodIncomesAction(){
+        $period = Date::getChosenPeriod($_POST);
+        if($period){
+            $incomes = new Income();
+            View::renderTemplate('Incomes/chosenPeriod.html',[
+                'incomes' => $incomes->getIncomesFromDB($period),
+                'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
+        }else {
+            Flash::addMessage('Proszę wpisać obie daty w formacie YYYY-MM-DD.', Flash::WARNING);
+            View::renderTemplate('Incomes/chosenPeriod.html',[]);
+        }
 
-    public function showThisWeekAction(){
-        $this->incomes = $this->getIncomeEntries();
-        $this->sum = Income::getIncomesSumFromDB();
-        View::renderTemplate('Incomes/index.html', [
-            'incomeCategories' => Account::getIncomeCategories(),
-            'incomes' => $this->incomes,
-            'totalAmount' => $this->sum]);
-       // var_dump($this->incomes);
-    }
+      }
 
     public function createAction(){
 
@@ -46,10 +69,6 @@ class Incomes extends Authenticated{
         }
     }  
 
-    protected function getIncomeEntries(){
-        return $incomes = Income::getIncomesFromDB();
-    }
-
     /**
      * Incomes - add entry
      * @return void
@@ -57,7 +76,6 @@ class Incomes extends Authenticated{
     public function newAction(){
         View::renderTemplate('Incomes/new.html', [
             'incomeCategories' => Account::getIncomeCategories()]);
-       // var_dump($this->incomes);
     }
 }
 ?>

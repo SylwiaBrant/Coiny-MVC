@@ -16,7 +16,20 @@
 </head>
 
 <body>
-    <div class="d-flex justify-content-center main-menu" id="sidebar">
+    {% if flash_messages is not empty %}
+    {% for message in flash_messages %}
+    <div class="alert alert-{{message.type}} alert-dismissible fade show text-center" role="alert">
+        <p>
+            {{ message.body }}
+        </p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+
+    <div class="d-flex justify-content-center main-menu hidden" id="sidebar">
         <nav>
             <div>
                 <img class="d-block mx-auto logo" src="/img/coiny.png">
@@ -27,7 +40,7 @@
             </div>
             <ul class="nav text-center">
                 <li class="nav-item">
-                    <a class="nav-link" href="/home/index">Strona główna</a>
+                    <a class="nav-link" href="/home/index">Przeglądaj bilans</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/incomes/new">Dodaj przychód</a>
@@ -35,54 +48,21 @@
                 <li class=" nav-item">
                     <a class="nav-link" href="/expenses/new">Dodaj wydatek</a>
                 </li>
-                <li class="nav-item currentPage">
-                    <a href="#incomesSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Przeglądaj przychody</a>
-                    <ul class="collapse list-unstyled" id="incomesSubmenu">
-                        <li class="nav-item">
-                            <a class="nav-link" href="showThisWeekIncomes.php">Bieżący tydzień</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="showThisMonthIncomes.php">Bieżący miesiąc</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="showLastMonthIncomes.php">Poprzedni miesiąc</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="showChosenPeriodIncomes.php">Wybrany okres</a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="nav-item">
-                    <a href="#expensesSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle">Przeglądaj wydatki</a>
-                    <ul class="collapse list-unstyled" id="expensesSubmenu">
-                        <li>
-                            <a class="nav-link" href="showThisWeekExpenses.php">Bieżący tydzień</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="showThisMonthExpenses.php">Bieżący miesiąc</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="showLastMonthExpenses.php">Poprzedni miesiąc</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="showChosenPeriodExpenses.php">Wybrany okres</a>
-                        </li>
-                    </ul>
+                    <a class="nav-link" href="/incomes/showThisMonthIncomes">Przeglądaj przychody</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="showBalance.php">Przeglądaj bilans</a>
+                <li class=" nav-item">
+                    <a class="nav-link" href="/expenses/showThisMonthExpenses">Przeglądaj wydatki</a>
                 </li>
                 <li class="nav-item">
                     <a href="#invoiceSubmenu" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle">Przeglądaj faktury</a>
                     <ul class="collapse list-unstyled" id="invoiceSubmenu">
                         <li>
-                            <a class="nav-link" href="/invoices/showThisMonthIncomeInvoicesAction">Wystawione</a>
+                            <a class="nav-link" href="/invoices/showThisMonthIncomeInvoices">Wystawione</a>
                         </li>
                         <li>
-                            <a class="nav-link" href="/invoices/showThisMonthExpenseInvoicesAction">Otrzymane</a>
+                            <a class="nav-link" href="/invoices/showThisMonthExpenseInvoices">Otrzymane</a>
                         </li>
                     </ul>
                 </li>
@@ -97,130 +77,6 @@
     </div>
     {% block body %}
     {% endblock %}
-    <!-- Add Income Modal -->
-    <div class="modal" id="incomeModal">
-        <div class="modal-dialog">
-            <div class="modal-content px-2 px-sm-4">
-                <!-- Modal Header -->
-                <div class="modal-header justify-content-center ml-2">
-                    <h4 class="modal-title">Dodaj przychód</h4>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body mx-2">
-                    <form action="/IncomeManager/create" method="post">
-                        <div class="form-group">
-                            <label>Podaj wysokość przychodu</label>
-                            <input class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
-                        </div>
-                        <div class="form-group">
-                            <label>Podaj datę uzyskania przychodu</label>
-                            <input class="form-control inputSlot" id="incomeDate" type="date" name="date">
-                        </div>
-                        <div class="form-group">
-                            <label>Wybierz z listy rodzaj przychodu</label>
-                            <select class="form-control inputSlot" id="incomeCategory" name="category">
-                                <option>Wynagrodzenie</option>
-                                <option>Odsetki</option>
-                                <option>Sprzedaż</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Dodaj komentarz (opcjonalnie)</label>
-                            <textarea class="form-control inputSlot" rows="4" name="comment">
-                            </textarea>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
-                            <input type="checkbox" id="invoiceCheckbox" name="incomeInvoice">
-                        </div>
-                        <div class="hidden" id="invoiceDropdown">
-                            <div class="form-group">
-                                <label>Podaj numer faktury</label>
-                                <input class="form-control inputSlot" type="text" name="invoiceNumber">
-                            </div>
-                            <div class="form-group">
-                                <label>Podaj nazwę kontrahenta</label>
-                                <input class="form-control inputSlot" type="text" name="contractor">
-                            </div>
-                            <div class="form-group">
-                                <label>Podaj datę płatności faktury</label>
-                                <input class="form-control inputSlot" type="date" name="invoicePayDate">
-                            </div>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer justify-content-between py-4">
-                            <input type="submit" class="mainBtn" name="submit" value="Dodaj">
-                            <button type="button" class="mainBtn" data-dismiss="modal">Anuluj</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Add Expense Modal -->
-    <div class="modal" id="expenseModal">
-        <div class="modal-dialog">
-            <div class="modal-content px-2 px-sm-4">
-                <!-- Modal Header -->
-                <div class="modal-header justify-content-center ml-2">
-                    <h4 class="modal-title">Dodaj wydatek</h4>
-                </div>
-                <!-- Modal body -->
-                <div class="modal-body mx-2">
-                    <form action="addExpense.php" method="post">
-                        <div class="form-group">
-                            <label>Podaj wysokość wydatku:</label>
-                            <input class="form-control" type="number" min='0' step='0.01' name='money'>
-                        </div>
-                        <div class="form-group">
-                            <label>Podaj datę uzyskania przychodu:</label>
-                            <input class="form-control" type="date" name='date'>
-                        </div>
-                        <div class="form-group">
-                            <label>Wybierz sposób płatności:</label>
-                            <select class="form-control" name='paymentMethod'>
-                                <option value="<?=$option['name']?>"><?=$option['name']?></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Kategoria:</label>
-                            <select class="form-control" name='category'>
-
-                                <option></option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Dodaj komentarz (opcjonalnie):</label>
-                            <textarea class="form-control" rows="3" name='comment'></textarea>
-                        </div>
-                        <div class="form-check">
-                            <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
-                            <input type="checkbox" id="invoiceCheckbox" name="incomeInvoice">
-                        </div>
-                        <div class="hidden" id="invoiceDropdown">
-                            <div class="form-group">
-                                <label>Podaj numer faktury</label>
-                                <input class="form-control inputSlot" type="text" name="invoiceNumber">
-                            </div>
-                            <div class="form-group">
-                                <label>Podaj nazwę kontrahenta</label>
-                                <input class="form-control inputSlot" type="text" name="contractor">
-                            </div>
-                            <div class="form-group">
-                                <label>Podaj datę płatności faktury</label>
-                                <input class="form-control inputSlot" type="date" name="invoicePayDate">
-                            </div>
-                        </div>
-                        <!-- Modal footer -->
-                        <div class="modal-footer justify-content-between py-4">
-                            <input type="submit" class="mainBtn" name="submit" value="Dodaj">
-                            <button type="button" class="mainBtn" data-dismiss="modal">Anuluj</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>

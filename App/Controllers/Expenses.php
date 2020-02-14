@@ -5,24 +5,47 @@ use \App\Flash;
 use \App\Models\Expense;
 use \App\Models\ExpenseWithInvoice;
 use \App\Models\Account;
+use \App\Models\Date;
+
 /**
  * Incomes controller
  */
 class Expenses extends Authenticated{
     
-    public $expenses = [];
     /**
-     * Expenses index
+     * Show expenses
      * @return void
      */
-    private $sum;
-    public function indexAction(){
-        $this->expenses = Expense::getExpensesFromDB();
-        $this->sum = Expense::getExpensesSumFromDB();;
-        View::renderTemplate('Expenses/index.html', [
-            'expenses' => $this->expenses,
-            'totalAmount' => $this->sum]);
-       // var_dump($this->incomes);
+    public function showThisWeekExpensesAction(){
+        $period = Date::getThisWeek();
+        $expenses = new Expense();
+        View::renderTemplate('Expenses/thisWeek.html',[
+            'expenses' => $expenses->getIncomesFromDB($period),
+            'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
+      }
+
+    public function showThisMonthExpensesAction(){
+        $period = Date::getThisMonth();
+        $expenses = new Expense();
+        View::renderTemplate('Expenses/thisMonth.html',[
+            'expenses' => $expenses->getIncomesFromDB($period),
+            'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
+    }
+
+    public function showLastMonthExpensesAction(){
+        $period = Date::getLastMonth();
+        $expenses = new Expense();
+        View::renderTemplate('Expenses/lastMonth.html',[
+            'expenses' => $expenses->getIncomesFromDB($period),
+            'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
+    }
+
+    public function showChosenPeriodExpensesAction(){
+    $period = Date::getChosenPeriod($_POST);
+    $expenses = new Expense();
+    View::renderTemplate('Expenses/chosenPeriod.html',[
+        'expenses' => $expenses->getIncomesFromDB($period),
+        'totalAmount' => $expenses->getIncomesSumFromDB($period)]);
     }
 
     public function createAction(){

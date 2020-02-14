@@ -1,0 +1,27 @@
+{% extends 'transactionBase.html' %}
+{% block incomesStatistics %}
+<div class="totalIncomesBox">
+    <h3>SUMA PRZYCHODÓW</h3>
+    <p class="incomeBox">w okresie od</p>
+    <p>{{ period.startingDate }} do {{period.endingDate}}</p>
+    <p class='incomeBoxInt'>{{ totalAmount }}</p>
+</div>
+{% endblock %}
+{% block navTab %}
+<ul class="nav nav-tabs" id="tableTab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="theWeekTab" href="/incomes/showThisWeekIncomes" role="tab"
+            aria-controls="nav-home" aria-selected="true">Bieżący tydzień</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/incomes/showThisMonthIncomes">Bieżący miesiąc</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/incomes/showLastMonthIncomes">Poprzedni miesiąc</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="collapse" data-target="#collapseChoosePeriod" aria-expanded="false"
+            aria-controls="collapseChoosePeriod">Wybierz okres</a>
+    </li>
+</ul>
+{% endblock %}

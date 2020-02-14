@@ -5,6 +5,12 @@ body{
    margin: 0;
    padding: 0;
 }
+.alert{
+    position: fixed; 
+    z-index: 2;
+    width: 100vw;
+    border-bottom: 1px solid;
+}
 .container-fluid.entryPage{
     background-color:  rgb(28, 37, 56);
     min-height: 100vh;
@@ -27,8 +33,10 @@ body{
 }
 
 .logo{
-    max-width: 100px;
+    width:100%;
+    max-width: 80px;
     height: auto;
+    padding: 5px;
 
 }
 @media screen and (max-width: 768px){
@@ -116,11 +124,11 @@ a.dropdown-toggle{
     color:rgb(34, 42, 59);
 }
 
-li:hover{
+.main-menu li:hover{
     background: linear-gradient(rgb(66, 93, 124, 0.4),rgb(66, 93, 124, 0.4));
 }
 
-.nav li:active{
+.main-menu .nav li:active{
     background: linear-gradient(rgb(66, 93, 124),rgb(66, 93, 124));
 }
 /*
@@ -135,12 +143,12 @@ ul li.currentPage{
         cursor: pointer;
     }
 
-    #sidebar.active{
+    #sidebar.hidden{
         min-width: 80px;
         max-width: 80px;
     }
 
-    #sidebar.active ul.nav{
+    #sidebar.hidden ul.nav{
         display: none;
     }
 
@@ -155,7 +163,7 @@ ul li.currentPage{
         margin-left: 7px;
       }
 
-    #sidebar.active .arrow {
+    #sidebar.hidden .arrow {
         border-left: 6px solid white;
         border-right: 0;
       }
@@ -165,19 +173,19 @@ ul li.currentPage{
         cursor: pointer;
     }
 
-    #sidebar.active{
+    #sidebar.hidden{
         min-width: 40px;
         max-width: 40px;
     }
 
-    #sidebar.active h2{
+    #sidebar.hidden h2{
         display: none;
     }
 
-    #sidebar.active ul.nav{
+    #sidebar.hidden ul.nav{
         display: none;
     } 
-    #sidebar.active .arrow {
+    #sidebar.hidden .arrow {
         border-top: 10px solid transparent;
         border-bottom: 10px solid transparent;
         border-left: 10px solid white;
@@ -321,41 +329,36 @@ display: none;
 /*----------------------GLOBAL TABLE STYLES------------------------*/
 
 @media screen and (max-width: 768px){
-    table, thead, tbody, th, td, tr { 
-		display: block; 
+    table{
+        display: block;
     }
-    thead tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
+
+    table thead {
+        display: none; 
     }
-    tr { 
-        border: 1px solid #ccc; 
+
+    .table td { 
+        display: block;
+        position: relative;
+        padding: 0.25rem;
     }
-	td { 
-		/* Behave  like a "row" */
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
+    
+	table td::before { 
+        padding-right: 7px;
+        font-weight: bold;
+        width: 45%;
+        
     }
-    td:before { 
-		/* Now like a table header 
-		position: absolute;*/
-		/* Top/left values mimic padding */
-		top: 6px;
-		left: 6px;
-		width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-    }
-    /*
-	Label the data
-	*/
-	td:nth-of-type(1):before { content: "First Name"; }
-	td:nth-of-type(2):before { content: "Last Name"; }
-	td:nth-of-type(3):before { content: "Job Title"; }
-	td:nth-of-type(4):before { content: "Favorite Color"; }
-	td:nth-of-type(5):before { content: "Wars of Trek"; }
-	td:nth-of-type(6):before { content: "Secret Alias"; }
+/* Headers for incomes and expenses tables*/
+    .transactionTable td:nth-of-type(1):before { content: "Kwota:"; }
+    .transactionTable td:nth-of-type(2):before { content: "Data:"; }
+    .transactionTable td:nth-of-type(3):before { content: "Rodzaj przychodu:"; }
+    .transactionTable td:nth-of-type(4):before { content: "Komentarz:"; }
+/* Headers for invoices tables*/
+    .invoiceTable td:nth-of-type(1):before { content: "Kwota"; }
+    .invoiceTable td:nth-of-type(2):before { content: "Numer faktury"; }
+    .invoiceTable td:nth-of-type(3):before { content: "Data wystawienia"; }
+    .invoiceTable td:nth-of-type(4):before { content: "Data płatności"; }
+    .invoiceTable td:nth-of-type(5):before { content: "Kontrahent"; }
+    .invoiceTable td:nth-of-type(6):before { content: "Komentarz"; }
 }
