@@ -1,19 +1,76 @@
 {% extends "base.html" %}
-
-{% block title %}Home{% endblock %}
-
+{% block title %}Coiny{% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
-    <div class="d-flex info-board justify-content-between text-center mb-3 ml-3">
-        <h3>Faktury do zapłacenia</h3>
-        {% if incomes is empty %}
-        <p class="incomeBox">W tym tygodniu nie masz do zapłacenia żadnych należności</p>
-        {% else %}
-        <p class="incomeBox">W tym tygodniu przypada termin płatności faktur:</p>
-        {% for invoice in invoices %}
-        <p>{invoice}</p>
-        {% endfor %}
-        {% endif %}
+    <div class="row justify-content-around">
+        <div class="info-board mb-3">
+            <h3>Bilans</h3>
+            <p class="incomeBox">Przychody........ {{ incomesSum }} zł</p>
+            <p class="incomeBox">Wydatki.......... {{ expensesSum }} zł</p>
+            <p class="incomeBox">Bilans........... {{ incomesSum-expensesSum }} zł</p>
+        </div>
+        <div class="info-board mb-3">
+            <h3>Przychody wg kategorii</h3>
+            <hr>
+            {% for incomeSum in incomeCategoriesSums %}
+            <p>{{incomeSum.name}} -> {{incomeSum.money}} zł</p>
+            {% endfor %}
+        </div>
+        <div class="info-board mb-3">
+            <h3>Wydatki wg kategorii</h3>
+            <hr>
+            {% for expenseSum in expenseCategoriesSums %}
+            <p>{{expenseSum.name}} -> {{expenseSum.money}} zł</p>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <div class="info-board mb-3">
+            <h3>Faktury do zapłacenia</h3>
+            <hr>
+            {% if invoices is empty %}
+            <p class="incomeBox">W tym tygodniu nie masz do zapłacenia żadnych należności</p>
+            {% else %}
+            <p class="incomeBox">W tym tygodniu przypada termin płatności faktur:</p>
+            {% for invoice in invoices %}
+            <p>{{invoice.payment_date}} {{invoice.contractor}} {{invoice.money}}</p>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <div class="info-board mb-3">
+            <h3>Ostatnie transakcje</h3>
+            <hr>
+            <table class="table bg-light table-striped incomeTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Rodzaj przychodu</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Kwota</th>
+                        <th scope="col">Komentarz</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lastIncome in lastIncomes %}
+                    <tr>
+                        <td>{{ lastIncome.name }}</td>
+                        <td>{{ lastIncome.date }}</td>
+                        <td>{{ lastIncome.money }}</td>
+                        <td>{{ lastIncome.comment }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% for lastExpense in lastExpenses %}
+                    <tr>
+                        <td>{{ lastExpense.name }}</td>
+                        <td>{{ lastExpense.date }}</td>
+                        <td>{{ lastExpense.money }}</td>
+                        <td>{{ lastExpense.comment }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}

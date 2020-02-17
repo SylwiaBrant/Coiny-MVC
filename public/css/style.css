@@ -37,8 +37,8 @@ body{
     max-width: 80px;
     height: auto;
     padding: 5px;
-
 }
+
 @media screen and (max-width: 768px){
 
     .banner-wrapper{
@@ -49,23 +49,24 @@ body{
         margin-top: 0px;
     }   
 }
-a.link{
-    color: rgb(231, 68, 95);
-}
+
 .mainContent{
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
     padding: 10px 20px;
     background-color: rgb(222, 227, 233);
     padding-left: 270px;
     box-sizing: border-box;
 }
 
-.form-wrapper{
-    background-color: white;
+a.link{
+    color: rgb(231, 68, 95);
 }
+
 .imgBanner{
     filter: sepia();
 }
+
 h1{
     font-weight: bold;
     color: rgb(231, 193, 68);
@@ -78,6 +79,13 @@ h1{
     box-shadow: 0 0 1em rgb(93, 102, 109);
 }
 
+.info-board h3{
+    font-size: 1.2em;
+}
+
+.info-board p{
+    margin-bottom: 5px;
+}
 @media screen and (max-width: 768px) {
     .mainContent {
         padding-left: 80px;
@@ -91,6 +99,10 @@ h1{
     }
 }
 
+.row {
+    margin: 0;
+    padding: 0;
+}
 /*----------------------MAIN NAVIGATION STYLES------------------------*/
 
 .main-menu{
@@ -192,10 +204,7 @@ ul li.currentPage{
         border-right: 0;
       }
 }
-/*----------------------TABLES NAVIGATION STYLES------------------------*/
-.tableNav a.nav-link{
-    display: inline-block;
-}
+
 /*----------------------TRANSACTIONS DISPLAY STYLES------------------------*/
 
 .totalIncomesBox{
@@ -223,7 +232,7 @@ ul li.currentPage{
 /*----------------------BUTTON STYLES------------------------*/
 
 .mainBtn{
-    margin: 5px;
+    margin: 5px 0;
     border: none;
   /*  border-top: 1px solid rgb(51, 69, 90, 0.9);
     border-bottom: 1px solid rgb(51, 69, 90); */
@@ -305,6 +314,13 @@ h2{
 }
 
 /*----------------------FORM STYLES------------------------*/
+label{
+    color:rgb(43, 59, 80);
+}
+.formWrapper{
+    padding: 20px;
+    background-color: rgb(241, 241, 241);
+}
 .form-control{
     border: none;
     border-radius: 2px;
@@ -322,6 +338,9 @@ input.form-control.inputSlot:focus, input.form-control.inputSlot.active:focus, i
     color: rgb(25, 44, 61);;
 }
 
+.formCheck{
+    padding-bottom: 10px;
+}
 #invoiceDropdown.hidden{
 display: none;
 }
@@ -346,7 +365,6 @@ display: none;
 	table td::before { 
         padding-right: 7px;
         font-weight: bold;
-        width: 45%;
         
     }
 /* Headers for incomes tables*/
@@ -367,4 +385,9 @@ display: none;
     .invoiceTable td:nth-of-type(4):before { content: "Data płatności"; }
     .invoiceTable td:nth-of-type(5):before { content: "Kontrahent"; }
     .invoiceTable td:nth-of-type(6):before { content: "Komentarz"; }
+}
+
+/*----------------------TABLES NAVIGATION STYLES------------------------*/
+.tableNav a.nav-link{
+    display: inline-block;
 }

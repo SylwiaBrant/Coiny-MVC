@@ -98,9 +98,9 @@ class Income extends \Core\Model{
         return $row['totalAmount'];
     }
 
-    public static function getSumsByCategory($period){
+    public function getSumsByCategory($period){
         $user_id = $_SESSION['user_id'];
-        $sql ='SELECT ic.name, ROUND(SUM(i.money),2) FROM incomes 
+        $sql ='SELECT ic.name, ROUND(SUM(i.money),2) AS money FROM incomes 
             AS i INNER JOIN income_categories AS ic WHERE 
             i.category_id=ic.id AND ic.user_id=i.user_id 
             AND ic.user_id=:user_id AND date BETWEEN :startingDate 
@@ -113,4 +113,16 @@ class Income extends \Core\Model{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } 
+
+    public function getLastTransactionPerCategory(){
+        $user_id = $_SESSION['user_id'];
+        $sql ='SELECT ic.name,i.money, MAX(i.date) AS date, i.comment FROM incomes AS i 
+            INNER JOIN income_categories AS ic WHERE i.category_id=ic.id 
+            AND ic.user_id=i.user_id AND ic.user_id=:user_id GROUP BY ic.name'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+    }
 }
