@@ -1,4 +1,55 @@
 {% extends 'base.html' %}
+{% block title %}Coiny - Dodaj przychód{% endblock %}
+{% block footer %}
+<script src="/js/validationPolishMessages.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#incomeForm').validate({
+            rules: {
+                money: {
+                    required: true,
+                    number: true,
+                    step: 0.01
+                },
+                date: {
+                    required: true,
+                    date: true,
+                },
+                category: {
+                    required: true,
+                },
+                comment: {
+                    maxlength: 400,
+                },
+                invoiceNumber: {
+                    required: {
+                        depends: function (element) {
+                            return $("#invoiceCheckbox").is(":checked");
+                        }
+                    },
+                    number: true,
+                },
+                contractor: {
+                    required: {
+                        depends: function (element) {
+                            return $("#invoiceCheckbox").is(":checked");
+                        }
+                    },
+                    rangelength: [1, 256],
+                },
+                invoicePayDate: {
+                    required: {
+                        depends: function (element) {
+                            return $("#invoiceCheckbox").is(":checked");
+                        }
+                    },
+                    date: true,
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
 {% block body %}
 <div class="modal-dialog">
     <div class="modal-content px-2 px-sm-4">
@@ -16,7 +67,7 @@
         </div>
         <!-- Modal body -->
         <div class="modal-body mx-2">
-            <form action="/Incomes/create" method="post">
+            <form action="/Incomes/create" method="post" id="incomeForm">
                 <div class="form-group">
                     <label>Podaj wysokość przychodu</label>
                     <input class="form-control inputSlot" type="number" min="0" step="0.01" name="money">

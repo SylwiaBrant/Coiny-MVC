@@ -93,7 +93,7 @@ class Expense extends \Core\Model{
 
     public static function getExpensesSumFromDB($period){
         $user_id = $_SESSION['user_id'];
-        $sql = 'SELECT ROUND(SUM(money),2) as totalAmount FROM expenses 
+        $sql = 'SELECT ROUND(SUM(money),2) AS totalAmount FROM expenses 
             WHERE user_id=:user_id AND date BETWEEN :startingDate 
             AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
@@ -108,7 +108,7 @@ class Expense extends \Core\Model{
 
     public static function getSumsByCategory($period){
         $user_id = $_SESSION['user_id'];
-        $sql ='SELECT ec.name, ROUND(SUM(e.money),2) FROM expenses 
+        $sql ='SELECT ec.name, ROUND(SUM(e.money),2) AS money FROM expenses 
             AS e INNER JOIN expense_categories AS ec WHERE 
             e.category_id=ec.id AND ec.user_id=e.user_id 
             AND ec.user_id=:user_id AND date BETWEEN :startingDate 
@@ -121,4 +121,16 @@ class Expense extends \Core\Model{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } 
+
+    public function getLastTransactionPerCategory(){
+        $user_id = $_SESSION['user_id'];
+        $sql ='SELECT ec.name, e.money, MAX(e.date) AS date, e.comment FROM expenses AS e 
+            INNER JOIN expense_categories AS ec WHERE e.category_id=ec.id AND 
+            ec.user_id=e.user_id AND ec.user_id=:user_id GROUP BY ec.name'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+    }
 }

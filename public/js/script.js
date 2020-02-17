@@ -13,3 +13,7 @@ $(document).ready(function () {
     else { $('#invoiceDropdown').hide(); }
   });
 });
+
+$(document).ready(function () {
+  $('textarea').autoResize();
+});

@@ -49,7 +49,7 @@ class Invoice extends \Core\Model{
         var_dump($this->errors);
     }
 
-    public static function getIncomeInvoicesFromDB($period){
+    public function getIncomeInvoicesFromDB($period){
         $user_id = $_SESSION['user_id'];
         $sql ='SELECT iv.number, ic.money, ic.date, iv.payment_date, iv.contractor, ic.comment 
             FROM income_invoices AS iv INNER JOIN incomes AS ic 
@@ -65,7 +65,7 @@ class Invoice extends \Core\Model{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
     
-    public static function getExpenseInvoicesFromDB($period){
+    public function getExpenseInvoicesFromDB($period){
         $user_id = $_SESSION['user_id'];
         $sql ='SELECT ev.number, ec.money, ec.date, ev.payment_date, ev.contractor, ec.comment 
             FROM expense_invoices AS ev INNER JOIN expenses AS ec 
@@ -80,4 +80,17 @@ class Invoice extends \Core\Model{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+         
+    public function getDueInvoices(){
+        $user_id = $_SESSION['user_id'];
+        $sql ='SELECT ev.number, ec.money, ev.contractor, ev.payment_date FROM expense_invoices AS ev 
+        INNER JOIN expenses AS ec ON ev.id = ec.invoice_id WHERE ev.user_id=14 
+        AND ev.payment_date BETWEEN DATE_ADD(CURDATE(), INTERVAL 1-DAYOFWEEK(CURDATE()) DAY) 
+        AND DATE_ADD(CURDATE(), INTERVAL 7-DAYOFWEEK(CURDATE()) DAY)';
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+      }
 }

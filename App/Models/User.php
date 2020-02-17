@@ -270,7 +270,7 @@ class User extends \Core\Model
      * Send an email to the user containing the activation link
      * @return void
      */
-  /*  public function sendActivationEmail(){
+    public function sendActivationEmail(){
         $url = 'http://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
         $text = View::getTemplate('Signup/activation_email.txt', ['url' => $url]);
         $html = View::getTemplate('Signup/activation_email.html', ['url' => $url]);
@@ -282,7 +282,7 @@ class User extends \Core\Model
      * @param string $value Activation token from the URL
      * @return void
      */
-/*    public static function activate($value){
+    public static function activate($value){
         $token = new Token($value);
         $hashed_token = $token->getHash();
         $sql = 'UPDATE users
@@ -293,5 +293,5 @@ class User extends \Core\Model
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':hashed_token', $hashed_token, PDO::PARAM_STR);   
         $stmt->execute();
-    } */
+    } 
 }
