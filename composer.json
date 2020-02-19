@@ -1,10 +1,7 @@
 {
     "require": {
         "twig/twig": "~2.0",
-        "phpmailer/phpmailer": "^6.1",
-        "mailgun/mailgun-php": "^3.0",
-        "kriswallsmith/buzz": "^1.0",
-        "nyholm/psr7": "^1.2"
+        "phpmailer/phpmailer": "^6.1"
     },
     "autoload": {
         "psr-4": {

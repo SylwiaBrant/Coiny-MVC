@@ -1,13 +1,9 @@
 <?php
 namespace App;
-//require 'vendor/autoload.php';
-use Mailgun\Mailgun;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-/**
- * Mail
- * PHP version 7.4.2
- */
 class Mail{
     /**
      * Send message
@@ -18,16 +14,40 @@ class Mail{
      * @return mixed
      */
     public static function send($to, $subject, $text, $html){
+        /* Create a new PHPMailer object. Passing TRUE to the constructor enables exceptions. */
+        $mail = new PHPMailer(TRUE);
 
-        $mg = Mailgun::create(Config::MAILGUN_API_KEY);   
-        // Now, compose and send your message.
-        $mg->messages()->send(Config::MAILGUN_DOMAIN, array(
-          'from'    => '<mailgun@sandbox30f857b1a4b74737bfe90d9cbb117047.mailgun.org>',
-          'to'      => $to,
-          'subject' => $subject,
-          'text'    => $text,
-          'html'    => $html
-         ));
+        /* Open the try/catch block. */
+        try {
+        $mail->CharSet = "UTF-8";
+
+        $mail->setFrom('appSBMailer@gmail.com', 'Coiny - Sylwia Brant');
+        $mail->addAddress($to);
+        $mail->Subject = $subject;
+        $mail->isHTML(TRUE);
+        $mail->Body = $html;
+        $mail->AltBody = $text;
+
+        /* SMTP parameters. */
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = 587;
+        $mail->SMTPAuth = true;
+        $mail->SMTPSecure = 'tls';
+        $mail->Username = 'appSBMailer@gmail.com';
+        $mail->Password = '';
+        
+        $mail->send();
+        }
+        catch (Exception $e)
+        {
+            echo $e->errorMessage();
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage();
+        }
     }
 }
+
 ?>
