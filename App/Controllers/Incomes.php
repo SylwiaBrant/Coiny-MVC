@@ -61,11 +61,11 @@ class Incomes extends Authenticated{
         }
         if($income->save()){
             Flash::addMessage('Przychód dodany pomyślnie.'); 
-            View::renderTemplate('Incomes/new.html');
+
         } else {
             Flash::addMessage('Coś poszło nie tak. Przychód nie dodany.', 'WARNING');
-            View::renderTemplate('Incomes/new.html');
         }
+        $this->newAction();
     }  
 
     /**

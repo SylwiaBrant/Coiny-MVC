@@ -62,11 +62,10 @@ class Expenses extends Authenticated{
         }
         if($expense->save()){
             Flash::addMessage('Przychód dodany pomyślnie.'); 
-            View::renderTemplate('Expenses/new.html');
         } else {
             Flash::addMessage('Coś poszło nie tak. Przychód nie dodany.', 'WARNING');
-            View::renderTemplate('Expenses/new.html');
         }
+        $this->newAction();
     }  
 
     /**

@@ -11,8 +11,8 @@ class Config
 {
     const DB_HOST = 'localhost';
     const DB_NAME = 'coiny';
-    const DB_USER = 'coiny';
-    const DB_PASSWORD = '123$456^789(TajneHaslo)';
+    const DB_USER = 'root';
+    const DB_PASSWORD = '';
     const SHOW_ERRORS = false;
     const SECRET_KEY = 'g0hLSlSeqCoLbSCEyOALWyxihCtS2LWt';
     const MAILGUN_DOMAIN = 'sandbox30f857b1a4b74737bfe90d9cbb117047.mailgun.org';

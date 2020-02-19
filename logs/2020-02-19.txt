@@ -1,0 +1,171 @@
+[19-Feb-2020 09:16:39 Europe/Berlin] Uncaught exception: 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user 'coiny'@'localhost' (using password: YES)'
+Stack trace: #0 C:\xampp\htdocs\coiny\Core\Model.php(27): PDO->__construct('mysql:host=loca...', 'coiny', '123$456^789(Taj...')
+#1 C:\xampp\htdocs\coiny\App\Models\User.php(131): Core\Model::getDB()
+#2 C:\xampp\htdocs\coiny\App\Models\User.php(145): App\Models\User::findByEmail('sylwia.brant.pr...')
+#3 C:\xampp\htdocs\coiny\App\Controllers\Login.php(26): App\Models\User::authenticate('sylwia.brant.pr...', '123admin')
+#4 [internal function]: App\Controllers\Login->createAction()
+#5 C:\xampp\htdocs\coiny\Core\Controller.php(50): call_user_func_array(Array, Array)
+#6 C:\xampp\htdocs\coiny\Core\Router.php(121): Core\Controller->__call('create', Array)
+#7 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('login/create')
+#8 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Model.php' on line 27
+[19-Feb-2020 09:16:39 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('login/fontello/...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:16:39 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:16:43 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('fontello/css/me...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:19:49 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('fontello/css/me...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:19:49 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:19:53 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('fontello/css/me...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:19:53 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:19:57 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('expenses/fontel...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:19:58 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:19:58 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:20:00 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:20:00 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:20:24 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('Incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:20:24 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:20:24 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:16 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:16 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:38 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('Incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:38 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:50 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('Incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:50 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:56 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('Incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:23:56 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:24:55 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:24:55 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:24:56 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:24:56 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:25:03 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:25:03 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('css/img/change....')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:25:29 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('expenses/fontel...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:25:31 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('expenses/fontel...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 09:25:32 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('incomes/fontell...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:20:18 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('fontello/css/me...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:20:18 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:25:14 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('signup/fontello...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:25:14 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('favicon.ico')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:25:28 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('signup/fontello...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:25:46 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('signup/fontello...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:25:48 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('fontello/css/me...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
+[19-Feb-2020 12:28:38 Europe/Berlin] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 C:\xampp\htdocs\coiny\public\index.php(40): Core\Router->dispatch('fontello/css/me...')
+#1 {main}
+Thrown in 'C:\xampp\htdocs\coiny\Core\Router.php' on line 130
