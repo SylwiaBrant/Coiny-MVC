@@ -1,58 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Coiny - Dodaj wydatek{% endblock %}
 {% block footer %}
-<script src="/js/validationPolishMessages.js"></script>
-<script src="/js/resizeCommentBox.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#expenseForm').validate({
-            rules: {
-                money: {
-                    required: true,
-                    number: true,
-                    step: 0.01
-                },
-                date: {
-                    required: true,
-                    date: true,
-                },
-                category: {
-                    required: true,
-                },
-                payment_method: {
-                    required: true,
-                },
-                comment: {
-                    maxlength: 400,
-                },
-                invoiceNumber: {
-                    required: {
-                        depends: function (element) {
-                            return $("#invoiceCheckbox").is(":checked");
-                        }
-                    },
-                    number: true,
-                },
-                contractor: {
-                    required: {
-                        depends: function (element) {
-                            return $("#invoiceCheckbox").is(":checked");
-                        }
-                    },
-                    rangelength: [1, 256],
-                },
-                invoicePayDate: {
-                    required: {
-                        depends: function (element) {
-                            return $("#invoiceCheckbox").is(":checked");
-                        }
-                    },
-                    date: true,
-                }
-            }
-        });
-    });
-</script>
+<script src="/js/addExpense.js"></script>
 {% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
@@ -66,65 +15,59 @@
         </ul>
         {% endif %}
         <div class="text-center">
-
             <h4>Dodaj wydatek</h4>
-            <hr>
         </div>
-        <div class="">
-            <form action="/Expenses/create" method="post">
-                <div class="form-group">
-                    <label>Podaj wysokość wydatku</label>
-                    <input class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
-                </div>
-                <div class="form-group">
-                    <label>Podaj datę poniesienia wydatku</label>
-                    <input class="form-control inputSlot" id="expenseDate" type="date" name="date">
-                </div>
-                <div class="form-group">
-                    <label>Wybierz z listy sposób płatności</label>
-                    <select class="form-control inputSlot" id="paymentMethod" name="payment_method">
-                        {% for method in paymentMethods %}
-                        <option>{{method.name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Wybierz z listy rodzaj wydatku</label>
-                    <select class="form-control inputSlot" id="incomeCategory" name="category">
-                        {% for category in expenseCategories %}
-                        <option>{{category.name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Dodaj komentarz (opcjonalnie)</label>
-                    <textarea class="form-control inputSlot" rows="3" name="comment">
+        <form method="post" id="addExpenseForm">
+            <div class="form-group">
+                <label for="money">KWOTA</label>
+                <input id="money" class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
+            </div>
+            <div class="form-group">
+                <label for="expenseDate">DATA</label>
+                <input id="expenseDate" class="form-control inputSlot" id="expenseDate" type="date" name="expenseDate">
+            </div>
+            <div class="form-group">
+                <label for="paymentMethod">METODA PŁATNOŚCI</label>
+                <select id="paymentMethod" class="form-control custom-select inputSlot" name="paymentMethod">
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="expenseCategory">RODZAJ WYDATKU</label>
+                <select id="expenseCategory" class="form-control custom-select inputSlot" id="incomeCategory"
+                    name="category">
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label>KOMENTARZ (opcjonalnie)</label>
+                <textarea id="comment" class="form-control inputSlot" rows="3" name="comment">
                     </textarea>
+            </div>
+            <div class="formCheck">
+                <label for="invoiceCheckbox" class="form-check-label">Chcę dodać fakturę</label>
+                <input id="invoiceCheckbox" type="checkbox" name="invoiceCheckbox">
+            </div>
+            <div class="hidden" id="invoiceDropdown">
+                <div class="form-group">
+                    <label for="invoiceNumber">NUMER FAKTURY</label>
+                    <input id="invoiceNumber" class="form-control inputSlot" type="text" name="invoiceNumber">
                 </div>
-                <div class="formCheck">
-                    <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
-                    <input type="checkbox" id="invoiceCheckbox" name="expenseInvoice">
+                <div class="form-group">
+                    <label for="contractor">KONTRAHENT</label>
+                    <input id="contractor" class="form-control inputSlot" type="text" name="contractor">
                 </div>
-                <div class="hidden" id="invoiceDropdown">
-                    <div class="form-group">
-                        <label>Podaj numer faktury</label>
-                        <input class="form-control inputSlot" type="text" name="invoiceNumber">
-                    </div>
-                    <div class="form-group">
-                        <label>Podaj nazwę kontrahenta</label>
-                        <input class="form-control inputSlot" type="text" name="contractor">
-                    </div>
-                    <div class="form-group">
-                        <label>Podaj datę płatności faktury</label>
-                        <input class="form-control inputSlot" type="date" name="invoicePayDate">
-                    </div>
+                <div class="form-group">
+                    <label for="invoicePayDate">TERMIN PŁATNOŚCI</label>
+                    <input id=" invoicePayDate" class="form-control inputSlot" type="date" name="invoicePayDate">
                 </div>
-                <div class="justify-content-between py-4">
-                    <input type="submit" class="mainBtn" name="submit" value="DODAJ">
-                    <button type="button" class="mainBtn" data-dismiss="modal">ANULUJ</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="d-flex row justify-content-around py-4">
+                <input type="submit" class="mainBtn" name="submit" value="DODAJ">
+                <button type="button" class="mainBtn" data-dismiss="modal">ANULUJ</button>
+            </div>
+        </form>
     </div>
+</div>
 </div>
 {% endblock %}

@@ -21,25 +21,26 @@ class Invoices extends Authenticated{
      */
     public function showThisWeekIncomeInvoicesAction(){
       $period = Date::getThisWeek();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      $this->invoices->getIncomeInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showThisMonthIncomeInvoicesAction(){
       $period = Date::getThisMonth();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      
+      $this->invoices->getIncomeInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showLastMonthIncomeInvoicesAction(){
       $period = Date::getLastMonth();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      $this->invoices->getIncomeInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
       
     public function showChosenPeriodIncomeInvoicesAction(){
       $period = Date::getLastMonth();
-      $this->invoices = Invoice::getIncomeInvoicesFromDB($period);
+      $this->invoices->getIncomeInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
@@ -49,25 +50,25 @@ class Invoices extends Authenticated{
      */
     public function showThisWeekExpenseInvoicesAction(){
       $period = Date::getThisWeek();
-      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
+      $this->invoices->getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showThisMonthExpenseInvoicesAction(){
       $period = Date::getThisMonth();
-      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
+      $this->invoices->getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showLastMonthExpenseInvoicesAction(){
       $period = Date::getLastMonth();
-      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
+      $this->invoices->getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 
     public function showChosenPeriodExpenseInvoicesAction(){
       $period = Date::getLastMonth();
-      $this->invoices = Invoice::getExpenseInvoicesFromDB($period);
+      $this->invoices->getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);
     }
 }

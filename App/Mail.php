@@ -35,7 +35,7 @@ class Mail{
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = 'tls';
         $mail->Username = 'appSBMailer@gmail.com';
-        $mail->Password = '';
+        $mail->Password = '(Na1G2eL)';
         
         $mail->send();
         }

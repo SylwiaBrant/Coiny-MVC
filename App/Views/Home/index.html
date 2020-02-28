@@ -2,6 +2,10 @@
 {% block title %}Coiny{% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
+    <form action="/Settings/removeIncomeCategory" method="post">
+        <input name="id">
+        <input type="submit">
+    </form>
     <div class="row justify-content-around">
         <div class="info-board mb-3">
             <h3>Bilans</h3>

@@ -40,14 +40,14 @@ class Income extends \Core\Model{
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
-            $stmt->bindValue(':date', $this->date, PDO::PARAM_STR);            
-            $stmt->bindValue(':category', $this->category);
+            $stmt->bindValue(':date', $this->incomeDate, PDO::PARAM_STR);            
+            $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
             $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
-            return $stmt->execute();
+            $stmt->execute();
+            return $stmt->rowCount();
         }
-        return false;
     }
 
     public function validate(){
@@ -57,7 +57,7 @@ class Income extends \Core\Model{
         if(preg_match('/.*\d+.*/i', $this->money) == 0) {
             $this->errors[] = 'W tym polu można wpisać jedynie wartości numeryczne, np. 100, 100.50.';
         }
-        if($this->date == ''){
+        if($this->incomeDate == ''){
             $this->errors[] = 'Należy podać datę uzyskania przychodu.';
         }
         if($this->category == ''){
