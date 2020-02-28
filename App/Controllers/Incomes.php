@@ -68,6 +68,16 @@ class Incomes extends Authenticated{
         $this->newAction();
     }  
 
+    public function addIncome(){
+        if (isset($_POST['invoiceCheckbox'])){
+            $income = new IncomeWithInvoice($_POST);
+        } else {
+            $income = new Income($_POST);
+        }
+        $result = $income->save();
+        echo json_encode($result);
+    }
+
     /**
      * Incomes - add entry
      * @return void

@@ -1,59 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Coiny - Dodaj przychód{% endblock %}
 {% block footer %}
-<script src="/js/validationPolishMessages.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#incomeForm').validate({
-            rules: {
-                money: {
-                    required: true,
-                    number: true,
-                    step: 0.01
-                },
-                date: {
-                    required: true,
-                    date: true,
-                },
-                category: {
-                    required: true,
-                },
-                comment: {
-                    maxlength: 400,
-                },
-                invoiceNumber: {
-                    required: {
-                        depends: function (element) {
-                            return $("#invoiceCheckbox").is(":checked");
-                        }
-                    },
-                    number: true,
-                },
-                contractor: {
-                    required: {
-                        depends: function (element) {
-                            return $("#invoiceCheckbox").is(":checked");
-                        }
-                    },
-                    rangelength: [1, 256],
-                },
-                invoicePayDate: {
-                    required: {
-                        depends: function (element) {
-                            return $("#invoiceCheckbox").is(":checked");
-                        }
-                    },
-                    date: true,
-                }
-            }
-        });
-    });
-</script>
+
+<script src="/js/addIncome.js"></script>
+
 {% endblock %}
 {% block body %}
-<div class="modal-dialog">
-    <div class="modal-content px-2 px-sm-4">
-        <!-- Modal Header -->
+<div class="container-fluid mainContent justify-content-center">
+    <!--  <div class="">
         {% if IncomeWithInvoice.errors is not empty %}
         <p>Błędy:</p>
         <ul>
@@ -62,58 +16,58 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <div class="modal-header justify-content-center ml-2">
-            <h4 class="modal-title">Dodaj przychód</h4>
+    </div>-->
+
+    <div class="formWrapper">
+        <div class="text-center">
+            <h4>DODAJ PRZYCHÓD</h4>
         </div>
-        <!-- Modal body -->
-        <div class="modal-body mx-2">
-            <form action="/Incomes/create" method="post" id="incomeForm">
+        <form method="post" id="addIncomeForm">
+
+            <div class="form-group">
+                <input class="form-control inputSlot" type="number" min="0" step="0.01" id="money" name="money"
+                    placeholder="Kwota">
+                <label>KWOTA</label>
+
+            </div>
+            <div class=" form-group">
+                <label>Podaj datę uzyskania przychodu</label>
+                <input class="form-control inputSlot" id="incomeDate" type="date" name="incomeDate">
+            </div>
+            <div class="form-group">
+                <label for="category">Wybierz z listy rodzaj przychodu</label>
+                <select id="category" class="form-control custom-select inputSlot" name="category">
+
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comment">Dodaj komentarz (opcjonalnie)</label>
+                <textarea id="comment" class="form-control inputSlot" rows="4" name="comment">
+                </textarea>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
+                <input id="invoiceCheckbox" type="checkbox" name="invoiceCheckbox">
+            </div>
+            <div class="hidden" id="invoiceDropdown">
                 <div class="form-group">
-                    <label>Podaj wysokość przychodu</label>
-                    <input class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
+                    <label>NUMER FAKTURY</label>
+                    <input id="invoiceNumber" class="form-control inputSlot" type="text" name="invoiceNumber">
                 </div>
                 <div class="form-group">
-                    <label>Podaj datę uzyskania przychodu</label>
-                    <input class="form-control inputSlot" id="incomeDate" type="date" name="date">
+                    <label>KONTRAHENT</label>
+                    <input id="contractor" class="form-control inputSlot" type="text" name="contractor">
                 </div>
                 <div class="form-group">
-                    <label>Wybierz z listy rodzaj przychodu</label>
-                    <select class="form-control inputSlot" id="incomeCategory" name="category">
-                        {% for category in incomeCategories %}
-                        <option>{{category.name}}</option>
-                        {% endfor %}
-                    </select>
+                    <label>Podaj datę płatności faktury</label>
+                    <input class="form-control inputSlot" type="date" id="invoicePayDate" name="invoicePayDate">
                 </div>
-                <div class="form-group">
-                    <label>Dodaj komentarz (opcjonalnie)</label>
-                    <textarea class="form-control inputSlot" rows="4" name="comment">
-                            </textarea>
-                </div>
-                <div class="form-check">
-                    <label class="form-check-label" for="invoiceCheckbox">Chcę dodać fakturę</label>
-                    <input type="checkbox" id="invoiceCheckbox" name="incomeInvoice">
-                </div>
-                <div class="hidden" id="invoiceDropdown">
-                    <div class="form-group">
-                        <label>Podaj numer faktury</label>
-                        <input class="form-control inputSlot" type="text" name="invoiceNumber">
-                    </div>
-                    <div class="form-group">
-                        <label>Podaj nazwę kontrahenta</label>
-                        <input class="form-control inputSlot" type="text" name="contractor">
-                    </div>
-                    <div class="form-group">
-                        <label>Podaj datę płatności faktury</label>
-                        <input class="form-control inputSlot" type="date" name="invoicePayDate">
-                    </div>
-                </div>
-                <!-- Modal footer -->
-                <div class="modal-footer justify-content-between py-4">
-                    <input type="submit" class="mainBtn" name="submit" value="Dodaj">
-                    <button type="button" class="mainBtn" data-dismiss="modal">Anuluj</button>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div class="d-flex row justify-content-around pt-4">
+                <input type="submit" class="mainBtn" id="submitBtn" name="submit" value="DODAJ">
+                <button type="button" class="mainBtn" data-dismiss="modal">ANULUJ</button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

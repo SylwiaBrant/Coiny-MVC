@@ -46,7 +46,6 @@ class Invoice extends \Core\Model{
         if(strlen($this->contractor) > 256){
             $this->errors[] = "Nazwa kontrahenta musi się zawierać w 256 znakach.";
         }
-        var_dump($this->errors);
     }
 
     public function getIncomeInvoicesFromDB($period){

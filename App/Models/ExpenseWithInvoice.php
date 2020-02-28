@@ -26,9 +26,9 @@ class ExpenseWithInvoice extends \Core\Model{
         $this->user_id = $_SESSION['user_id'];
         $this->expense= new Expense([
             'money' => $_POST['money'], 
-            'date' => $_POST['date'], 
+            'expenseDate' => $_POST['expenseDate'], 
             'category' => $_POST['category'],
-            'payment_method' => $_POST['payment_method'], 
+            'paymentMethod' => $_POST['paymentMethod'], 
             'comment' => $_POST['comment']
         ]);
         $this->invoice= new Invoice([
@@ -67,16 +67,16 @@ class ExpenseWithInvoice extends \Core\Model{
                 $stmt = $db->prepare($sql_add_expense);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':money', $this->expense->money);
-                $stmt->bindValue(':date', $this->expense->date, PDO::PARAM_STR);   
+                $stmt->bindValue(':date', $this->expense->expenseDate, PDO::PARAM_STR);   
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
-                $stmt->bindValue(':payment_method', $this->expense->payment_method, PDO::PARAM_STR);
+                $stmt->bindValue(':payment_method', $this->expense->paymentMethod, PDO::PARAM_STR);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);         
                 $stmt->bindValue(':category', $this->expense->category, PDO::PARAM_STR);
                 $stmt->bindValue(':comment', $this->expense->comment, PDO::PARAM_STR);
                 $stmt->bindValue(':invoice_id', $invoice_id, PDO::PARAM_STR);
                 $stmt->execute();
-                $db->commit();
-                return true;
+                $result = $db->commit();
+                return $result;
             }
             //in case of fail cancel both inserts
             catch (PDOException $e) { 

@@ -51,12 +51,11 @@ class User extends \Core\Model
             try {
                 $db->beginTransaction();
                 $sql_add_user = $db->prepare(
-                    'INSERT INTO users (email, password, activation_hash/*, is_active*/) 
-                    VALUES (:email, :password_hash, :activation_hash/*, :is_active*/)');
+                    'INSERT INTO users (email, password, activation_hash) 
+                    VALUES (:email, :password_hash, :activation_hash)');
                 $sql_add_user->bindValue(':email', $this->email, PDO::PARAM_STR); 
                 $sql_add_user->bindValue(':password_hash', $password_hash, PDO::PARAM_STR);
                 $sql_add_user->bindValue(':activation_hash', $hashed_token, PDO::PARAM_STR);
-             //   $sql_add_user->bindValue(':is_active', 1, PDO::PARAM_INT);
                 $sql_add_user ->execute();     
                 $user_id = $db->lastInsertId(); 
                 $sql_populate_income_categories = $db->prepare(

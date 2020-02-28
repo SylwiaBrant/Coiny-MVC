@@ -55,7 +55,7 @@ class Expenses extends Authenticated{
 
     public function createAction(){
 
-        if ($remember_me = isset($_POST['expenseInvoice'])){
+        if (isset($_POST['expenseInvoice'])){
             $expense = new ExpenseWithInvoice($_POST);
         } else {
             $expense = new Expense($_POST);
@@ -67,6 +67,16 @@ class Expenses extends Authenticated{
         }
         $this->newAction();
     }  
+
+    public function addExpense(){
+        if (isset($_POST['invoiceCheckbox'])){
+            $expense = new ExpenseWithInvoice($_POST);
+        } else {
+            $expense = new Expense($_POST);
+        }
+        $result = $expense->save();
+        echo json_encode($result);
+    }
 
     /**
      * Expense - add entry

@@ -26,7 +26,7 @@ class IncomeWithInvoice extends \Core\Model{
         $this->user_id = $_SESSION['user_id'];
         $this->income = new Income([
             'money' => $_POST['money'], 
-            'date' => $_POST['date'], 
+            'incomeDate' => $_POST['incomeDate'], 
             'category' => $_POST['category'], 
             'comment' => $_POST['comment']
         ]);
@@ -65,20 +65,20 @@ class IncomeWithInvoice extends \Core\Model{
                 $stmt = $db->prepare($sql_add_income);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':money', $this->income->money);
-                $stmt->bindValue(':date', $this->income->date, PDO::PARAM_STR);            
+                $stmt->bindValue(':date', $this->income->incomeDate, PDO::PARAM_STR);            
                 $stmt->bindValue(':category', $this->income->category);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':comment', $this->income->comment, PDO::PARAM_STR);
                 $stmt->bindValue(':invoice_id', $invoice_id, PDO::PARAM_STR);
                 $stmt->execute();
-                $db->commit();
-                return true;
+                if($db->commit())
+                    return true;
             }
             //in case of fail cancel both inserts
             catch (PDOException $e) { 
                 $db->rollback();
-                return false;
-            } 
+            }
+            return false;
         }
     }   
 }

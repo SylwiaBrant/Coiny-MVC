@@ -68,10 +68,25 @@ a.link{
 }
 
 h1{
-    font-weight: bold;
-    color: rgb(231, 193, 68);
+    font-weight: 600;
     font-size: 2em;
 }
+
+h2{
+    font-size: 1.4em;
+    font-weight: 700;
+    background-image: linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+}
+
+h4{
+    color: rgb(218, 98, 61);
+}
+/*
+rgb(219, 163, 59), rgb(204, 57, 81)
+rgb(231, 193, 68), rgb(231, 68, 95)
+rgb(192, 117, 47), rgb(201, 45, 45)*/
 
 .info-board{
     background-color: rgb(241, 241, 241);
@@ -143,12 +158,6 @@ a.dropdown-toggle{
 .main-menu .nav li:active{
     background: linear-gradient(rgb(66, 93, 124),rgb(66, 93, 124));
 }
-/*
-ul li.currentPage{
-    background: linear-gradient(rgb(222, 227, 233), rgb(222, 227, 233));
-    z-index: 15;
-} */
-
 
 @media screen and (max-width: 768px){
     #navCollapse{
@@ -234,13 +243,11 @@ ul li.currentPage{
 .mainBtn{
     margin: 5px 0;
     border: none;
-  /*  border-top: 1px solid rgb(51, 69, 90, 0.9);
-    border-bottom: 1px solid rgb(51, 69, 90); */
-    border-radius: 2px;
+    border-radius: 20px;
     color: white;
     max-width: 300px;
-    min-width: 100px;
-    padding: 3px 10px 6px 10px;
+    min-width: 150px;
+    padding: 5px 10px 5px 10px;
     box-shadow: 0 0 5px rgb(16, 19, 24);
     background-image: linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
 }
@@ -283,64 +290,100 @@ a:hover{
 .navbar-btn:hover{
     color: rgba(255,255,255,.8);
 }
-
-.transactionsBtn{
+/*
+[type="button"]{
     border: none;
+    border-radius: 20px;
+    padding-bottom: 0.1em;
     color: whitesmoke;
     background-image: linear-gradient(to top right, rgb(51, 69, 90), rgb(34, 42, 59));
     cursor: pointer;
 }
-
+*/
 .transactionsBtn:hover{
     background-color: rgb(44, 72, 97);
-}
-
-h2{
-    font-size: 1.2em;
 }
 
 .error{
     color: red;
 }
 
-.modal-header, .modal-footer{
-    border: none;
-}
-
-.modal-content{
-    background-image: linear-gradient(rgb(51, 69, 90, 0.9), rgb(4, 11, 26, 0.9)), url("img/change.jpg");
-    background-position: center;
-    color: white;
-}
-
 /*----------------------FORM STYLES------------------------*/
+/* Remove default form styling */
+
+textarea:hover, 
+textarea:active, 
+textarea:focus, 
+label:focus{
+    outline: 0px;
+    -webkit-appearance:none;
+    box-shadow: none !important;
+    background-color: inherit !important;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
 label{
     color:rgb(43, 59, 80);
+    font-size: 0.8em;
+    font-weight: 600;
+    margin-bottom: 0;
 }
+
+.inputSlot{
+    background-color: inherit;
+}
+input:focus ~ label{
+    
+}
+
 .formWrapper{
+    height: inherit;
+    max-height: inherit;
     padding: 20px;
-    background-color: rgb(241, 241, 241);
+    vertical-align: middle;
+    width: 100%;
+    max-width: 600px;
 }
+
 .form-control{
     border: none;
-    border-radius: 2px;
-    border-bottom: 1px solid;
+    border-radius: 0;
+    border-bottom: 1px solid rgb(114, 124, 133);
 }
 
-input.form-control.inputSlot:focus, input.form-control.inputSlot.active:focus, input.form-control.inputSlot:active:focus{
+option{
+    background: inherit;
+}
+
+input.form-control.inputSlot:focus, 
+input.form-control.inputSlot.active:focus, 
+input.form-control.inputSlot:active:focus,
+select.form-control.inputSlot:focus, 
+select.form-control.inputSlot.active:focus, 
+select.form-control.inputSlot:active:focus
+textarea.form-control.inputSlot:focus, 
+textarea.form-control.inputSlot.active:focus, 
+textarea.form-control.inputSlot:active:focus{
     box-shadow: none;
     border: none;
-    border-bottom: 2px solid rgb(116, 150, 180);
+    outline: none;
+    background: inherit;
+    border-bottom: 2px solid rgb(218, 98, 61);
     color: rgb(25, 44, 61);
-}
-
-.input-group img{
-    color: rgb(25, 44, 61);;
 }
 
 .formCheck{
     padding-bottom: 10px;
 }
+
 #invoiceDropdown.hidden{
 display: none;
 }
@@ -391,3 +434,50 @@ display: none;
 .tableNav a.nav-link{
     display: inline-block;
 }
+
+/*----------------------SETTINGS PAGE STYLES------------------------*/
+#settingsCategories li{
+    list-style-type: none;
+    width: 100%;
+
+}
+
+.editBtn i{
+    color:rgb(183, 212, 231);
+ }
+
+.deleteBtn i{
+    color:rgb(236, 184, 184);
+ }
+.settingsBtn{
+    margin: 0 5px;
+    padding-bottom: 0.4em;
+    padding-top: 0.2em;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 0 5px rgb(16, 19, 24);
+}
+.editBtn{
+
+    background-color:rgb(68, 109, 136);
+ }
+ .editBtn:hover{
+
+    background-color:rgb(96, 141, 172);
+ }
+ .editBtn:active{
+
+    background-color:rgb(55, 97, 124);
+ }
+
+ .deleteBtn{
+    background-color: rgb(167, 39, 39);
+ }
+ .deleteBtn:hover{
+    background-color: rgb(209, 66, 66);
+ }
+ .deleteBtn:active{
+    background-color: rgb(131, 36, 36);
+ }

@@ -42,8 +42,8 @@ class Expense extends \Core\Model{
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
-            $stmt->bindValue(':date', $this->date, PDO::PARAM_STR); 
-            $stmt->bindValue(':payment_method', $this->payment_method, PDO::PARAM_STR);  
+            $stmt->bindValue(':date', $this->expenseDate, PDO::PARAM_STR); 
+            $stmt->bindValue(':payment_method', $this->paymentMethod, PDO::PARAM_STR);  
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);          
             $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
@@ -61,13 +61,13 @@ class Expense extends \Core\Model{
         if(preg_match('/.*\d+.*/i', $this->money) == 0) {
             $this->errors[] = 'W tym polu można wpisać jedynie wartości numeryczne, np. 100, 100.50.';
         }
-        if($this->date == ''){
+        if($this->expenseDate == ''){
             $this->errors[] = 'Należy podać datę uzyskania przychodu.';
         }
         if($this->category == ''){
             $this->errors[] = 'Należy podać kategorię przychodu.';
         }
-        if($this->payment_method == ''){
+        if($this->paymentMethod == ''){
             $this->errors[] = 'Należy podać metodę płatności.';
         }
         if(strlen($this->comment) > 400){
