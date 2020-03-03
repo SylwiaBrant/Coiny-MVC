@@ -2,9 +2,9 @@
     namespace App\Controllers;
     use \Core\View;
     use \App\Auth;
-    use \App\Models\Account;
+    use \App\Models\Category;
     /**
-     * Account controller
+     * Category controller
      * PHP version 7.4.2
      */
     class Settings extends Authenticated{
@@ -13,78 +13,99 @@
          * @return void
          */
         public function indexAction(){
-        View::renderTemplate('settings/settings.html');
+        View::renderTemplate('settings/settings.html', [
+            'user' => Auth::getUser(),
+            'incomeCategories' => $this->getIncomeCategories(),
+            'expenseCategories' => $this->getExpenseCategories(),
+            'paymentMethods' => $this->getPaymentMethods()
+        ]);
 
         }
 /** Functions fetching all user assigned categories 
  *  @return array
 */
-        public function getIncomeCategories(){
-            $categories = Account::getIncomeCategories();
-            echo json_encode($categories);
-        }
+    public function getIncomeCategories(){
+        return Category::getIncomeCategories();
+    }
 
-        public function getExpenseCategories(){
-            $categories = Account::getExpenseCategories();
-            echo json_encode($categories);
-        }
+    public function getExpenseCategories(){
+        return Category::getExpenseCategories();
+     //   echo json_encode($categories);
+    }
 
-        public function getPaymentMethods(){
-            $methods = Account::getPaymentMethods();
-            echo json_encode($methods);
-        }
+    public function getPaymentMethods(){
+        return Category::getPaymentMethods();
+     //   echo json_encode($methods);
+    }
+/** Functions fetching all user assigned categories 
+ *  @return array
+*/
+    public function getIncomeCategoriesAjax(){
+        $categories = Category::getIncomeCategories();
+        echo json_encode($categories);
+    }
+
+    public function getExpenseCategoriesAjax(){
+        $categories = Category::getExpenseCategories();
+        echo json_encode($categories);
+    }
+
+    public function getPaymentMethodsAjax(){
+        $methods = Category::getPaymentMethods();
+        echo json_encode($methods);
+    }
 /** Functions deleting single user category
  * @return int - number of affected rows
  */
-        public function removeIncomeCategory(){
-            $account =  new Account();
-            $result = $account->removeIncomeCategory();  
+        public function removeIncomeCategoryAjax(){
+            $Category =  new Category();
+            $result = $Category->removeIncomeCategory();  
             echo json_encode($result);
         }
 
-        public function removeExpenseCategory(){
-            $account =  new Account();
-            $result = $account->removeExpenseCategory();  
+        public function removeExpenseCategoryAjax(){
+            $Category =  new Category();
+            $result = $Category->removeExpenseCategory();  
             echo json_encode($result);
         }
 
-        public function removePaymentMethod(){
-            $account =  new Account();
-            $result = $account->removePaymentMethod();  
+        public function removePaymentMethodAjax(){
+            $Category =  new Category();
+            $result = $Category->removePaymentMethod();  
             echo json_encode($result);
         }
 /** Functions updating single user category 
  *  @return int - number of affected rows
 */
-        public function editExpenseCategory(){
-            $account =  new Account();
-            $result = $account->editExpenseCategory();  
+        public function editExpenseCategoryAjax(){
+            $Category =  new Category();
+            $result = $Category->editExpenseCategory();  
             echo json_encode($result);
         }
 
-        public function editPaymentMethod(){
-            $account =  new Account();
-            $result = $account->editPaymentMethod();  
+        public function editPaymentMethodAjax(){
+            $Category =  new Category();
+            $result = $Category->editPaymentMethod();  
             echo json_encode($result);
         }
 /** Functions adding single new user category
  *  @return int - number of affected rows
  */
-        public function addIncomeCategory(){
-            $account =  new Account();
-            $result = $account->addIncomeCategory();  
+        public function addIncomeCategoryAjax(){
+            $Category =  new Category();
+            $result = $Category->addIncomeCategory();  
             echo json_encode($result);
         }
 
-        public function addExpenseCategory(){
-            $account =  new Account();
-            $result = $account->addExpenseCategory();  
+        public function addExpenseCategoryAjax(){
+            $Category =  new Category();
+            $result = $Category->addExpenseCategory();  
             echo json_encode($result);
         }
 
-        public function addPaymentMethod(){
-            $account =  new Account();
-            $result = $account->addPaymentMethod();  
+        public function addPaymentMethodAjax(){
+            $Category =  new Category();
+            $result = $Category->addPaymentMethod();  
             echo json_encode($result);
         }
     }

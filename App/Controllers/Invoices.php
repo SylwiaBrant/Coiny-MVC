@@ -8,12 +8,16 @@ use \App\Models\Date;
  * Invoices controller
  */
 class Invoices extends Authenticated{
-    
-    public $invoices = [];
-
-    public function indexAction(){
-      View::renderTemplate('Invoices/index.html', ['invoices' => $this->invoices]); 
-    }
+  /**
+   * Show income invoices
+   * @return void
+   */
+  public function indexAction(){
+    $period = Date::getThisMonth();
+    $invoices = new Invoice();
+    View::renderTemplate('Invoices/index.html', [
+      'invoices' => $invoices->getIncomeInvoicesFromDB($period)]); 
+  }
 
     /**
      * Show income invoices
@@ -27,9 +31,7 @@ class Invoices extends Authenticated{
 
     public function showThisMonthIncomeInvoicesAction(){
       $period = Date::getThisMonth();
-      
-      $this->invoices->getIncomeInvoicesFromDB($period);
-      $this->indexAction(['invoices' => $this->invoices]);
+      return Invoice::getIncomeInvoicesFromDB($period);
     }
 
     public function showLastMonthIncomeInvoicesAction(){

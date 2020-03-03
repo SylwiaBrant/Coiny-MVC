@@ -2,10 +2,6 @@
 {% block title %}Coiny{% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
-    <form action="/Settings/removeIncomeCategory" method="post">
-        <input name="id">
-        <input type="submit">
-    </form>
     <div class="row justify-content-around">
         <div class="info-board mb-3">
             <h3>Bilans</h3>
@@ -19,6 +15,7 @@
             {% for incomeSum in incomeCategoriesSums %}
             <p>{{incomeSum.name}} -> {{incomeSum.money}} zł</p>
             {% endfor %}
+            <canvas id="incomesPie" width="400" height="400"></canvas>
         </div>
         <div class="info-board mb-3">
             <h3>Wydatki wg kategorii</h3>
@@ -77,4 +74,112 @@
         </div>
     </div>
 </div>
+{% endblock %}
+{% block footer %}
+<script src="/js/node_modules/chart.js/dist/Chart.js"></script>
+<script>
+
+    function respondCanvas() {
+        var c = $('#incomesPie');
+        var ctx = c.get(0).getContext("2d");
+        var container = c.parent();
+
+        var $container = $(container);
+
+        c.attr('width', $container.width()); //max width
+
+        c.attr('height', $container.height()); //max height                   
+
+        //Call a function to redraw other content (texts, images etc)
+        var chart = new Chart(ctx).Line(chartData, {
+            scaleOverride: true,
+            scaleSteps: steps,
+            scaleStepWidth: Math.ceil(max / steps),
+            scaleStartValue: 0
+        });
+    }
+
+    function getIncomesData() {
+        $.ajax({
+            url: "/Home/getIncomeCategoriesSums",
+            method: 'POST',
+            dataType: 'json',
+            success: function (d) {
+                console.log(d);
+                /*       chartData = {
+                labels: d.AxisLabels,
+                    datasets: [
+                        {
+                            fillColor: "rgba(220,220,220,0.5)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            data: d.DataSets[0]
+                        }
+                    ] */
+            }
+            //    respondCanvas();
+        });
+    }
+    $(document).ready(function () {
+        //     $(window).resize(respondCanvas);
+
+        var incomesData = getIncomesData();
+        console.log(incomesData);
+        let incomesPie = $('#incomesPie');
+        let myChart = new Chart(incomesPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: 'Przychody wg. kategorii',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+ /*  /////
+                                                                                                       data = {
+                                                                                                           datasets: [{
+                                                                                                               data: [10, 20, 30]
+                                                                                                           }],
+                                                                                                           labels: [
+                                                                                                               'Red',
+                                                                                                               'Yellow',
+                                                                                                               'Blue'
+                                                                                                           ]
+                                                                                                       };
+                                                                                                       var incomesDoughnut = new Chart(ctx, {
+                                                                                                           type: 'doughnut',
+                                                                                                           data: data,
+                                                                                                           options: options
+                                                                                                       });
+                                                                                                   */
+</script>
 {% endblock %}

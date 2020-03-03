@@ -44,4 +44,29 @@ class Home extends Authenticated
         return $data;
     }
 
+    public function getIncomeCategoriesSums(){
+        $period = Date::getThisMonth();
+        $income = new Income();
+        $expense = new Expense();
+        $invoice = new Invoice();
+        $invoices = $invoice->getDueInvoices();
+        $incomesSum = $income->getIncomesSumFromDB($period);
+        $expensesSum= $expense->getExpensesSumFromDB($period);
+        $incomeCategoriesSums = $income->getSumsByCategory($period);
+        $expenseCategoriesSums = $expense->getSumsByCategory($period);
+        $lastIncomes = $income->getLastTransactionPerCategory();
+        $lastExpenses = $expense->getLastTransactionPerCategory();
+
+        $response = array(
+            'invoices' => $invoices,
+            'incomesSum' => $incomesSum,
+            'expensesSum' => $expensesSum,
+            'incomeCategoriesSums' => $incomeCategoriesSums,
+            'expenseCategoriesSums' => $expenseCategoriesSums,
+            'lastIncomes' => $lastIncomes,
+            'lastExpenses' => $lastExpenses
+        );
+        echo json_encode($response);
+    }
+
 }

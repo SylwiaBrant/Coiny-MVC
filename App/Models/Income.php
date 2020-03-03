@@ -41,7 +41,7 @@ class Income extends \Core\Model{
             $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
             $stmt->bindValue(':date', $this->incomeDate, PDO::PARAM_STR);            
-            $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
+            $stmt->bindValue(':category', $this->incomeCategory, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
             $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
@@ -60,7 +60,7 @@ class Income extends \Core\Model{
         if($this->incomeDate == ''){
             $this->errors[] = 'Należy podać datę uzyskania przychodu.';
         }
-        if($this->category == ''){
+        if($this->incomeCategory == ''){
             $this->errors[] = 'Należy podać kategorię przychodu.';
         }
         if(strlen($this->comment) > 400){

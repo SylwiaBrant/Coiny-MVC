@@ -45,7 +45,7 @@ class Expense extends \Core\Model{
             $stmt->bindValue(':date', $this->expenseDate, PDO::PARAM_STR); 
             $stmt->bindValue(':payment_method', $this->paymentMethod, PDO::PARAM_STR);  
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);          
-            $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
+            $stmt->bindValue(':category', $this->expenseCategory, PDO::PARAM_STR);
             $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
             $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
@@ -64,7 +64,7 @@ class Expense extends \Core\Model{
         if($this->expenseDate == ''){
             $this->errors[] = 'Należy podać datę uzyskania przychodu.';
         }
-        if($this->category == ''){
+        if($this->expenseCategory == ''){
             $this->errors[] = 'Należy podać kategorię przychodu.';
         }
         if($this->paymentMethod == ''){
@@ -77,7 +77,7 @@ class Expense extends \Core\Model{
 
     public static function getExpensesFromDB($period){
         $user_id = $_SESSION['user_id'];
-        $sql = 'SELECT e.date, e.money, ep.name AS method , ec.name AS category, e.comment 
+        $sql = 'SELECT e.id, e.date, e.money, ep.name AS method , ec.name AS category, e.comment 
         FROM expenses AS e INNER JOIN expense_categories AS ec ON e.user_id = ec.user_id 
         AND e.category_id=ec.id INNER JOIN payment_methods AS ep ON e.user_id = ep.user_id 
         AND e.payment_method_id = ep.id WHERE e.user_id=:user_id AND date BETWEEN
