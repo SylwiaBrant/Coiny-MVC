@@ -27,7 +27,7 @@ class ExpenseWithInvoice extends \Core\Model{
         $this->expense= new Expense([
             'money' => $_POST['money'], 
             'expenseDate' => $_POST['expenseDate'], 
-            'category' => $_POST['category'],
+            'expenseCategory' => $_POST['expenseCategory'],
             'paymentMethod' => $_POST['paymentMethod'], 
             'comment' => $_POST['comment']
         ]);
@@ -71,7 +71,7 @@ class ExpenseWithInvoice extends \Core\Model{
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':payment_method', $this->expense->paymentMethod, PDO::PARAM_STR);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);         
-                $stmt->bindValue(':category', $this->expense->category, PDO::PARAM_STR);
+                $stmt->bindValue(':category', $this->expense->expenseCategory, PDO::PARAM_STR);
                 $stmt->bindValue(':comment', $this->expense->comment, PDO::PARAM_STR);
                 $stmt->bindValue(':invoice_id', $invoice_id, PDO::PARAM_STR);
                 $stmt->execute();

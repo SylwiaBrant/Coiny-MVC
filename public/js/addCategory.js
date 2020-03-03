@@ -31,7 +31,6 @@ $(document).ready(function () {
                     if (response > 0) {
                         console.log("Sukces!" + response);
                         $('#addCategoryModal').modal('hide');
-                        $(form).trigger('reset');
                         var row = "<tr data-catId='" + response + "'>" +
                             "<td class='category'>" + data[0].value + "</td>" +
                             "<td class='blockedFunds'>" + data[2].value + "</td>" +
@@ -53,6 +52,14 @@ $(document).ready(function () {
             }
         });
     }
+
+    $('#fundsBlockCheckbox').on('click', function () {
+        if ($(this).is(':checked')) {
+            $('#blockedFunds').attr('disabled', false);
+        } else {
+            $('#blockedFunds').attr('disabled', true);
+        }
+    });
 
     $("#newIncomeCategory").on('click', function () {
         $('#addCategoryModal').modal('toggle');

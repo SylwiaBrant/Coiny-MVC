@@ -21,11 +21,22 @@
                         <thead>
                             <tr>
                                 <th scope="col">Kategoria</th>
-                                <th scope="col">Limit</th>
-                                <th scope="col">Edytuj/Usuń</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
+                            {% if incomeCategories is not empty %}
+                            {% for category in incomeCategories %}
+                            <tr data-catId="{{ category.id }}"></tr>
+                            <td class='category'>{{ category.name }} </td>
+                            <td>
+                                <div class='btn-group' role='group' aria-label='buttonsGroup'>
+                                    <button type='button' class='settingsBtn'><i class='icon-trash'></i></button>
+                                </div>
+                            </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
                         </tbody>
                     </table>
                     <button id="newIncomeCategory" class="mainBtn"><i class="icon-plus-circle"></i>Dodaj nową
@@ -54,6 +65,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <tbody>
+                            {% if expenseCategories is not empty %}
+                            {% for category in expenseCategories %}
+                            <tr data-catId="{{ category.id }}"></tr>
+                            <td class='category'>{{ category.name }} </td>
+                            <td class='blockedFunds'>{{ category.blocked_funds }}</td>
+                            <td>
+                                <div class='btn-group' role='group' aria-label='buttonsGroup'>
+                                    <button type='button' class='settingsBtn'><i class='icon-edit'></i></button>
+                                    <button type='button' class='settingsBtn'><i class='icon-trash'></i></button>
+                                </div>
+                            </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
                         </tbody>
                     </table>
                     <button id="newExpenseCategory" class="mainBtn"><i class="icon-plus-circle"></i>Dodaj nową
@@ -82,6 +109,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {% if paymentMethods is not empty %}
+                            {% for method in paymentMethods %}
+                            <tr data-catId="{{ method.id }}"></tr>
+                            <td class='category'>{{ method.name }} </td>
+                            <td class='blockedFunds'>{{ method.blocked_funds }}</td>
+                            <td>
+                                <div class='btn-group' role='group' aria-label='buttonsGroup'>
+                                    <button type='button' class='settingsBtn'><i class='icon-edit'></i></button>
+                                    <button type='button' class='settingsBtn'><i class='icon-trash'></i></button>
+                                </div>
+                            </td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
                         </tbody>
                     </table>
                     <button id="newPaymentMethod" class="mainBtn"><i class="icon-plus-circle"></i>Dodaj nową metodę
@@ -93,24 +134,20 @@
 
     {% include '/Modals/addCategoryModal.html'%}
     {% include '/Modals/editCategoryModal.html'%}
+    {% include '/Modals/deleteCategoryModal.html'%}
 
     {% endblock %}
     {% block footer %}
     <script src="/js/addCategory.js"></script>
     <script>
         $(document).ready(function () {
-            getIncomeCategories();
-            getExpenseCategories();
-            getPaymentMethods();
-
-            $('#fundsBlockCheckbox').onchange = function () {
-                //  $('#blockedFunds').attr('disabled', !this.checked);
-                $(this).next().prop("disabled", !$(this).prop("checked"));
-            };
+            //    getIncomeCategoriesAjax();
+            //  getExpenseCategoriesAjax();
+            //  getPaymentMethodsAjax();
             // Fetch from DB income categories assigned to user using AJAX
-            function getIncomeCategories() {
+            function getIncomeCategoriesAjax() {
                 $.ajax({
-                    url: "/Settings/getIncomeCategories",
+                    url: "/Settings/getIncomeCategoriesAjax",
                     type: "POST",
                     dataType: 'json'
                 }).done(function (categories) {
@@ -122,9 +159,9 @@
             }
 
             // Fetch from DB expense categories assigned to user using AJAX
-            function getExpenseCategories() {
+            function getExpenseCategoriesAjax() {
                 $.ajax({
-                    url: "/Settings/getExpenseCategories",
+                    url: "/Settings/getExpenseCategoriesAjax",
                     type: "POST",
                     dataType: 'json'
                 }).done(function (categories) {
@@ -136,10 +173,10 @@
             }
 
             // Fetch from DB payment methods assigned to user using AJAX
-            function getPaymentMethods() {
+            function getPaymentMethodsAjax() {
                 $.ajax({
-                    url: "/Settings/getPaymentMethods",
-                    type: "POST",
+                    url: "/Settings/getPaymentMethodsAjax",
+                    type: "GET",
                     dataType: 'json',
                 }).done(function (categories) {
                     displayCategories(categories, '#paymentMetsList');

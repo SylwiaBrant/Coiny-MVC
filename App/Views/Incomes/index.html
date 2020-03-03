@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="container-fluid mainContent justify-content-center">
+    <div class="row align-items-center" id="choiceMenuWrapper">
+        <div class="col-lg">
+            <form id="selectDefaultForm">
+                <select class="custom-select" name="transactionsPeriod" id="transactionsPeriod">
+                    <option value="showThisWeekIncomes">Bieżący tydzień</option>
+                    <option value="showThisMonthIncomes" selected>Bieżący miesiąc</option>
+                    <option value="showLastMonthIncomes">Poprzedni miesiąc</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-lg">
+            <form id="periodForm" method="post">
+                <div class="form-row align-items-center" id="periodFormWrapper">
+                    <label>OD</label>
+                    <div class="form-group">
+                        <input id="startingDate" class="form-control" type="date" name="startingDate">
+                    </div>
+                    <label>DO</label>
+                    <div class="form-group">
+                        <input id="endingDate" class="form-control" type="date" name="endingDate">
+                    </div>
+                    <div class="form-group">
+                        <input class="secondaryBtn" type="submit" name="submit" value="Wybierz">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="mt-3">
+        <table class="table bg-light incomeTable" id="incomesTable">
+            <thead>
+                <tr>
+                    <th scope="col">Kategoria</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Kwota</th>
+                    <th scope="col">Komentarz</th>
+                    <th scope="col">Edytuj/Usuń</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if incomes is not empty %}
+                {% for income in incomes %}
+                <tr>
+                    <td>{{ income.money }}</td>
+                    <td>{{ income.date }}</td>
+                    <td>{{ income.name }}</td>
+                    <td>{{ income.comment }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+{% endblock %}
+{% block footer %}
+<script>
+    $(document).ready(function () {
+        $('#transactionsPeriod').on('change', function (e) {
+            $('input[type=date]', '#periodForm').val('');
+            let action = $('#transactionsPeriod option:selected').val();
+            let url = "/Incomes/" + action + "Ajax";
+            $.ajax({
+                url: url,
+                type: "POST",
+                dataType: 'json'
+            }).done(function (incomes) {
+                $('#incomesTable tbody > tr').remove();
+                displayIncomes(incomes);
+            }).fail(function (incomes) {
+                console.log("No i klops!" + incomes);
+                console.dir(arguments);
+            });
+        });
+
+        $('#periodForm').validate({
+            rules: {
+                startingDate: {
+                    required: true,
+                    date: true,
+                },
+                endingDate: {
+                    required: true,
+                    date: true,
+                },
+            },
+            submitHandler: function (form) {
+                let data = $('#periodForm').serialize();
+                let url = "/Incomes/showChosenPeriodIncomesAjax";
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: 'json',
+                    data: data
+                }).done(function (incomes) {
+                    $('#incomesTable tbody > tr').remove();
+                    displayIncomes(incomes);
+                }).fail(function (incomes) {
+                    console.log("No i klops!" + incomes);
+                    console.dir(arguments);
+                });
+                return false;
+            }
+        });
+
+        function displayIncomes(incomes) {
+            $.each(incomes, function (i, income) {
+                var row = "<tr data-catId='" + income.id + "'>" +
+                    "<td class='category'>" + income.name + "</td>" +
+                    "<td class='category'>" + income.date + "</td>" +
+                    "<td class='blockedFunds'>" + income.money + "</td>" +
+                    "<td class='blockedFunds'>" + income.comment + "</td>" +
+                    "<td>" + "<div class='btn-group' role='group' aria-label='buttonsGroup'>" +
+                    "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +
+                    "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +
+                    "</tr>";
+                $('#incomesTable tbody').append(row);
+            });
+        }
+    });
+</script>
+{% endblock %}

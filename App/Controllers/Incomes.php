@@ -15,42 +15,46 @@ class Incomes extends Authenticated{
        * Show incomes
        * @return void
        */
-      public function showThisWeekIncomesAction(){
-        $period = Date::getThisWeek();
-        $incomes = new Income();
-        View::renderTemplate('Incomes/thisWeek.html',[
-            'incomes' => $incomes->getIncomesFromDB($period),
-            'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
-      }
   
-      public function showThisMonthIncomesAction(){
+    public function indexAction(){
         $period = Date::getThisMonth();
         $incomes = new Income();
-        View::renderTemplate('Incomes/thisMonth.html',[
-            'incomes' => $incomes->getIncomesFromDB($period),
-            'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
-      }
-  
-      public function showLastMonthIncomesAction(){
+        View::renderTemplate('Incomes/index.html',[
+            'incomes' => $incomes->getIncomesFromDB($period)]);
+    }
+
+    public function showThisWeekIncomesAjax(){
+        $period = Date::getThisWeek();
+        $income = new Income();
+        $entries = $income->getIncomesFromDB($period);
+        echo json_encode($entries);
+    }
+
+    public function showThisMonthIncomesAjax(){
+        $period = Date::getThisMonth();
+        $incomes = new Income();
+        $entries = $incomes->getIncomesFromDB($period);
+        echo json_encode($entries);
+    }
+
+    public function showLastMonthIncomesAjax(){
         $period = Date::getLastMonth();
         $incomes = new Income();
-        View::renderTemplate('Incomes/lastMonth.html',[
-            'incomes' => $incomes->getIncomesFromDB($period),
-            'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
-      }
+        $entries = $incomes->getIncomesFromDB($period);
+        echo json_encode($entries);
+    }
         
-      public function showChosenPeriodIncomesAction(){
+    public function showChosenPeriodIncomesAjax(){
         $period = Date::getChosenPeriod($_POST);
         if($period){
             $incomes = new Income();
-            View::renderTemplate('Incomes/chosenPeriod.html',[
-                'incomes' => $incomes->getIncomesFromDB($period),
-                'totalAmount' => $incomes->getIncomesSumFromDB($period)]);
+            $entries = $incomes->getIncomesFromDB($period);
+            echo json_encode($entries);
         }else {
             Flash::addMessage('Proszę wpisać obie daty w formacie YYYY-MM-DD.', Flash::WARNING);
             View::renderTemplate('Incomes/chosenPeriod.html',[]);
         }
-      }
+    }
 
     public function createAction(){
 
@@ -68,7 +72,7 @@ class Incomes extends Authenticated{
         $this->newAction();
     }  
 
-    public function addIncome(){
+    public function addIncomeAjax(){
         if (isset($_POST['invoiceCheckbox'])){
             $income = new IncomeWithInvoice($_POST);
         } else {
@@ -84,7 +88,7 @@ class Incomes extends Authenticated{
      */
     public function newAction(){
         View::renderTemplate('Incomes/new.html', [
-            'incomeCategories' => Account::getIncomeCategories()]);
+            'incomeCategories' => Categories::getIncomeCategories()]);
     }
 }
 ?>

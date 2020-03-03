@@ -43,16 +43,16 @@
                     <a class="nav-link" href="/home/index">Przeglądaj bilans</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/incomes/new">Dodaj przychód</a>
+                    <a class="nav-link" id="addIncomeBtn">Dodaj przychód</a>
                 </li>
                 <li class=" nav-item">
-                    <a class="nav-link" href="/expenses/new">Dodaj wydatek</a>
+                    <a class="nav-link" id="addExpenseBtn">Dodaj wydatek</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/incomes/showThisMonthIncomes">Przeglądaj przychody</a>
+                    <a class="nav-link" href="/incomes/index">Przeglądaj przychody</a>
                 </li>
                 <li class=" nav-item">
-                    <a class="nav-link" href="/expenses/showThisMonthExpenses">Przeglądaj wydatki</a>
+                    <a class="nav-link" href="/expenses/index">Przeglądaj wydatki</a>
                 </li>
                 <li class="nav-item">
                     <a href="#invoiceSubmenu" data-toggle="collapse" aria-expanded="false"
@@ -78,7 +78,8 @@
     {% block body %}
     {% endblock %}
     <!-- Bootstrap JS -->
-
+    {% include '/Modals/addIncomeModal.html'%}
+    {% include '/Modals/addExpenseModal.html'%}
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -86,6 +87,8 @@
     <script src="/js/validationPolishMessages.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
+
+    <script src="/js/addExpense.js"></script>
 
     {% block footer %}
     {% endblock %}

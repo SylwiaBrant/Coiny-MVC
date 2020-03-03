@@ -1,0 +1,74 @@
+<div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content px-2 px-sm-4">
+            <!-- Modal Header -->
+            <!--    {% if ExpenseWithInvoice.errors is not empty %}
+            <p>Błędy:</p>
+            <ul>
+                {% for error in ExpenseWithInvoice.errors %}
+                <li>{{error}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %} -->
+            <div class="modal-header justify-content-center ml-2">
+                <h4 class="modal-title">Dodaj przychód</h4>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body mx-2">
+                <form method="post" id="addExpenseForm">
+                    <div class="form-group">
+                        <label for="money">KWOTA</label>
+                        <input id="money" class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseDate">DATA</label>
+                        <input id="expenseDate" class="form-control inputSlot" id="expenseDate" type="date"
+                            name="expenseDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="paymentMethod">METODA PŁATNOŚCI</label>
+                        <select id="paymentMethod" class="form-control custom-select inputSlot" name="paymentMethod">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="expenseCategory">RODZAJ WYDATKU</label>
+                        <select id="expenseCategory" class="form-control custom-select inputSlot"
+                            name="expenseCategory">
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>KOMENTARZ (opcjonalnie)</label>
+                        <textarea id="comment" class="form-control inputSlot" rows="3" name="comment">
+                            </textarea>
+                    </div>
+                    <div class="formCheck">
+                        <label for="invoiceCheckbox" class="form-check-label">Chcę dodać fakturę</label>
+                        <input id="invoiceCheckbox" type="checkbox" name="invoiceCheckbox">
+                    </div>
+                    <div class="hidden" id="invoiceDropdown">
+                        <div class="form-group">
+                            <label for="invoiceNumber">NUMER FAKTURY</label>
+                            <input id="invoiceNumber" class="form-control inputSlot" type="text" name="invoiceNumber">
+                        </div>
+                        <div class="form-group">
+                            <label for="contractor">KONTRAHENT</label>
+                            <input id="contractor" class="form-control inputSlot" type="text" name="contractor">
+                        </div>
+                        <div class="form-group">
+                            <label for="invoicePayDate">TERMIN PŁATNOŚCI</label>
+                            <input id=" invoicePayDate" class="form-control inputSlot" type="date"
+                                name="invoicePayDate">
+                        </div>
+                    </div>
+                    <div class="d-flex row justify-content-around py-4">
+                        <input type="submit" class="mainBtn" name="submit" value="DODAJ">
+                        <button type="button" class="mainBtn" data-dismiss="modal">ANULUJ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

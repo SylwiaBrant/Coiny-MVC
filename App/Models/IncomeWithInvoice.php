@@ -27,7 +27,7 @@ class IncomeWithInvoice extends \Core\Model{
         $this->income = new Income([
             'money' => $_POST['money'], 
             'incomeDate' => $_POST['incomeDate'], 
-            'category' => $_POST['category'], 
+            'incomeCategory' => $_POST['incomeCategory'], 
             'comment' => $_POST['comment']
         ]);
         $this->invoice= new Invoice([
@@ -66,7 +66,7 @@ class IncomeWithInvoice extends \Core\Model{
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':money', $this->income->money);
                 $stmt->bindValue(':date', $this->income->incomeDate, PDO::PARAM_STR);            
-                $stmt->bindValue(':category', $this->income->category);
+                $stmt->bindValue(':category', $this->income->incomeCategory);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':comment', $this->income->comment, PDO::PARAM_STR);
                 $stmt->bindValue(':invoice_id', $invoice_id, PDO::PARAM_STR);
