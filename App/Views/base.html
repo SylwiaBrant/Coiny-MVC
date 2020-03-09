@@ -16,19 +16,15 @@
 </head>
 
 <body>
-    {% if flash_messages is not empty %}
-    {% for message in flash_messages %}
-    <div class="alert alert-{{message.type}} alert-dismissible fade show text-center" role="alert">
+    <!--Ajax response flash message-->
+    <!--  <div class="alert alert-dismissible fade text-center" role="alert">
         <p>
-            {{ message.body }}
         </p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-    </div>
-    {% endfor %}
-    {% endif %}
-
+    </div>-->
+    <!--Main content page-->
     <div class="d-flex justify-content-center main-menu hidden" id="sidebar">
         <nav>
             <div>
@@ -43,10 +39,10 @@
                     <a class="nav-link" href="/home/index">Przeglądaj bilans</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="addIncomeBtn">Dodaj przychód</a>
+                    <a class="nav-link" href="/incomes/new">Dodaj przychód</a>
                 </li>
                 <li class=" nav-item">
-                    <a class="nav-link" id="addExpenseBtn">Dodaj wydatek</a>
+                    <a class="nav-link" href="/expenses/new">Dodaj wydatek</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/incomes/index">Przeglądaj przychody</a>
@@ -78,8 +74,6 @@
     {% block body %}
     {% endblock %}
     <!-- Bootstrap JS -->
-    {% include '/Modals/addIncomeModal.html'%}
-    {% include '/Modals/addExpenseModal.html'%}
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -87,9 +81,6 @@
     <script src="/js/validationPolishMessages.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="/js/script.js"></script>
-
-    <script src="/js/addExpense.js"></script>
-
     {% block footer %}
     {% endblock %}
 </body>

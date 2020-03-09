@@ -22,11 +22,12 @@ class Expense extends \Core\Model{
      */
     public function __construct($data=[])
     {
+        $this->user_id = $_SESSION['user_id'];
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
-        $user_id= $_SESSION['user_id'];
     }
+
     /**
      * Save the income model with the current property values
      * @return void
@@ -132,5 +133,56 @@ class Expense extends \Core\Model{
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+    }
+
+    public function getExpensesByCategory(){
+        $sql ='SELECT e.id AS transactionId, ec.id AS categoryId, e.date, e.money, ep.name AS method, 
+        ec.name AS category, e.comment FROM expenses AS e INNER JOIN expense_categories AS ec 
+        ON e.user_id = ec.user_id AND e.category_id=ec.id INNER JOIN payment_methods AS ep 
+        ON e.user_id = ep.user_id AND e.payment_method_id = ep.id WHERE ec.id=:categoryId AND e.category_id=ec.id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':categoryId', $this->categoryId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } 
+
+    public function getExpensesByPayments(){
+        $sql ='SELECT e.id AS transactionId, ep.id AS categoryId e.date, e.money, ep.name AS method, 
+        ec.name AS category, e.comment FROM expenses AS e INNER JOIN expense_categories AS ec 
+        ON e.user_id = ec.user_id AND e.category_id=ec.id INNER JOIN payment_methods AS ep 
+        ON e.user_id = ep.user_id AND e.payment_method_id = ep.id WHERE ep.id=:categoryId AND e.category_id=ep.id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':categoryId', $this->categoryId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } 
+
+    public function editExpenseEntry(){
+        $sql ='UPDATE income_categories SET money=:money, date=:date,
+            payment_method_id = (SELECT id FROM payment_methods WHERE name=:payment_method AND user_id=:user_id),
+            category_id = (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), 
+            comment=:comment WHERE id=:income_id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':income_id', $this->incomeId, PDO::PARAM_INT);
+        $stmt->bindValue(':money', $this->money);
+        $stmt->bindValue(':date', $this->incomeDate, PDO::PARAM_STR);   
+        $stmt->bindValue(':payment_method', $this->paymentMethod, PDO::PARAM_STR);            
+        $stmt->bindValue(':category', $this->incomeCategory, PDO::PARAM_STR);
+        $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public function deleteEntry(){
+        $sql ='DELETE FROM expenses WHERE id=:id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 }

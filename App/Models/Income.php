@@ -69,14 +69,13 @@ class Income extends \Core\Model{
     }
 
     public function getIncomesFromDB($period){
-        $user_id = $_SESSION['user_id'];
         $sql = 'SELECT i.date, i.money, ic.name, i.comment 
             FROM incomes AS i INNER JOIN income_categories AS ic WHERE i.user_id=:user_id 
             AND i.user_id = ic.user_id AND i.category_id=ic.id AND date BETWEEN :startingDate 
             AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
@@ -124,5 +123,43 @@ class Income extends \Core\Model{
         $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);   
+    }
+
+    public function getIncomesByCategory(){
+        $user_id = $_SESSION['user_id'];
+        $sql ='SELECT i.id AS transactionId, ic.id AS categoryId, ic.name, i.date, i.money, i.comment FROM incomes AS i 
+                INNER JOIN income_categories AS ic WHERE ic.id=:categoryId AND i.category_id=ic.id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+
+        $stmt->bindValue(':categoryId', $this->categoryId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } 
+
+    public function editIncomeEntry(){
+        $sql ='UPDATE income_categories SET money=:money, date=:date,
+            category_id = (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), 
+            comment=:comment WHERE id=:income_id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':income_id', $this->incomeId, PDO::PARAM_INT);
+        $stmt->bindValue(':money', $this->money);
+        $stmt->bindValue(':date', $this->incomeDate, PDO::PARAM_STR);            
+        $stmt->bindValue(':category', $this->incomeCategory, PDO::PARAM_STR);
+        $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->rowCount();
+    }
+
+    public function deleteEntry(){
+        $sql ='DELETE FROM incomes WHERE id=:id AND user_id=:user_id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount();
     }
 }

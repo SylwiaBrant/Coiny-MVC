@@ -1,10 +1,10 @@
 <?php
 namespace App\Controllers;
+
 use \Core\View;
-use \App\Flash;
 use \App\Models\Expense;
 use \App\Models\ExpenseWithInvoice;
-use \App\Models\Account;
+use \App\Models\Category;
 use \App\Models\Date;
 
 /**
@@ -88,8 +88,26 @@ class Expenses extends Authenticated{
      */
     public function newAction(){
         View::renderTemplate('Expenses/new.html', [
-            'expenseCategories' => Account::getExpenseCategories(),
-            'paymentMethods' => Account::getPaymentMethods()]);
+            'expenseCategories' => Category::getExpenseCategories(),
+            'paymentMethods' => Category::getPaymentMethods()]);
+    }
+
+    public function getExpensesByCategoryAjax(){
+        $expense = new Expense($_POST);
+        $result = $expense->getExpensesByCategory();
+        echo json_encode($result);
+    }
+
+    public function getExpensesByPaymentsAjax(){
+        $expense = new Expense($_POST);
+        $result = $expense->getExpensesByPayments();
+        echo json_encode($result);
+    }
+
+    public function deleteEntryAjax(){
+        $expense = new Expense($_POST);
+        $result = $expense->deleteEntry();
+        echo json_encode($result);
     }
 }
 ?>

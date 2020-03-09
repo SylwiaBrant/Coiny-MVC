@@ -1,7 +1,29 @@
 $(document).ready(function () {
-    function categoryIsValid(form, action) {
-        console.log(form);
-        $(form).validate({
+    $("#newIncomeCategory").on('click', function () {
+        $('#addCategoryModal').modal('toggle');
+        categoryIsValid('#addCategoryForm', 'Income', '#incomeCatsList');
+    });
+
+    $("#newExpenseCategory").on('click', function () {
+        $('#addCategoryModal').modal('toggle');
+        categoryIsValid('#addCategoryForm', 'Expense', '#expenseCatsList');
+    });
+
+    $("#newPaymentMethod").on('click', function () {
+        $('#addCategoryModal').modal('toggle');
+        categoryIsValid('#addCategoryForm', 'Payment', '#paymentMetsList');
+    });
+
+    $('#fundsBlockCheckbox').on('click', function (e) {
+        if ($(this).is(':checked')) {
+            $('#blockedFunds').attr('disabled', false);
+        } else {
+            $('#blockedFunds').attr('disabled', true);
+        }
+    });
+
+    function categoryIsValid(action, parent) {
+        var validator = $('#addCategoryModal').validate({
             rules: {
                 name: {
                     required: true,
@@ -18,27 +40,29 @@ $(document).ready(function () {
                 },
             },
             submitHandler: function (form) {
-                //    console.log('no i tutaj kurwa nie doszlismy');
                 let data = $(form).serializeArray();
                 console.log(data);
-                let url = "/Settings/" + action;
+                let url = "/Settings/add" + action + "CategoryAjax";
                 $.ajax({
                     url: url,
                     type: "POST",
                     dataType: 'json',
+                    cache: false,
                     data: data
                 }).done(function (response) {
                     if (response > 0) {
                         console.log("Sukces!" + response);
-                        $('#addCategoryModal').modal('hide');
-                        var row = "<tr data-catId='" + response + "'>" +
-                            "<td class='category'>" + data[0].value + "</td>" +
-                            "<td class='blockedFunds'>" + data[2].value + "</td>" +
-                            "<td>" + "<div class='btn-group' role='group' aria-label='buttonsGroup'>" +
-                            "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +
-                            "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +
-                            "</tr>";
-                        $('#incomeCatsList tbody').append(row);
+                        $('.modal').modal('hide');
+                        if (action == 'Income') {
+                            appendIncome(response, parent, data);
+                        } else {
+                            if (data.length == 1) {
+                                appendName(response, parent, data);
+                            }
+                            else {
+                                appendNameAndLimit(response, parent, data);
+                            }
+                        }
                     }
                     else {
                         console.log("Lipa! Nie edytowano rekordu" + response);
@@ -51,36 +75,44 @@ $(document).ready(function () {
                 return false;
             }
         });
+
+        $(".cancel").click(function () {
+            validator.resetForm();
+            $(this).find('form').trigger('reset');
+            $('#addCategoryModal #fundsBlockCheckbox').show();
+            $('#addCategoryModal #blockedFunds').show();
+            $('#blockedFunds').attr('disabled', true);
+        });
     }
 
-    $('#fundsBlockCheckbox').on('click', function () {
-        if ($(this).is(':checked')) {
-            $('#blockedFunds').attr('disabled', false);
-        } else {
-            $('#blockedFunds').attr('disabled', true);
-        }
-    });
+    function appendIncome(id, parent, data) {
+        let row = "<tr data-catId='" + id + "'>" +
+            "<td class='category'>" + data[0].value + "</td>" +
+            "<td><div class='btn-group' role='group' aria-label='buttonsGroup'>" +
+            "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +
+            "</tr>";
+        $(parent + ' tbody').append(row);
+    }
 
-    $("#newIncomeCategory").on('click', function () {
-        $('#addCategoryModal').modal('toggle');
-        categoryIsValid('#addCategoryForm', 'addIncomeCategory');
-    });
+    function appendName(id, parent, data) {
+        let row = "<tr data-catId='" + id + "'>" +
+            "<td class='category'>" + data[0].value + "</td>" +
+            "<td class='category'>" + '' + "</td>" +
+            "<td><div class='btn-group' role='group' aria-label='buttonsGroup'>" +
+            "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +
+            "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +
+            "</tr>";
+        $(parent + ' tbody').append(row);
+    }
 
-    $("#newExpenseCategory").on('click', function () {
-        $('#addcategoryModal').modal('toggle');
-        categoryIsValid('#addCategoryForm', 'addExpenseCategory');
-    });
-
-    $("#newPaymentMethod").on('click', function () {
-        $('#addModal').modal('toggle');
-        categoryIsValid('#addCategoryForm', 'addPaymentMethod');
-    });
-
-    $('#addCategoryModal').on('hidden.bs.modal', function () {
-        $(this).find('form').trigger('reset');
-    })
-
+    function appendNameAndLimit(id, parent, data) {
+        let row = "<tr data-catId='" + id + "'>" +
+            "<td class='category'>" + data[0].value + "</td>" +
+            "<td class='category'>" + data[2].value + "</td>" +
+            "<td><div class='btn-group' role='group' aria-label='buttonsGroup'>" +
+            "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +
+            "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +
+            "</tr>";
+        $(parent + ' tbody').append(row);
+    }
 });
-//var s = $('#post-form').find('input, textarea, select')
-//.not(':checkbox')
-//.serialize()

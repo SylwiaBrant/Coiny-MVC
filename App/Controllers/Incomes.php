@@ -1,10 +1,9 @@
 <?php
 namespace App\Controllers;
 use \Core\View;
-use \App\Flash;
 use \App\Models\Income;
 use \App\Models\IncomeWithInvoice;
-use \App\Models\Account;
+use \App\Models\Category;
 use \App\Models\Date;
 /**
  * Incomes controller
@@ -87,8 +86,22 @@ class Incomes extends Authenticated{
      * @return void
      */
     public function newAction(){
+        $category = new Category();
+        $categories = $category->getIncomeCategories();
         View::renderTemplate('Incomes/new.html', [
-            'incomeCategories' => Categories::getIncomeCategories()]);
+            'incomeCategories' => $categories]);
+    }
+
+    public function deleteEntryAjax(){
+        $income = new Income($_POST);
+        $result = $income->deleteEntry();
+        echo json_encode($result);
+    }
+
+    public function getIncomesByCategoryAjax(){
+        $income = new Income($_POST);
+        $result = $income->getIncomesByCategory();
+        echo json_encode($result);
     }
 }
 ?>

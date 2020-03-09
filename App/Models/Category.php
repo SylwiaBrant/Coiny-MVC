@@ -9,6 +9,18 @@ use PDO;
  */
 class Category extends \Core\Model{
     /**
+     * Class constructor
+     * @param array $data Initial property values
+     * @return void
+     */
+    public function __construct($data=[])
+    {
+        $this->user_id = $_SESSION['user_id'];
+        foreach ($data as $key =>$value){
+            $this->$key = $value;
+        };
+    }
+    /**
      * Get income categories associated with user from DB
      * @return mixed Array of income categories if found, false otherwise
      */
@@ -52,29 +64,29 @@ class Category extends \Core\Model{
  * @return int - number of affected rows 
  */
     public function removeIncomeCategory(){
-        return $this->deleteCategoryFromDB($_POST['id'], 'income_categories');
+        return $this->deleteCategoryFromDB('income_categories');
     }
 
     public function removeExpenseCategory(){
-        return $this->deleteCategoryFromDB($_POST['id'], 'expense_categories');
+        return $this->deleteCategoryFromDB('expense_categories');
     }
 
-    public function removePaymentMethod(){
-        return $this->deleteCategoryFromDB($_POST['id'], 'payment_methods');
+    public function removePaymentCategory(){
+        return $this->deleteCategoryFromDB('payment_methods');
     }
 
-    public function deleteCategoryFromDB($category_id, $table){
+    public function deleteCategoryFromDB($table){
         $user_id = $_SESSION['user_id'];
         $sql = 'DELETE FROM '.$table.' WHERE id = :id AND user_id = :user_id';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':id', $category_id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $this->categoryId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->rowCount();
     }
 
-/** Functions to sedit user's single category in database
+/** Functions to edit user's single category in database
  * @return int - number of affected rows 
  */
 
@@ -110,15 +122,12 @@ class Category extends \Core\Model{
  * @return int - last inserted id. 
  */
     public function addIncomeCategory(){
-        $user_id = $_SESSION['user_id'];
-        $category_name = $data['name'];
-
-        $sql = 'INSERT INTO '.$table.' (user_id, name) 
+        $sql = 'INSERT INTO income_categories (user_id, name) 
                 VALUES (:user_id, :name)'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':name', $category_name, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
         
         $stmt->execute();
         $result = intval($db->lastInsertId());
@@ -126,25 +135,24 @@ class Category extends \Core\Model{
     }
 
     public function addExpenseCategory(){
-        return $this->insertCategoryIntoDB($_POST, 'expense_categories');
+        return $this->insertCategoryIntoDB('expense_categories');
     }
 
     public function addPaymentMethod(){
-        return $this->insertCategoryIntoDB($_POST, 'payment_methods');
+        return $this->insertCategoryIntoDB('payment_methods');
     }
 
-    public function insertCategoryIntoDB($data, $table){
-        $user_id = $_SESSION['user_id'];
-        $category_name = $data['name'];
-        $blocked_funds = $data['blockedFunds'];
-
+    public function insertCategoryIntoDB($table){
+        if(!isset($_POST['fundsBlockCheckbox'])){
+            $this->blockedFunds = NULL;
+        }
         $sql = 'INSERT INTO '.$table.' (user_id, name, blocked_funds) 
                 VALUES (:user_id, :name, :blocked_funds)'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':name', $category_name, PDO::PARAM_STR);
-        $stmt->bindValue(':blocked_funds', $blocked_funds);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $stmt->bindValue(':blocked_funds', $this->blockedFunds);
         
         $stmt->execute();
         $result = intval($db->lastInsertId());

@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
-use \Core\View;
 
+use \Core\View;
 use \App\Models\Invoice;
 use \App\Models\Date;
 /**
@@ -12,11 +12,10 @@ class Invoices extends Authenticated{
    * Show income invoices
    * @return void
    */
-  public function indexAction(){
+  public function indexAction($invoices){
     $period = Date::getThisMonth();
-    $invoices = new Invoice();
     View::renderTemplate('Invoices/index.html', [
-      'invoices' => $invoices->getIncomeInvoicesFromDB($period)]); 
+      'invoices' => $invoices]); 
   }
 
     /**
@@ -25,13 +24,16 @@ class Invoices extends Authenticated{
      */
     public function showThisWeekIncomeInvoicesAction(){
       $period = Date::getThisWeek();
-      $this->invoices->getIncomeInvoicesFromDB($period);
-      $this->indexAction(['invoices' => $this->invoices]);
+      $invoices = new Invoice();
+      $invoices->getIncomeInvoicesFromDB($period);
+      $this->indexAction($invoices);
     }
 
     public function showThisMonthIncomeInvoicesAction(){
       $period = Date::getThisMonth();
-      return Invoice::getIncomeInvoicesFromDB($period);
+      $invoices = new Invoice();
+      $invoices->getIncomeInvoicesFromDB($period);
+      $this->indexAction($invoices);
     }
 
     public function showLastMonthIncomeInvoicesAction(){
@@ -50,19 +52,21 @@ class Invoices extends Authenticated{
      * Show expense invoices
      * @return void
      */
-    public function showThisWeekExpenseInvoicesAction(){
+    public function showThisWeekExpenseInvoicesAjax(){
       $period = Date::getThisWeek();
-      $this->invoices->getExpenseInvoicesFromDB($period);
-      $this->indexAction(['invoices' => $this->invoices]);
+      $invoices = new Invoice();
+      $invoices->getExpenseInvoicesFromDB($period);
+      $this->indexAction($invoices);
     }
 
     public function showThisMonthExpenseInvoicesAction(){
       $period = Date::getThisMonth();
-      $this->invoices->getExpenseInvoicesFromDB($period);
-      $this->indexAction(['invoices' => $this->invoices]);
+      $invoices = new Invoice();
+      $invoices->getExpenseInvoicesFromDB($period);
+      $this->indexAction($invoices);
     }
 
-    public function showLastMonthExpenseInvoicesAction(){
+    public function showLastMonthExpenseInvoicesAjax(){
       $period = Date::getLastMonth();
       $this->invoices->getExpenseInvoicesFromDB($period);
       $this->indexAction(['invoices' => $this->invoices]);

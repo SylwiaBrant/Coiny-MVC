@@ -4,9 +4,10 @@
 <script src="/js/addExpense.js"></script>
 {% endblock %}
 {% block body %}
-<div class="container-fluid mainContent justify-content-center">
-    <div class="formWrapper">
-        {% if ExpenseWithInvoice.errors is not empty %}
+<div class="container-fluid mainContent justify-content-center bg-light">
+    <div class="row justify-content-center">
+        <h4>DODAJ WYDATEK</h4>
+        <!--       {% if ExpenseWithInvoice.errors is not empty %}
         <p>Błędy:</p>
         <ul>
             {% for error in ExpenseWithInvoice.errors %}
@@ -14,41 +15,49 @@
             {% endfor %}
         </ul>
         {% endif %}
-        <div class="text-center">
-            <h4>Dodaj wydatek</h4>
-        </div>
-        <form method="post" id="addExpenseForm">
-            <div class="form-group">
-                <label for="money">KWOTA</label>
-                <input id="money" class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
-            </div>
-            <div class="form-group">
-                <label for="expenseDate">DATA</label>
-                <input id="expenseDate" class="form-control inputSlot" id="expenseDate" type="date" name="expenseDate">
-            </div>
-            <div class="form-group">
-                <label for="paymentMethod">METODA PŁATNOŚCI</label>
-                <select id="paymentMethod" class="form-control custom-select inputSlot" name="paymentMethod">
+-->
 
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="expenseCategory">RODZAJ WYDATKU</label>
-                <select id="expenseCategory" class="form-control custom-select inputSlot" id="incomeCategory"
-                    name="category">
-
-                </select>
-            </div>
-            <div class="form-group">
-                <label>KOMENTARZ (opcjonalnie)</label>
-                <textarea id="comment" class="form-control inputSlot" rows="3" name="comment">
+    </div>
+    <form method="post" id="addExpenseForm">
+        <div class="row">
+            <div class="transactionFormWrapper">
+                <div class="form-group">
+                    <label for="money">KWOTA</label>
+                    <input id="money" class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
+                </div>
+                <div class="form-group">
+                    <label for="expenseDate">DATA</label>
+                    <input id="expenseDate" class="form-control inputSlot" id="expenseDate" type="date"
+                        name="expenseDate">
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">METODA PŁATNOŚCI</label>
+                    <select id="paymentMethod" class="form-control custom-select inputSlot" name="paymentMethod">
+                        {% for method in paymentMethods %}
+                        <option>{{ method.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="expenseCategory">RODZAJ WYDATKU</label>
+                    <select id="expenseCategory" class="form-control custom-select inputSlot" id="incomeCategory"
+                        name="category">
+                        {% for category in expenseCategories %}
+                        <option>{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>KOMENTARZ (opcjonalnie)</label>
+                    <textarea id="comment" class="form-control inputSlot" rows="3" name="comment">
                     </textarea>
+                </div>
+                <div class="formCheck">
+                    <label for="invoiceCheckbox" class="form-check-label">Chcę dodać fakturę</label>
+                    <input id="invoiceCheckbox" type="checkbox" name="invoiceCheckbox">
+                </div>
             </div>
-            <div class="formCheck">
-                <label for="invoiceCheckbox" class="form-check-label">Chcę dodać fakturę</label>
-                <input id="invoiceCheckbox" type="checkbox" name="invoiceCheckbox">
-            </div>
-            <div class="hidden" id="invoiceDropdown">
+            <div class="invoiceFormWrapper hidden" id="invoiceDropdown">
                 <div class="form-group">
                     <label for="invoiceNumber">NUMER FAKTURY</label>
                     <input id="invoiceNumber" class="form-control inputSlot" type="text" name="invoiceNumber">
@@ -62,12 +71,11 @@
                     <input id=" invoicePayDate" class="form-control inputSlot" type="date" name="invoicePayDate">
                 </div>
             </div>
-            <div class="d-flex row justify-content-around py-4">
-                <input type="submit" class="mainBtn" name="submit" value="DODAJ">
-                <button type="button" class="mainBtn" data-dismiss="modal">ANULUJ</button>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
+        <div class="row justify-content-center py-4 btnGroup">
+            <input type="submit" class="mainBtn" name="submit" value="DODAJ">
+            <button type="button" class="mainBtn" data-dismiss="modal">ANULUJ</button>
+        </div>
+    </form>
 </div>
 {% endblock %}
