@@ -91,27 +91,25 @@ class Category extends \Core\Model{
  */
 
     public function editExpenseCategory(){
-        return $this->updateCategoryInDB($_POST, 'expense_categories');
+        return $this->updateCategoryInDB('expense_categories');
     }
 
-    public function editPaymentMethod(){
-        return $this->updateCategoryInDB($_POST, 'payment_methods');
+    public function editPaymentCategory(){
+        return $this->updateCategoryInDB('payment_methods');
     }
 
-    public function updateCategoryInDB($data, $table){
-        $user_id = $_SESSION['user_id'];
-        $category_id = $data['id'];
-        $category_name = $data['name'];
-        $blocked_funds = $data['blockedFunds'];
-
+    public function updateCategoryInDB($table){
+        if(!isset($this->blockedFunds)){
+            $this->blockedFunds = NULL;
+        }
         $sql = 'UPDATE '.$table.' SET name = :name, blocked_funds = :blocked_funds 
                 WHERE id = :id AND user_id = :user_id';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':name', $category_name, PDO::PARAM_STR);
-        $stmt->bindValue(':blocked_funds', $blocked_funds);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':id', $category_id, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $stmt->bindValue(':blocked_funds', $this->blockedFunds);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
         
         $stmt->execute();
         return $stmt->rowCount();

@@ -1,5 +1,7 @@
 $(document).ready(function () {
     $("#newIncomeCategory").on('click', function () {
+        $('#addCategoryModal').children().find('#fundsBlockCheckbox').parent().hide();
+        $('#addCategoryModal').children().find('#blockedFunds').parent().hide();
         $('#addCategoryModal').modal('toggle');
         categoryIsValid('#addCategoryForm', 'Income', '#incomeCatsList');
     });

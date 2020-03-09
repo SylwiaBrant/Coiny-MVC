@@ -20,7 +20,7 @@ class Settings extends Authenticated{
             'paymentMethods' => $this->getPaymentMethods()
             ]);
     }
-    
+
     public function resetPassword(){
 
     }
@@ -82,14 +82,14 @@ class Settings extends Authenticated{
  *  @return int - number of affected rows
 */
         public function editExpenseCategoryAjax(){
-            $Category =  new Category();
-            $result = $Category->editExpenseCategory();  
+            $category =  new Category($_POST);
+            $result = $category->editExpenseCategory();  
             echo json_encode($result);
         }
 
-        public function editPaymentMethodAjax(){
-            $Category =  new Category();
-            $result = $Category->editPaymentMethod();  
+        public function editPaymentCategoryAjax(){
+            $category =  new Category($_POST);
+            $result = $category->editPaymentMethod();  
             echo json_encode($result);
         }
 /** Functions adding single new user category

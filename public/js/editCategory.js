@@ -1,21 +1,21 @@
 $(document).ready(function () {
     $("#expenseCatsList").on('click', ".editBtn", function () {
         let button = $(this);
-        let data = getEditData(button, 'expense');
+        let data = getEditData(button, 'Expense');
         confirmEdit(data);
     });
 
     $("#paymentCatsList").on('click', ".editBtn", function () {
         let button = $(this);
-        let data = getEditData(button, 'payment');
+        let data = getEditData(button, 'Payment');
         confirmEdit(data);
     });
 
-    $('#fundsBlockCheckbox').on('click', function (e) {
+    $('#editModal').on('click', '#fundsBlockCheckbox', function (e) {
         if ($(this).is(':checked')) {
-            $('#blockedFunds').attr('disabled', false);
+            $('#editModal #blockedFunds').attr('disabled', false);
         } else {
-            $('#blockedFunds').attr('disabled', true);
+            $('#editModal #blockedFunds').attr('disabled', true);
         }
     });
 
@@ -43,6 +43,7 @@ $(document).ready(function () {
     }
 
     function editIsValid(categoryData) {
+        //   let transactionType = ;
         var validator = $('#updateForm').validate({
             rules: {
                 name: {
@@ -61,20 +62,24 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 let data = $(form).serializeArray();
+                console.log(data);
+                console.log(categoryData.transactionType);
                 $.ajax({
-                    url: "/Settings/edit" + transactionType + "Category",
+                    url: "/Settings/edit" + categoryData.transactionType + "CategoryAjax",
                     type: "POST",
-                    dataType: 'json',
+                    dataType: "json",
                     cache: false,
                     data: data
                 }).done(function (response) {
                     if (response > 0) {
                         console.log("Sukces!" + response);
                         if (response == true) {
+                            let categoryName = $('#updateForm #name').val();
+                            categoryData.toEdit.find('td.category').html(categoryName);
+                            let blockedFunds = $('#updateForm #blockedFunds').val();
+                            categoryData.toEdit.find('td.blockedFunds').html(blockedFunds);
                             $('#editModal').modal('hide');
-                            $('#updateForm')[0].reset();
-                            $(categoryData.toEdit).children().sibling('.category').text(data.category);
-
+                            $('#updateForm').trigger('reset');
                         }
                         else {
                             console.log("Lipa! Nie edytowano rekordu" + response);
