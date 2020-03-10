@@ -3,74 +3,87 @@
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
     <div class="row justify-content-around">
-        <div class="info-board mb-3">
-            <h3>Bilans</h3>
-            <p class="incomeBox">Przychody........ {{ incomesSum }} zł</p>
-            <p class="incomeBox">Wydatki.......... {{ expensesSum }} zł</p>
-            <p class="incomeBox">Bilans........... {{ incomesSum-expensesSum }} zł</p>
+        <div class="d-flex col-sm-4 pr-sm-1 pr-lg-3">
+            <div class="totalIncomesBox incomeSum col-md-12">
+                <h3>Przychody</h3>
+                <p class="incomeBoxInt text-right">{{ incomesSum }} zł</p>
+            </div>
         </div>
-        <div class="info-board mb-3">
-            <h3>Przychody wg kategorii</h3>
-            <hr>
-            {% for incomeSum in incomeCategoriesSums %}
-            <p>{{incomeSum.name}} -> {{incomeSum.money}} zł</p>
-            {% endfor %}
-            <canvas id="incomesPie" width="400" height="400"></canvas>
+        <div class="d-flex col-sm-4 px-sm-2 px-sm-3">
+            <div class="totalIncomesBox expenseSum col-md-12">
+                <h3>Wydatki</h3>
+                <p class="incomeBoxInt text-right">{{ expensesSum }} zł</p>
+            </div>
         </div>
-        <div class="info-board mb-3">
-            <h3>Wydatki wg kategorii</h3>
-            <hr>
-            {% for expenseSum in expenseCategoriesSums %}
-            <p>{{expenseSum.name}} -> {{expenseSum.money}} zł</p>
-            {% endfor %}
+        <div class="d-flex col-sm-4 pl-sm-2 pl-lg-3">
+            <div class="totalIncomesBox balance col-md-12">
+                <h3>Bilans</h3>
+                <p class="incomeBoxInt text-right">{{ balance }} zł</p>
+            </div>
         </div>
     </div>
-    <div class="row justify-content-around">
-        <div class="info-board mb-3">
-            <h3>Faktury do zapłacenia</h3>
-            <hr>
-            {% if invoices is empty %}
-            <p class="incomeBox">W tym tygodniu nie masz do zapłacenia żadnych należności</p>
-            {% else %}
-            <p class="incomeBox">W tym tygodniu przypada termin płatności faktur:</p>
-            {% for invoice in invoices %}
-            <p>{{invoice.payment_date}} {{invoice.contractor}} {{invoice.money}}</p>
-            {% endfor %}
-            {% endif %}
+    <div class="row justify-content-around mt-3">
+        <div class="col-lg-4">
+            <div class="info-board mb-3">
+                <canvas id="incomesPie" width="300" height="200"></canvas>
+            </div>
+            <div class="info-board mb-3">
+                <canvas id="expensesPie" width="300" height="250"></canvas>
+            </div>
         </div>
-    </div>
-    <div class="row justify-content-around">
-        <div class="info-board mb-3">
-            <h3>Ostatnie transakcje</h3>
-            <hr>
-            <table class="table bg-light table-striped incomeTable">
-                <thead>
-                    <tr>
-                        <th scope="col">Rodzaj przychodu</th>
-                        <th scope="col">Data</th>
-                        <th scope="col">Kwota</th>
-                        <th scope="col">Komentarz</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for lastIncome in lastIncomes %}
-                    <tr>
-                        <td>{{ lastIncome.name }}</td>
-                        <td>{{ lastIncome.date }}</td>
-                        <td>{{ lastIncome.money }}</td>
-                        <td>{{ lastIncome.comment }}</td>
-                    </tr>
-                    {% endfor %}
-                    {% for lastExpense in lastExpenses %}
-                    <tr>
-                        <td>{{ lastExpense.name }}</td>
-                        <td>{{ lastExpense.date }}</td>
-                        <td>{{ lastExpense.money }}</td>
-                        <td>{{ lastExpense.comment }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="col-lg-8">
+            <div class="info-board mb-3">
+                <h3>Faktury do zapłacenia</h3>
+                <hr>
+                {% if invoices is empty %}
+                <p class="incomeBox">W ciągu najbliższych 7 dni nie kończy się termin płatności żadnej faktury.</p>
+                {% else %}
+                <p class="incomeBox">W ciągu najbliższych 7 dni przypada termin płatności faktur:</p>
+                {% for invoice in invoices %}
+                <div class="row">
+                    <div class="col-4">
+                        <p>{{invoice.payment_date}}</p>
+                        <p>{{invoice.contractor}}</p>
+                    </div>
+                    <div class="col-4">
+                        <h3>{{invoice.money}}</h3>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+            <div class="info-board mb-3">
+                <h3>Ostatnie transakcje</h3>
+                <hr>
+                <table class="table bg-light table-striped incomeTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rodzaj przychodu</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Kwota</th>
+                            <th scope="col">Komentarz</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lastIncome in lastIncomes %}
+                        <tr>
+                            <td>{{ lastIncome.name }}</td>
+                            <td>{{ lastIncome.date }}</td>
+                            <td>{{ lastIncome.money }}</td>
+                            <td>{{ lastIncome.comment }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% for lastExpense in lastExpenses %}
+                        <tr>
+                            <td>{{ lastExpense.name }}</td>
+                            <td>{{ lastExpense.date }}</td>
+                            <td>{{ lastExpense.money }}</td>
+                            <td>{{ lastExpense.comment }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -78,108 +91,87 @@
 {% block footer %}
 <script src="/js/node_modules/chart.js/dist/Chart.js"></script>
 <script>
+    $(document).ready(function () {
+        Chart.defaults.global.maintainAspectRatio = false;
+        var transactionsData;
+        let invoices;
+        let incomeCategoriesSums;
+        let expenseCategoriesSums;
+        let incomesSum;
+        let expensesSum;
 
-    function respondCanvas() {
-        var c = $('#incomesPie');
-        var ctx = c.get(0).getContext("2d");
-        var container = c.parent();
-
-        var $container = $(container);
-
-        c.attr('width', $container.width()); //max width
-
-        c.attr('height', $container.height()); //max height                   
-
-        //Call a function to redraw other content (texts, images etc)
-        var chart = new Chart(ctx).Line(chartData, {
-            scaleOverride: true,
-            scaleSteps: steps,
-            scaleStepWidth: Math.ceil(max / steps),
-            scaleStartValue: 0
-        });
-    }
-
-    function getIncomesData() {
         $.ajax({
             url: "/Home/getIncomeCategoriesSums",
             method: 'POST',
-            dataType: 'json',
-            success: function (d) {
-                console.log(d);
-                /*       chartData = {
-                labels: d.AxisLabels,
-                    datasets: [
-                        {
-                            fillColor: "rgba(220,220,220,0.5)",
-                            strokeColor: "rgba(220,220,220,1)",
-                            pointColor: "rgba(220,220,220,1)",
-                            pointStrokeColor: "#fff",
-                            data: d.DataSets[0]
-                        }
-                    ] */
-            }
-            //    respondCanvas();
-        });
-    }
-    $(document).ready(function () {
-        //     $(window).resize(respondCanvas);
+            dataType: 'json'
+        }).done(function (response) {
+            invoices = response['invoices'];
+            incomesSum = response['incomesSum'];
+            expensesSum = response['expensesSum'];
+            incomeCategoriesSums = response['incomeCategoriesSums'];
+            expenseCategoriesSums = response['expenseCategoriesSums'];
+            setPieChartData(incomeCategoriesSums, '#incomesPie', 'Przychody wg. kategorii');
+            setPieChartData(expenseCategoriesSums, '#expensesPie', 'Wydatki wg. kategorii');
 
-        var incomesData = getIncomesData();
-        console.log(incomesData);
-        let incomesPie = $('#incomesPie');
-        let myChart = new Chart(incomesPie, {
-            type: 'doughnut',
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    label: 'Przychody wg. kategorii',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
+        }).fail(function (response) {
+            console.log('no lipa');
         });
+
+        function setPieChartData(sums, canvas, title) {
+            var labels = sums.map(function (e) {
+                return e.name;
+            });
+            var data = sums.map(function (e) {
+                return e.money;
+            });
+            var pieConfig = {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgba(92, 104, 152, 0.7)',
+                            'rgba(243, 210, 172, 0.7)',
+                            'rgba(204, 119, 147, 0.7)',
+                            'rgba(129, 208, 233, 0.7)',
+                            'rgba(0, 48, 65, 0.7)',
+                            'rgba(142, 38, 72, 0.7)',
+                            'rgba(224, 138, 123, 0.7)',
+                            'rgba(179, 218, 97, 0.7)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 255, 255, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    title: {
+                        display: true,
+                        fontFamily: 'Helvetica',
+                        fontSize: 16,
+                        text: title,
+                        fontColor: '#212529'
+                    },
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        align: 'left',
+                        labels: {
+                            boxWidth: 15
+                        }
+                    }
+                }
+            };
+            renderChart(canvas, pieConfig);
+        }
+        function renderChart(canvas, config) {
+            let ctx = $(canvas)[0].getContext('2d');
+            let chart = new Chart(ctx, config);
+        }
     });
- /*  /////
-                                                                                                       data = {
-                                                                                                           datasets: [{
-                                                                                                               data: [10, 20, 30]
-                                                                                                           }],
-                                                                                                           labels: [
-                                                                                                               'Red',
-                                                                                                               'Yellow',
-                                                                                                               'Blue'
-                                                                                                           ]
-                                                                                                       };
-                                                                                                       var incomesDoughnut = new Chart(ctx, {
-                                                                                                           type: 'doughnut',
-                                                                                                           data: data,
-                                                                                                           options: options
-                                                                                                       });
-                                                                                                   */
 </script>
 {% endblock %}

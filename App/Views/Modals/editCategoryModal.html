@@ -1,12 +1,12 @@
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="editModal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edytuj kategorię</h5>
             </div>
             <div class="modal-body mx-4">
-                <form method="post" id="updateExpenseForm">
+                <form method="post" id="updateForm">
                     <div class="form-group">
                         <input type="hidden" class="form-control" id="id" name="id">
                     </div>
@@ -23,7 +23,8 @@
                     </div>
                     <div class="form-group">
                         <label for="blockedFunds" class="col-form-label">Podaj limit</label>
-                        <input type="number" class="form-control" id="blockedFunds" step="0.01" name="blockedFunds">
+                        <input type="number" class="form-control" id="blockedFunds" step="0.01" name="blockedFunds"
+                            disabled="disabled">
                     </div>
                     <div class="d-flex justify-content-around">
                         <input type="submit" class="mainBtn" id="submitEdit" value="Edytuj">

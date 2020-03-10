@@ -1,8 +1,32 @@
 {% extends 'base.html' %}
+{% block title %}Coiny - Ustawienia{% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
     <div class="text-center">
         <h1>Ustawienia</h1>
+        <!--   <form action="/Settings/editExpenseCategoryAjax" method="post">
+            <input type="number" class="form-control" id="id" name="id" placeholder="Id">
+            <div class="form-group">
+                <label for="name" class="col-form-label">Nazwa
+                    kategorii</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nazwa">
+            </div>
+            <hr>
+            <div class="form-check">
+                <input id="fundsBlockCheckbox" class="form-check-input" type="checkbox" name="fundsBlockCheckbox">
+                <label class="form-check-label" for="fundsBlockCheckbox">Chcę dodać limit
+                    funduszy</label>
+            </div>
+            <div class="form-group">
+                <label for="blockedFunds" class="col-form-label">Podaj limit</label>
+                <input type="number" id="blockedFunds" class="form-control" step="0.01" name="blockedFunds"
+                    placeholder="Kwota" disabled="disabled">
+            </div>
+            <div class="d-flex justify-content-around">
+                <input type="submit" class="mainBtn" id="submitAdd" value="DODAJ">
+                <button type="button" class="mainBtn cancel" id="cancelAdd" data-dismiss="modal">ANULUJ</button>
+            </div>
+        </form>-->
     </div>
     <div class="accordion" id="settingsCategories">
         <div class="card">
@@ -27,13 +51,14 @@
                         <tbody>
                             {% if incomeCategories is not empty %}
                             {% for category in incomeCategories %}
-                            <tr data-catId="{{ category.id }}"></tr>
-                            <td class='category'>{{ category.name }} </td>
-                            <td>
-                                <div class='btn-group' role='group' aria-label='buttonsGroup'>
-                                    <button type='button' class='settingsBtn'><i class='icon-trash'></i></button>
-                                </div>
-                            </td>
+                            <tr data-catId="{{ category.id }}">
+                                <td class='category'>{{ category.name }} </td>
+                                <td>
+                                    <div class='btn-group' role='group' aria-label='buttonsGroup'>
+                                        <button type='button' class='settingsBtn deleteBtn'><i
+                                                class='icon-trash'></i></button>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                             {% endif %}
@@ -65,22 +90,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <tbody>
                             {% if expenseCategories is not empty %}
                             {% for category in expenseCategories %}
-                            <tr data-catId="{{ category.id }}"></tr>
-                            <td class='category'>{{ category.name }} </td>
-                            <td class='blockedFunds'>{{ category.blocked_funds }}</td>
-                            <td>
-                                <div class='btn-group' role='group' aria-label='buttonsGroup'>
-                                    <button type='button' class='settingsBtn'><i class='icon-edit'></i></button>
-                                    <button type='button' class='settingsBtn'><i class='icon-trash'></i></button>
-                                </div>
-                            </td>
+                            <tr data-catId="{{ category.id }}">
+                                <td class='category'>{{ category.name }} </td>
+                                <td class='blockedFunds'>{{ category.blocked_funds }}</td>
+                                <td>
+                                    <div class='btn-group' role='group' aria-label='buttonsGroup'>
+                                        <button type='button' class='settingsBtn editBtn'><i
+                                                class='icon-edit'></i></button>
+                                        <button type='button' class='settingsBtn deleteBtn'><i
+                                                class='icon-trash'></i></button>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                             {% endif %}
-                        </tbody>
                         </tbody>
                     </table>
                     <button id="newExpenseCategory" class="mainBtn"><i class="icon-plus-circle"></i>Dodaj nową
@@ -111,15 +136,17 @@
                         <tbody>
                             {% if paymentMethods is not empty %}
                             {% for method in paymentMethods %}
-                            <tr data-catId="{{ method.id }}"></tr>
-                            <td class='category'>{{ method.name }} </td>
-                            <td class='blockedFunds'>{{ method.blocked_funds }}</td>
-                            <td>
-                                <div class='btn-group' role='group' aria-label='buttonsGroup'>
-                                    <button type='button' class='settingsBtn'><i class='icon-edit'></i></button>
-                                    <button type='button' class='settingsBtn'><i class='icon-trash'></i></button>
-                                </div>
-                            </td>
+                            <tr data-catId="{{ method.id }}">
+                                <td class='category'>{{ method.name }} </td>
+                                <td class='blockedFunds'>{{ method.blocked_funds }}</td>
+                                <td>
+                                    <div class='btn-group' role='group' aria-label='buttonsGroup'>
+                                        <button type='button' class='settingsBtn editBtn'><i
+                                                class='icon-edit'></i></button>
+                                        <button type='button' class='settingsBtn deleteBtn'><i
+                                                class='icon-trash'></i></button>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                             {% endif %}
@@ -130,249 +157,52 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header" id="headingPassword">
+                <h2 class="mb-0">
+                    <button id="passwordBtn" class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#forgottenPassword" aria-expanded="false" aria-controls="forgottenPassword">
+                        Zresetuj hasło
+                    </button>
+                </h2>
+            </div>
+            <div id="forgottenPassword" class="collapse" aria-labelledby="headingPassword"
+                data-parent="#settingsCategories">
+                <div class="card-body">
+                    <form action="/password/request-reset" method="post">
+                        <div class="form-group">
+                            <label>Podaj adres email, na który mamy przysłać kod do zmiany hasła:</label>
+                            <input class="form-control inputSlot" name="email" type="email" placeholder="Email"
+                                value="{{ email }}">
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            <input class="mainBtn" type="submit" name="submit" value="Wyślij">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    {% include '/Modals/addCategoryModal.html'%}
-    {% include '/Modals/editCategoryModal.html'%}
-    {% include '/Modals/deleteCategoryModal.html'%}
-
-    {% endblock %}
-    {% block footer %}
-    <script src="/js/addCategory.js"></script>
-    <script>
-        $(document).ready(function () {
-            //    getIncomeCategoriesAjax();
-            //  getExpenseCategoriesAjax();
-            //  getPaymentMethodsAjax();
-            // Fetch from DB income categories assigned to user using AJAX
-            function getIncomeCategoriesAjax() {
-                $.ajax({
-                    url: "/Settings/getIncomeCategoriesAjax",
-                    type: "POST",
-                    dataType: 'json'
-                }).done(function (categories) {
-                    displayCategories(categories, '#incomeCatsList')
-                }).fail(function (jqXHR, textStatus) {
-                    console.log("No i klops!" + jqXHR + textStatus);
-                    console.dir(arguments);
-                });
-            }
-
-            // Fetch from DB expense categories assigned to user using AJAX
-            function getExpenseCategoriesAjax() {
-                $.ajax({
-                    url: "/Settings/getExpenseCategoriesAjax",
-                    type: "POST",
-                    dataType: 'json'
-                }).done(function (categories) {
-                    displayCategories(categories, '#expenseCatsList');
-                }).fail(function (jqXHR, textStatus) {
-                    console.log("No i klops!" + jqXHR + textStatus);
-                    console.dir(arguments);
-                });
-            }
-
-            // Fetch from DB payment methods assigned to user using AJAX
-            function getPaymentMethodsAjax() {
-                $.ajax({
-                    url: "/Settings/getPaymentMethodsAjax",
-                    type: "GET",
-                    dataType: 'json',
-                }).done(function (categories) {
-                    displayCategories(categories, '#paymentMetsList');
-                }).fail(function (jqXHR, textStatus) {
-                    console.log("No i klops!" + jqXHR + textStatus);
-                    console.dir(arguments);
-                });
-            }
-
-            function displayCategories(categories, table) {
-                for (var i = 0; i < categories.length; i++) {
-                    var row = '';
-                    row = "<tr data-catId='" + categories[i].id + "'>" +
-                        "<td class='category'>" + categories[i].name + "</td>" +
-                        "<td class='blockedFunds'>" + categories[i].blocked_funds + "</td>" +
-                        "<td>" + "<div class='btn-group' role='group' aria-label='buttonsGroup'>" +
-                        "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +
-                        "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +
-                        "</tr>";
-                    $(table + ' tbody').append(row);
-                }
-            }
-
-            //Delete categories
-            $("#incomeCatsList").on('click', ".deleteBtn", function () {
-                var button = $(this);
-                var toDelete = button.closest('tr');
-                var id = toDelete.data('catid');
-                if (confirm('Czy na pewno chcesz usunąć kategorię?')) {
-                    $.ajax({
-                        cache: false,
-                        url: "/Settings/removeIncomeCategory",
-                        type: "POST",
-                        dataType: "json",
-                        data: { id: id }
-                    }).done(function (response) {
-                        if (response != 0) {
-                            console.log("Sukces! Usunięto kategorię." + response);
-                            console.dir(arguments);
-                            toDelete.remove();
-                        }
-                        else {
-                            console.log("Lipa! Nie usunięto rekordu" + response);
-                            console.dir(arguments);
-                        }
-
-                    }).fail(function (jqXHR, textStatus) {
-                        console.log("No i klops!" + jqXHR + textStatus);
-                        console.dir(arguments);
-                    });
-                }
-            });
-
-            $("#expenseCatsList").on('click', ".deleteBtn", function () {
-                var button = $(this);
-                var category = button.parents().eq(1).siblings('.category').text();
-                var toDelete = button.closest('tr');
-                if (confirmDelete()) {
-                    $.ajax({
-                        url: "/Settings/removeExpenseCategory",
-                        type: "POST",
-                        dataType: 'json',
-                        data: { name: category }
-                    }).done(function (response) {
-                        if (response == true) {
-                            console.log("Sukces! Usunięto kategorię: " + category + response);
-                            toDelete.remove();
-                        }
-                        else
-                            console.log("Lipa! Nie usunięto rekordu" + response);
-                        console.dir(arguments);
-                    }).fail(function (response) {
-                        console.log("No i klops!");
-                        console.dir(arguments);
-                    });
-                }
-            });
-
-            $("#paymentMetsList").on('click', ".deleteBtn", function () {
-                var button = $(this);
-                var category = button.parent('td').siblings('.category').text();
-                var toDelete = button.closest('tr');
-                if (confirmDelete()) {
-                    $.ajax({
-                        url: "/Settings/removePaymentMethod",
-                        type: "POST",
-                        dataType: 'json',
-                        data: { name: category }
-                    }).done(function (response) {
-                        if (response == true) {
-                            console.log("Sukces! Usunięto kategorię: " + category + response);
-                            toDelete.remove();
-                        }
-                        else
-                            console.log("Lipa! Nie usunięto rekordu" + response);
-                        console.dir(arguments);
-                    }).fail(function (response) {
-                        console.log("No i klops!");
-                        console.dir(arguments);
-                    });
-                }
-            });
-
-            // Edit categories------------------------------------------------------------------------
-            $("#expenseCatsList").on('click', ".editBtn", function () {
-                let button = $(this);
-                var category = button.parents().eq(1).siblings('.category').text();
-                console.log(category);
-                var blockedFunds = +(button.parents().eq(1).siblings('.blockedFunds').text());
-                console.log(blockedFunds);
-                var toEdit = button.closest('tr');
-                console.log(toEdit);
-                var id = toEdit.data('catid');
-                console.log(id);
-                confirmEdit(id, category, blockedFunds);
-            });
-
-            $('#updateExpenseForm').on('submit', function (e) {
-                e.preventDefault();
-                var data = $('#updateExpenseForm').serialize();
-                console.log(data);
-                if (true) {
-                    $.ajax({
-                        url: "/Settings/editExpenseCategory",
-                        type: "POST",
-                        dataType: 'json',
-                        data: data
-                    }).done(function (response) {
-                        if (response == true) {
-                            console.log("Sukces!" + response);
-                            $('#editModal').modal('hide');
-                            $('#updateExpenseForm')[0].reset();
-                            $('#expenseCatsList').append(response);
-                        }
-                        else
-                            console.log("Lipa! Nie edytowano rekordu" + response);
-                        console.dir(arguments);
-                    }).fail(function (response) {
-                        console.log("No i klops!" + response);
-                        console.dir(arguments);
-                    })
-                }
-            });
-
-            $("#paymentMetsList").on('click', ".editBtn", function () {
-                var button = $(this);
-                var category = button.parent('.btn-group').siblings('.category').text();
-                var toEdit = button.closest('li');
-                if (confirmEdit()) {
-                    $.ajax({
-                        url: "/Settings/editPaymentMethod",
-                        type: "POST",
-                        dataType: 'json',
-                        data: { name: category }
-                    }).done(function (response) {
-                        if (response == true) {
-                            console.log("Sukces! Usunięto kategorię: " + category + response);
-                            toDelete.remove();
-                        }
-                        else
-                            console.log("Lipa! Nie usunięto rekordu" + response);
-                        console.dir(arguments);
-                    }).fail(function (response) {
-                        console.log("No i klops!");
-                        console.dir(arguments);
-                    });
-                }
-            });
-
-            function confirmEdit($id, $category, $blockedFunds) {
-                $('#id').val($id);
-                $('#name').val($category);
-                $('#blockedFunds').val($blockedFunds);
-                if ($blockedFunds > 0) {
-                    $('#fundsBlockCheckbox').attr("checked", true);
-                } else {
-                    $('#fundsBlockCheckbox').attr("checked", false);
-                }
-                $('#editModal').modal('toggle');
-            }
-            //Add categories------------------------------------------------------------------------
+{% include '/Modals/addCategoryModal.html'%}
+{% include '/Modals/editCategoryModal.html'%}
+{% include '/Modals/confirmModal.html'%}
+{% include '/Modals/alterTransactionsModal.html'%}
+{% include '/Modals/editIncomeModal.html'%}
+{% include '/Modals/settingsPartialViews.html'%}
 
 
-
-            function setData($id, $category, $blockedFunds) {
-                $('#id').val($id);
-                $('#name').val($category);
-                $('#blockedFunds').val($blockedFunds);
-                if ($blockedFunds > 0) {
-                    $('#fundsBlockCheckbox').attr("checked", true);
-                } else {
-                    $('#fundsBlockCheckbox').attr("checked", false);
-                }
-                $('#addModal').modal('toggle');
-            }
-        });
-
-    </script>
-    {% endblock %}
+{% endblock %}
+{% block footer %}
+<!--<script src="/js/getCategories.js"></script>-->
+<script src="/js/addCategory.js"></script>
+<script src="/js/editCategory.js"></script>
+<script src="/js/deleteCategory.js"></script>
+<script src="/js/deleteIncomeCategory.js"></script>
+<script src="/js/deleteExpenseCategory.js"></script>
+<script src="/js/deletePaymentCategory.js"></script>
+<script src="/js/deleteTransaction.js"></script>
+<script>
+</script>
+{% endblock %}

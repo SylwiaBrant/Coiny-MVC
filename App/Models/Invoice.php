@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 use PDO;
 use \Core\View;
@@ -22,6 +21,7 @@ class Invoice extends \Core\Model{
      */
     public function __construct($data=[])
     {
+        $this->user_id = $_SESSION['user_id'];
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
@@ -49,7 +49,6 @@ class Invoice extends \Core\Model{
     }
 
     public function getIncomeInvoicesFromDB($period){
-        $user_id = $_SESSION['user_id'];
         $sql ='SELECT iv.number, ic.money, ic.date, iv.payment_date, iv.contractor, ic.comment 
             FROM income_invoices AS iv INNER JOIN incomes AS ic 
             ON iv.id = ic.invoice_id 
@@ -57,7 +56,7 @@ class Invoice extends \Core\Model{
             AND :endingDate';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
         $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
@@ -65,7 +64,6 @@ class Invoice extends \Core\Model{
     }   
     
     public function getExpenseInvoicesFromDB($period){
-        $user_id = $_SESSION['user_id'];
         $sql ='SELECT ev.number, ec.money, ec.date, ev.payment_date, ev.contractor, ec.comment 
             FROM expense_invoices AS ev INNER JOIN expenses AS ec 
             ON ev.id = ec.invoice_id 
@@ -73,7 +71,7 @@ class Invoice extends \Core\Model{
             AND :endingDate';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
         $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
@@ -81,14 +79,12 @@ class Invoice extends \Core\Model{
     }
          
     public function getDueInvoices(){
-        $user_id = $_SESSION['user_id'];
         $sql ='SELECT ev.number, ec.money, ev.contractor, ev.payment_date FROM expense_invoices AS ev 
-        INNER JOIN expenses AS ec ON ev.id = ec.invoice_id WHERE ev.user_id=14 
-        AND ev.payment_date BETWEEN DATE_ADD(CURDATE(), INTERVAL 1-DAYOFWEEK(CURDATE()) DAY) 
-        AND DATE_ADD(CURDATE(), INTERVAL 7-DAYOFWEEK(CURDATE()) DAY)';
+        INNER JOIN expenses AS ec ON ev.id = ec.invoice_id WHERE ev.user_id=:user_id
+        AND ev.payment_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
       }

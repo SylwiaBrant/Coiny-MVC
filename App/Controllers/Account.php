@@ -1,6 +1,6 @@
 <?php
     namespace App\Controllers;
-    use \App\Models\User;
+    use \App\Views;
     /**
      * Account controller
      * PHP version 7.4.2

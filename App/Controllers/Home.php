@@ -34,9 +34,13 @@ class Home extends Authenticated
         $income = new Income();
         $expense = new Expense();
         $invoice = new Invoice();
+        $incomesSum = $income->getIncomesSumFromDB($period);
+        $expensesSum = $expense->getExpensesSumFromDB($period);
+        $balance = $incomesSum-$expensesSum;
         $data['invoices'] = $invoice->getDueInvoices();
-        $data['incomesSum'] = $income->getIncomesSumFromDB($period);
-        $data['expensesSum'] = $expense->getExpensesSumFromDB($period);
+        $data['incomesSum'] = number_format($incomesSum, 2, ',', ' ');
+        $data['expensesSum'] = number_format($expensesSum, 2, ',', ' ');
+        $data['balance'] = number_format($balance, 2, ',', ' ');
         $data['incomeCategoriesSums'] = $income->getSumsByCategory($period);
         $data['expenseCategoriesSums'] = $expense->getSumsByCategory($period);
         $data['lastIncomes'] = $income->getLastTransactionPerCategory();
@@ -56,7 +60,6 @@ class Home extends Authenticated
         $expenseCategoriesSums = $expense->getSumsByCategory($period);
         $lastIncomes = $income->getLastTransactionPerCategory();
         $lastExpenses = $expense->getLastTransactionPerCategory();
-
         $response = array(
             'invoices' => $invoices,
             'incomesSum' => $incomesSum,
