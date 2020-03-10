@@ -26,6 +26,11 @@ class Expense extends \Core\Model{
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
+        if(empty($_POST['comment'])){
+            $this->comment = NULL;
+        }else{
+            $this->comment = $_POST['comment'];
+        }
     }
 
     /**
@@ -71,8 +76,10 @@ class Expense extends \Core\Model{
         if($this->paymentMethod == ''){
             $this->errors[] = 'Należy podać metodę płatności.';
         }
-        if(strlen($this->comment) > 400){
-            $this->errors[] = "Pole może zawierać maksymalnie 400 znaków.";
+        if($this->comment != NULL){
+            if(strlen($this->comment) > 400){
+                $this->errors[] = "Pole może zawierać maksymalnie 400 znaków.";
+            }
         }
     }
 

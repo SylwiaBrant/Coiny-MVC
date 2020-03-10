@@ -17,44 +17,44 @@ class Incomes extends Authenticated{
   
     public function indexAction(){
         $period = Date::getThisMonth();
-        $incomes = new Income();
+        $incomes = new Income($period);
         View::renderTemplate('Incomes/index.html',[
-            'incomes' => $incomes->getIncomesFromDB($period)]);
+            'incomes' => $incomes->getIncomesFromDB()]);
     }
 
     public function showThisWeekIncomesAjax(){
         $period = Date::getThisWeek();
-        $income = new Income();
-        $entries = $income->getIncomesFromDB($period);
+        $income = new Income($period);
+        $entries = $income->getIncomesFromDB();
         echo json_encode($entries);
     }
 
     public function showThisMonthIncomesAjax(){
         $period = Date::getThisMonth();
-        $incomes = new Income();
-        $entries = $incomes->getIncomesFromDB($period);
+        $incomes = new Income($period);
+        $entries = $incomes->getIncomesFromDB();
         echo json_encode($entries);
     }
 
     public function showLastMonthIncomesAjax(){
         $period = Date::getLastMonth();
-        $incomes = new Income();
-        $entries = $incomes->getIncomesFromDB($period);
+        $incomes = new Income($period);
+        $entries = $incomes->getIncomesFromDB();
         echo json_encode($entries);
     }
         
     public function showChosenPeriodIncomesAjax(){
         $period = Date::getChosenPeriod($_POST);
         if($period){
-            $incomes = new Income();
-            $entries = $incomes->getIncomesFromDB($period);
+            $incomes = new Income($period);
+            $entries = $incomes->getIncomesFromDB();
             echo json_encode($entries);
         }else {
             Flash::addMessage('Proszę wpisać obie daty w formacie YYYY-MM-DD.', Flash::WARNING);
             View::renderTemplate('Incomes/chosenPeriod.html',[]);
         }
     }
-
+    
     public function createAction(){
 
         if ($remember_me = isset($_POST['incomeInvoice'])){
