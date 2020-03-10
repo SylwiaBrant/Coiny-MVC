@@ -260,6 +260,7 @@ a.dropdown-toggle{
 /*----------------------BUTTON STYLES------------------------*/
 
 .mainBtn{
+    font-weight: 600;
     margin: 5px 0;
     border: none;
     border-radius: 5px;
@@ -269,6 +270,13 @@ a.dropdown-toggle{
     padding: 5px 10px 5px 10px;
     box-shadow: 0 0 5px rgb(16, 19, 24);
     background-image: linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+}
+
+.mainBtn.cancelBtn{
+    font-weight: 700;
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-color: rgb(88, 88, 88);
 }
 
 .mainBtn:hover{
@@ -379,8 +387,7 @@ input:focus ~ label{
 }
 
 .formWrapper{
-    height: inherit;
-    max-height: inherit;
+    margin: auto;
     padding: 20px;
     vertical-align: middle;
     width: 100%;
