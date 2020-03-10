@@ -26,6 +26,11 @@ class Income extends \Core\Model{
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
+        if(empty($_POST['comment'])){
+            $this->comment = NULL;
+        }else{
+            $this->comment = $_POST['comment'];
+        }
     }
     /**
      * Save the income model with the current property values
@@ -63,33 +68,35 @@ class Income extends \Core\Model{
         if($this->incomeCategory == ''){
             $this->errors[] = 'Należy podać kategorię przychodu.';
         }
-        if(strlen($this->comment) > 400){
-            $this->errors[] = "Pole może zawierać maksymalnie 400 znaków.";
+        if($this->comment != NULL){
+            if(strlen($this->comment) > 400){
+                $this->errors[] = "Pole może zawierać maksymalnie 400 znaków.";
+            }
         }
     }
 
-    public function getIncomesFromDB($period){
+    public function getIncomesFromDB(){
         $sql = 'SELECT i.date, i.money, ic.name, i.comment 
             FROM incomes AS i INNER JOIN income_categories AS ic WHERE i.user_id=:user_id 
             AND i.user_id = ic.user_id AND i.category_id=ic.id AND date BETWEEN :startingDate 
             AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
-        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':startingDate', $this->startingDate, PDO::PARAM_STR);
+        $stmt->bindValue(':endingDate', $this->endingDate, PDO::PARAM_STR);
         $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
 
     public function getIncomesSumFromDB($period){
-        $user_id = $_SESSION['user_id'];
         $sql = 'SELECT ROUND(SUM(money),2) as totalAmount FROM incomes 
             WHERE user_id=:user_id AND date BETWEEN :startingDate 
             AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
         $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
@@ -98,7 +105,6 @@ class Income extends \Core\Model{
     }
 
     public function getSumsByCategory($period){
-        $user_id = $_SESSION['user_id'];
         $sql ='SELECT ic.name, ROUND(SUM(i.money),2) AS money FROM incomes 
             AS i INNER JOIN income_categories AS ic WHERE 
             i.category_id=ic.id AND ic.user_id=i.user_id 
@@ -106,7 +112,7 @@ class Income extends \Core\Model{
             AND :endingDate GROUP BY ic.name DESC'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
         $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();

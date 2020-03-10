@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Coiny - Faktury otrzymane{% endblock %}
+{% block body %}
+<div class="container-fluid mainContent justify-content-center">
+    <div id="choiceMenuWrapper" class="row align-items-center">
+        <div class="col-lg">
+            <form id="selectDefaultForm">
+                <select id="transactionsPeriod" class="custom-select" name="transactionsPeriod">
+                    <option value="showThisWeekIncomes">Bieżący tydzień</option>
+                    <option value="showThisMonthIncomes" selected>Bieżący miesiąc</option>
+                    <option value="showLastMonthIncomes">Poprzedni miesiąc</option>
+                </select>
+            </form>
+        </div>
+        <div class="col-lg">
+            <form id="periodForm" method="post">
+                <div id="periodFormWrapper" class="form-row align-items-center ml-1 mt-2 mt-lg-0">
+                    <label>OD</label>
+                    <div class="form-group">
+                        <input id="startingDate" class="form-control" type="date" name="startingDate">
+                    </div>
+                    <label>DO</label>
+                    <div class="form-group">
+                        <input id="endingDate" class="form-control" type="date" name="endingDate">
+                    </div>
+                    <div class="form-group">
+                        <input class="secondaryBtn" type="submit" name="submit" value="Wybierz">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="mt-3">
+        <table id="invoicesTable" class="table bg-light invoicesTable">
+            <thead>
+                <tr>
+                    <th scope="col">Kwota</th>
+                    <th scope="col">Numer faktury</th>
+                    <th scope="col">Data wystawienia</th>
+                    <th scope="col">Data płatności</th>
+                    <th scope="col">Kontrahent</th>
+                    <th scope="col">Komentarz</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if invoices is not empty %}
+                {% for invoice in invoices %}
+                <tr>
+                    <td>{{ invoice.number }}</td>
+                    <td>{{ invoice.contractor }}</td>
+                    <td>{{ invoice.date }}</td>
+                    <td>{{ invoice.payment_date }}</td>
+                    <td>{{ invoice.money }}</td>
+                    <td>{{ invoice.comment }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

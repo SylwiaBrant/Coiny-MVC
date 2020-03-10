@@ -429,16 +429,10 @@ select{
     width: 100%;
 }
 
-option:hover{
-    background-color: rgb(134, 158, 180);
-}
 #invoiceDropdown.hidden{
 display: none;
 }
 
-#choiceMenu{
-    width: 100%;
-}
 #transactionsPeriod{
     width: 100%;
 
@@ -448,20 +442,30 @@ display: none;
 }
 
 #periodFormWrapper{
-    width: 450px;
+    width: 460px;
+}
+
+@media screen and (max-width: 495px) {
+    #periodFormWrapper input.secondaryBtn{
+        margin-left: 0;
+        margin-top: 15px;
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+    }
+    #periodFormWrapper{
+        width: 100%;
+        margin-left: 0;
+    }
+    #periodFormWrapper .form-group{
+        margin-left: 0 !important;
+        display: block !important;
+        width: 100%;
+    }
 }
 #periodForm .form-group {
       margin: 0 5px;
 }
-
-#wrapper, #right {
-    overflow: hidden;
-}/*
-#left {
-    float: left;
-    width: 50%;
-    background-color: #ffa;
-}*/
 
 .transactionFormWrapper{
     min-width: 390px;
@@ -490,48 +494,50 @@ display: none;
 /*----------------------GLOBAL TABLE STYLES------------------------*/
 
 @media screen and (max-width: 768px){
-    table{
+    table, thead, tbody, th, td, tr {
         display: block;
     }
 
-    table thead {
-        display: none; 
+    thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
     }
+
+    tr { border: 1px solid #ccc; }
+
     .table td { 
-
-        padding: 0.25rem;
+        border: none;
+        position: relative;
+        padding-left: 20px;
+        margin-left: 105px;
+        padding: 5px;
     }
-    .table td.money {
-        display: flex;
-    }
-    .table td.category {
-        display: flex;
-    }
-    .table td.comment{
-        display: block;
-        float: left;
-    }
-
 
     .table td .money{
         font-weight: 500;
     }
 
 	table td::before { 
-        padding-right: 7px;
-        font-weight: bold;
-        
+        position: absolute;
+        top: 5px;
+        left: 6px;
+        width: 100%;
+        padding-right: 40px;
+        white-space: nowrap;
+        margin-left: -100px;
     }
+
 /* Headers for incomes tables*/
-    .incomeTable td:nth-of-type(1):before { content: "Kwota:"; }
+    .incomeTable td:nth-of-type(1):before { content: "Kategoria:"; }
     .incomeTable td:nth-of-type(2):before { content: "Data:"; }
-    .incomeTable td:nth-of-type(3):before { content: "Rodzaj przychodu:"; }
+    .incomeTable td:nth-of-type(3):before { content: "Kwota:"; }
     .incomeTable td:nth-of-type(4):before { content: "Komentarz:"; }
-    /* Headers for expenses tables*/
- /*   .expenseTable td:nth-of-type(1):before { content: "Kwota:"; }
+/* Headers for expenses tables*/
+    .expenseTable td:nth-of-type(1):before { content: "Kategoria:"; }
     .expenseTable td:nth-of-type(2):before { content: "Data:"; }
-    .expenseTable td:nth-of-type(3):before { content: "Sposób płatności:"; }
-    .expenseTable td:nth-of-type(3):before { content: "Rodzaj wydatku:"; }
+    .expenseTable td:nth-of-type(3):before { content: "Płatność:"; }
+    .expenseTable td:nth-of-type(3):before { content: "Kwota:"; }
     .expenseTable td:nth-of-type(4):before { content: "Komentarz:"; }
 /* Headers for invoices tables*/
     .invoiceTable td:nth-of-type(1):before { content: "Kwota"; }
@@ -540,11 +546,12 @@ display: none;
     .invoiceTable td:nth-of-type(4):before { content: "Data płatności"; }
     .invoiceTable td:nth-of-type(5):before { content: "Kontrahent"; }
     .invoiceTable td:nth-of-type(6):before { content: "Komentarz"; }
-}
-
-/*----------------------TABLES NAVIGATION STYLES------------------------*/
-.tableNav a.nav-link{
-    display: inline-block;
+    td:empty {
+        visibility: hidden;
+      }
+      td:before:empty {
+        display: none;
+      }
 }
 
 /*----------------------SETTINGS PAGE STYLES------------------------*/

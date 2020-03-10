@@ -1,11 +1,12 @@
+{% block title %}Coiny - Wydatki{% endblock %}
 {% extends 'base.html' %}
 {% block body %}
 
-<div class="container-fluid mainContent justify-content-center">
-    <div class="row align-items-center" id="choiceMenuWrapper">
+<div class="container-fluid mainContent justify-content-center align-items-top">
+    <div id="choiceMenuWrapper" class="row align-items-top">
         <div class="col-lg">
             <form id="selectDefaultForm">
-                <select class="custom-select" name="transactionsPeriod" id="transactionsPeriod">
+                <select id="transactionsPeriod" class="custom-select" name="transactionsPeriod">
                     <option value="showThisWeekExpenses">Bieżący tydzień</option>
                     <option value="showThisMonthExpenses" selected>Bieżący miesiąc</option>
                     <option value="showLastMonthExpenses">Poprzedni miesiąc</option>
@@ -14,7 +15,7 @@
         </div>
         <div class="col-lg">
             <form id="periodForm" method="post">
-                <div class="form-row align-items-center mt-2 mt-lg-0 ml-lg-3" id="periodFormWrapper">
+                <div id="periodFormWrapper" class="form-row align-items-top ml-1 mt-2 mt-lg-0">
                     <label>OD</label>
                     <div class="form-group">
                         <input id="startingDate" class="form-control" type="date" name="startingDate">
@@ -31,7 +32,7 @@
         </div>
     </div>
     <div class="mt-3">
-        <table class="table bg-light expenseTable" id="expensesTable">
+        <table id="expensesTable" class="table bg-light expenseTable">
             <thead>
                 <tr>
                     <th scope="col">Kategoria</th>
@@ -46,9 +47,10 @@
                 {% if expenses is not empty %}
                 {% for expense in expenses %}
                 <tr>
-                    <td>{{ expense.money }}</td>
+                    <td>{{ expense.category }}</td>
                     <td>{{ expense.date }}</td>
-                    <td>{{ expense.date }}</td>
+                    <td>{{ expense.method }}</td>
+                    <td><strong>{{ expense.money }}</strong></td>
                     <td>{{ expense.name }}</td>
                     <td>{{ expense.comment }}</td>
                 </tr>
@@ -57,7 +59,6 @@
             </tbody>
         </table>
     </div>
-</div>
 </div>
 {% endblock %}
 {% block footer %}
@@ -70,10 +71,11 @@
             $.ajax({
                 url: url,
                 type: "POST",
-                dataType: 'json'
+                dataType: "json"
             }).done(function (expenses) {
                 $('#expensesTable tbody > tr').remove();
-                displayexpenses(expenses);
+                displayExpenses(expenses);
+                console.log(expenses);
             }).fail(function (expenses) {
                 console.log("No i klops!" + expenses);
                 console.dir(arguments);
@@ -101,7 +103,7 @@
                     data: data
                 }).done(function (expenses) {
                     $('#expensesTable tbody > tr').remove();
-                    displayexpenses(expenses);
+                    displayExpenses(expenses);
                 }).fail(function (expenses) {
                     console.log("No i klops!" + expenses);
                     console.dir(arguments);
@@ -110,14 +112,14 @@
             }
         });
 
-        function displayexpenses(expenses) {
+        function displayExpenses(expenses) {
             $.each(expenses, function (i, expense) {
                 console.log(expense);
                 var row = "<tr data-catId='" + expense.id + "'>" +
                     "<td class='category'>" + expense.category + "</td>" +
                     "<td class='date'>" + expense.date + "</td>" +
                     "<td class='method'>" + expense.method + "</td>" +
-                    "<td class='money'><span style='font-weight:bold'>" + expense.money + "</span></td>" +
+                    "<td class='money'><strong>" + expense.money + "</strong></td>" +
                     "<td class='comment'>" + expense.comment + "</td>" +
                     "<td>" + "<div class='btn-group' role='group' aria-label='buttonsGroup'>" +
                     "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +

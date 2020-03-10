@@ -141,7 +141,7 @@ class Category extends \Core\Model{
     }
 
     public function insertCategoryIntoDB($table){
-        if(!isset($_POST['fundsBlockCheckbox'])){
+        if(!isset($this->blockedFunds)){
             $this->blockedFunds = NULL;
         }
         $sql = 'INSERT INTO '.$table.' (user_id, name, blocked_funds) 

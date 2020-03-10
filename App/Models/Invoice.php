@@ -48,7 +48,7 @@ class Invoice extends \Core\Model{
         }
     }
 
-    public function getIncomeInvoicesFromDB($period){
+    public function getIncomeInvoicesFromDB(){
         $sql ='SELECT iv.number, ic.money, ic.date, iv.payment_date, iv.contractor, ic.comment 
             FROM income_invoices AS iv INNER JOIN incomes AS ic 
             ON iv.id = ic.invoice_id 
@@ -56,14 +56,14 @@ class Invoice extends \Core\Model{
             AND :endingDate';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
-        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
-        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':startingDate', $this->startingDate, PDO::PARAM_STR);
+        $stmt->bindValue(':endingDate', $this->endingDate, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
     
-    public function getExpenseInvoicesFromDB($period){
+    public function getExpenseInvoicesFromDB(){
         $sql ='SELECT ev.number, ec.money, ec.date, ev.payment_date, ev.contractor, ec.comment 
             FROM expense_invoices AS ev INNER JOIN expenses AS ec 
             ON ev.id = ec.invoice_id 
@@ -71,9 +71,9 @@ class Invoice extends \Core\Model{
             AND :endingDate';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
-        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
-        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->bindValue(':startingDate', $this->startingDate, PDO::PARAM_STR);
+        $stmt->bindValue(':endingDate', $this->endingDate, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
