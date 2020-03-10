@@ -37,17 +37,23 @@
 {% endblock %}
 {% block body %}
 <div class="formWrapper">
-    <h2>Zarejestruj się</h2>
-
-    <div class="mx-lg-2 mt-3">
-        {% if user.errors is not empty %}
-        <p>Błędy:</p>
-        <ul>
-            {% for error in user.errors %}
-            <li>{{error}}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+    <div class="d-flex flex-row justify-content-between">
+        <h2>Zarejestruj się</h2>
+        <div>
+            <a class="link" href="/login/new">Zaloguj się</a>
+        </div>
+    </div>
+    <div class="mt-3">
+        <div class="mx-lg-2 mt-3">
+            {% if user.errors is not empty %}
+            <p>Błędy:</p>
+            <ul>
+                {% for error in user.errors %}
+                <li>{{error}}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
         <form method="post" action="/signup/create" id="registerForm">
             <div class="form-group">
                 <label>E-MAIL</label>
@@ -62,4 +68,5 @@
             </div>
         </form>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}

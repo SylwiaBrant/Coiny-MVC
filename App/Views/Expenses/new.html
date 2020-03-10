@@ -7,28 +7,18 @@
 <div class="container-fluid mainContent justify-content-center bg-light">
     <div class="row justify-content-center">
         <h4>DODAJ WYDATEK</h4>
-        <!--       {% if ExpenseWithInvoice.errors is not empty %}
-        <p>Błędy:</p>
-        <ul>
-            {% for error in ExpenseWithInvoice.errors %}
-            <li>{{error}}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
--->
-
     </div>
     <form method="post" id="addExpenseForm">
         <div class="row">
             <div class="transactionFormWrapper">
                 <div class="form-group">
                     <label for="money">KWOTA</label>
-                    <input id="money" class="form-control inputSlot" type="number" min="0" step="0.01" name="money">
+                    <input id="money" class="form-control inputSlot" type="number" min="0" step="0.01" name="money"
+                        placeholder="Kwota">
                 </div>
                 <div class="form-group">
                     <label for="expenseDate">DATA</label>
-                    <input id="expenseDate" class="form-control inputSlot" id="expenseDate" type="date"
-                        name="expenseDate">
+                    <input id="expenseDate" class="form-control inputSlot" type="date" name="expenseDate">
                 </div>
                 <div class="form-group">
                     <label for="paymentMethod">METODA PŁATNOŚCI</label>
@@ -68,13 +58,12 @@
                 </div>
                 <div class="form-group">
                     <label for="invoicePayDate">TERMIN PŁATNOŚCI</label>
-                    <input id=" invoicePayDate" class="form-control inputSlot" type="date" name="invoicePayDate">
+                    <input id="invoicePayDate" class="form-control inputSlot" type="date" name="invoicePayDate">
                 </div>
             </div>
         </div>
-        <div class="row justify-content-center py-4 btnGroup">
+        <div class="row justify-content-center">
             <input type="submit" class="mainBtn" name="submit" value="DODAJ">
-            <button type="button" class="mainBtn" data-dismiss="modal">ANULUJ</button>
         </div>
     </form>
 </div>

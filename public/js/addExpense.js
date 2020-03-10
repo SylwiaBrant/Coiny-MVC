@@ -68,4 +68,11 @@ $(document).ready(function () {
             return false;
         }
     });
+
+    $('#invoiceCheckbox').click(function () {
+        if (this.checked) {
+            $('#invoiceDropdown').show();
+        }
+        else { $('#invoiceDropdown').hide(); }
+    });
 });
