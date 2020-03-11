@@ -30,8 +30,7 @@
                 </div>
                 <div class="form-group">
                     <label for="expenseCategory">RODZAJ WYDATKU</label>
-                    <select id="expenseCategory" class="form-control custom-select inputSlot" id="incomeCategory"
-                        name="category">
+                    <select id="expenseCategory" class="form-control custom-select inputSlot" name="expenseCategory">
                         {% for category in expenseCategories %}
                         <option>{{category.name}}</option>
                         {% endfor %}

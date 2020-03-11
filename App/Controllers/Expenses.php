@@ -58,20 +58,6 @@ class Expenses extends Authenticated{
         } 
     }
 
-    public function createAction(){
-        if (isset($_POST['expenseInvoice'])){
-            $expense = new ExpenseWithInvoice($_POST);
-        } else {
-            $expense = new Expense($_POST);
-        }
-        if($expense->save()){
-            Flash::addMessage('Przychód dodany pomyślnie.'); 
-        } else {
-            Flash::addMessage('Coś poszło nie tak. Przychód nie dodany.', 'WARNING');
-        }
-        $this->newAction();
-    }  
-
     public function addExpenseAjax(){
         if (isset($_POST['invoiceCheckbox'])){
             $expense = new ExpenseWithInvoice($_POST);
@@ -101,6 +87,12 @@ class Expenses extends Authenticated{
     public function getExpensesByPaymentsAjax(){
         $expense = new Expense($_POST);
         $result = $expense->getExpensesByPayments();
+        echo json_encode($result);
+    }
+
+    public function editExpenseCategoryAjax(){
+        $expense = new Expense($_POST);
+        $result = $expense->editExpenseCategory();
         echo json_encode($result);
     }
 

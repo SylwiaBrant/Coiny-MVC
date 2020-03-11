@@ -7,8 +7,8 @@
             </select>
         </div>
         <div class="row justify-content-center btnGroup">
-            <input type="submit" class="mainBtn" name="submit" value="DODAJ">
-            <button type="button" class="mainBtn cancelEditBtn">ANULUJ</button>
+            <button id="submitEditIncome" type="button" class="mainBtn">EDYTUJ</button>
+            <button type="button" class="mainBtn cancelEditBtn cancelBtn">ANULUJ</button>
         </div>
     </form>
 </div>
@@ -22,22 +22,22 @@
             </select>
         </div>
         <div class="row justify-content-center btnGroup">
-            <input type="submit" class="mainBtn" name="submit" value="DODAJ">
-            <button type="button" class="mainBtn cancelEditBtn">ANULUJ</button>
+            <input id="submitEditExpense" type="submit" class="mainBtn" name="submit">EDYTUJ</button>
+            <button type="button" class="mainBtn cancelEditBtn cancelBtn">ANULUJ</button>
         </div>
     </form>
 </div>
 <div id="editPaymentCategoryBlock" class="d-none">
     <p class="d-block text-center">Wybierz nową kategorię:</p>
-    <form method="post" id="updateExpenseForm">
+    <form method="post" id="updatePaymentForm">
         <div class="form-group">
             <label for="category">METODA PŁATNOŚCI</label>
             <select id="category" class="form-control custom-select inputSlot" name="category">
             </select>
         </div>
         <div class="row justify-content-center btnGroup">
-            <input type="submit" class="mainBtn" name="submit" value="DODAJ">
-            <button type="button" class="mainBtn cancelEditBtn">ANULUJ</button>
+            <button id="submitEditPayment" type="button" class="mainBtn">EDYTUJ</button>
+            <button type="button" class="mainBtn cancelEditBtn cancelBtn">ANULUJ</button>
         </div>
     </form>
 </div>
@@ -45,6 +45,6 @@
     <p class="d-block text-center">Czy na pewno chcesz usunąć transakcję?</p>
     <div class="row justify-content-center btnGroup">
         <button type="button" class="mainBtn confirmBtn">USUŃ</button>
-        <button type="button" class="mainBtn cancelDeleteBtn">ANULUJ</button>
+        <button type="button" class="mainBtn cancelBtn cancelDeleteBtn">ANULUJ</button>
     </div>
 </div>

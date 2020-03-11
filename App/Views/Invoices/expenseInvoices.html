@@ -6,9 +6,9 @@
         <div class="col-lg">
             <form id="selectDefaultForm">
                 <select id="transactionsPeriod" class="custom-select" name="transactionsPeriod">
-                    <option value="showThisWeekIncomes">Bieżący tydzień</option>
-                    <option value="showThisMonthIncomes" selected>Bieżący miesiąc</option>
-                    <option value="showLastMonthIncomes">Poprzedni miesiąc</option>
+                    <option value="showThisWeekExpenseInvoices">Bieżący tydzień</option>
+                    <option value="showThisMonthExpenseInvoices" selected>Bieżący miesiąc</option>
+                    <option value="showLastMonthExpenseInvoices">Poprzedni miesiąc</option>
                 </select>
             </form>
         </div>
@@ -34,11 +34,11 @@
         <table id="invoicesTable" class="table bg-light invoicesTable">
             <thead>
                 <tr>
-                    <th scope="col">Kwota</th>
                     <th scope="col">Numer faktury</th>
+                    <th scope="col">Kontrahent</th>
                     <th scope="col">Data wystawienia</th>
                     <th scope="col">Data płatności</th>
-                    <th scope="col">Kontrahent</th>
+                    <th scope="col">Kwota</th>
                     <th scope="col">Komentarz</th>
                 </tr>
             </thead>
@@ -50,8 +50,12 @@
                     <td>{{ invoice.contractor }}</td>
                     <td>{{ invoice.date }}</td>
                     <td>{{ invoice.payment_date }}</td>
-                    <td>{{ invoice.money }}</td>
+                    <td><strong>{{ invoice.money }}</strong></td>
+                    {% if invoice.comment is not null %}
                     <td>{{ invoice.comment }}</td>
+                    {% else %}
+                    <td>brak</td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
                 {% endif %}
@@ -59,5 +63,7 @@
         </table>
     </div>
 </div>
-
+{% endblock %}
+{% block footer %}
+<script src="/js/displayExpenseInvoices.js"></script>
 {% endblock %}

@@ -55,22 +55,6 @@ class Incomes extends Authenticated{
         }
     }
     
-    public function createAction(){
-
-        if ($remember_me = isset($_POST['incomeInvoice'])){
-            $income = new IncomeWithInvoice($_POST);
-        } else {
-            $income = new Income($_POST);
-        }
-        if($income->save()){
-            Flash::addMessage('Przychód dodany pomyślnie.'); 
-
-        } else {
-            Flash::addMessage('Coś poszło nie tak. Przychód nie dodany.', 'WARNING');
-        }
-        $this->newAction();
-    }  
-
     public function addIncomeAjax(){
         if (isset($_POST['invoiceCheckbox'])){
             $income = new IncomeWithInvoice($_POST);

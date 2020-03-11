@@ -1,3 +1,26 @@
+function editIncomeCategory(id, callback) {
+    let url = "/Incomes/editIncomeCategoryAjax";
+    let category = $('#updateIncomeForm #category').val();
+    $.ajax({
+        url: url,
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        data: { id: id, name: category }
+    }).done(function (response) {
+        if (response > 0) {
+            console.log("Sukces!" + response);
+            callback(response);
+        } else {
+            console.log("Nie edytowano rekordu" + response);
+            console.dir(arguments);
+        }
+    }).fail(function (response) {
+        console.log(response);
+        console.dir(arguments);
+    });
+}
+
 $(document).ready(function () {
     $("#incomeCatsList").on('click', ".deleteBtn", function () {
         let button = $(this);
@@ -32,7 +55,6 @@ $(document).ready(function () {
                 //remove currently set category from options and append rest for user's choice
                 for (var i = 0; i < categories.length; i++) {
                     if (categories[i].id == categoryId) {
-                        console.log(categories[i].id);
                         categories.splice(i, 1);
                     }
                 }
@@ -42,6 +64,22 @@ $(document).ready(function () {
                 });
             });
             rowToDelete.next().show();
+        });
+
+        $('#alterTransactionsModal').on('click', '#submitEditIncome', function () {
+            e.preventDefault();
+            editTransactionCategory(transactionType, transactionId, function (result) {
+                if (result == true) {
+                    let container = rowToDelete.parent();
+                    rowToDelete.next().children().hide();
+                    rowToDelete.next().children().remove();
+                    rowToDelete.remove();
+                    if ($(container[0].id + " div").length == 0) {
+                        console.log('No juz ni ma');
+                        $('#alterTransactionsModal').modal('hide');
+                    }
+                }
+            });
         });
 
         $('#alterTransactionsModal').on('click', ".deleteBtn", function () {
@@ -54,7 +92,7 @@ $(document).ready(function () {
 
         $('#alterTransactionsModal').on('click', ".confirmBtn", function () {
             //function in deleteTransaction.js file
-            deleteTransactionEntry(transactionId, function (result) {
+            deleteTransactionEntry(transactionType, transactionId, function (result) {
                 if (result == true) {
                     let container = rowToDelete.parent();
                     rowToDelete.next().children().hide();
@@ -76,7 +114,8 @@ $(document).ready(function () {
         $('#confirmModal').modal('toggle');
         $("#confirmModal").on('click', "#confirmBtn", function (e) {
             e.preventDefault();
-            deleteCategory(categoryData, function () {
+            let url = "/Settings/removeIncomeCategoryAjax";
+            deleteCategory(url, categoryData.id, function (callback) {
                 if (callback == true) {
                     $('#confirmModal').modal('hide');
                     categoryData.rowToDelete.remove();

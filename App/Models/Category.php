@@ -19,6 +19,11 @@ class Category extends \Core\Model{
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
+    /*    if(isset($_POST['fundsBlockCheckbox'])){
+            $this->blockedFunds = $_POST['blockedFunds'];
+        }else{
+            $this->blockedFunds = NULL;
+        }*/
     }
     /**
      * Get income categories associated with user from DB
@@ -76,7 +81,6 @@ class Category extends \Core\Model{
     }
 
     public function deleteCategoryFromDB($table){
-        $user_id = $_SESSION['user_id'];
         $sql = 'DELETE FROM '.$table.' WHERE id = :id AND user_id = :user_id';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
@@ -141,7 +145,7 @@ class Category extends \Core\Model{
     }
 
     public function insertCategoryIntoDB($table){
-        if(!isset($this->blockedFunds)){
+        if(empty($this->blockedFunds)){
             $this->blockedFunds = NULL;
         }
         $sql = 'INSERT INTO '.$table.' (user_id, name, blocked_funds) 

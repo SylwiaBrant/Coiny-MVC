@@ -14,7 +14,7 @@ use \App\Flash;
  */
 class ExpenseWithInvoice extends \Core\Model{
     private $user_id;
-    public $income;
+    public $expense;
     public $invoice;
     /**
      * Class constructor

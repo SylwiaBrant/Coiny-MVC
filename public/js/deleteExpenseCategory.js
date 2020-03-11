@@ -1,3 +1,27 @@
+function editExpenseCategory(id, callback) {
+    let url = "/Expenses/editExpenseCategoryAjax";
+    let category = $('#updateExpenseForm #category').val();
+    $.ajax({
+        url: url,
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        data: { id: id, name: category }
+    }).done(function (response) {
+        if (response > 0) {
+            console.log("Sukces!" + response);
+            callback(response);
+        } else {
+            console.log("Nie edytowano rekordu" + response);
+            console.dir(arguments);
+        }
+    }).fail(function (response) {
+        console.log(data);
+        console.log(response);
+        console.dir(arguments);
+    });
+}
+
 $(document).ready(function () {
     $("#expenseCatsList").on('click', ".deleteBtn", function () {
         let button = $(this);
@@ -35,13 +59,28 @@ $(document).ready(function () {
                         categories.splice(i, 1);
                     }
                 }
-                console.log(categories);
                 $.each(categories, function (i, category) {
                     var row = "<option data-catid='" + category.id + "'>" + category.name + "</option>";
                     $(selectElement).append(row);
                 });
             });
             rowToDelete.next().show();
+        });
+
+        $('#alterTransactionsModal').on('click', '#submitEditExpense', function (e) {
+            e.preventDefault();
+            editExpenseCategory(transactionId, function (result) {
+                if (result > 0) {
+                    let container = rowToDelete.parent();
+                    rowToDelete.next().children().hide();
+                    rowToDelete.next().children().remove();
+                    rowToDelete.remove();
+                    if ($(container[0].id + " div").length == 0) {
+                        console.log('No juz ni ma');
+                        $('#alterTransactionsModal').modal('hide');
+                    }
+                }
+            });
         });
 
         $('#alterTransactionsModal').on('click', ".deleteBtn", function () {
@@ -54,7 +93,7 @@ $(document).ready(function () {
 
         $('#alterTransactionsModal').on('click', ".confirmBtn", function () {
             //function in deleteTransaction.js file
-            deleteTransactionEntry(transactionId, function (result) {
+            deleteTransactionEntry('Expense', transactionId, function (result) {
                 if (result == true) {
                     let container = rowToDelete.parent();
                     rowToDelete.next().children().hide();
@@ -76,28 +115,13 @@ $(document).ready(function () {
         $('#confirmModal').modal('toggle');
         $("#confirmModal").on('click', "#confirmBtn", function (e) {
             e.preventDefault();
-            deleteCategory(categoryData, function () {
-                if (callback == true) {
+            let url = "/Settings/removeExpenseCategoryAjax";
+            deleteCategory(url, categoryData.id, function (callback) {
+                if (callback > 0) {
                     $('#confirmModal').modal('hide');
                     categoryData.rowToDelete.remove();
                 }
             });
         });
-    }
-
-    function deleteCategory(categoryData, callback) {
-        let url = "/Settings/remove" + categoryData.transaction + "CategoryAjax";
-        $.ajax({
-            url: url,
-            type: "POST",
-            dataType: 'json',
-            data: { categoryId: categoryData.id }
-        }).done(function (response) {
-            console.log(response);
-            deleteCategory(callback);
-        }).fail(function (response) {
-            console.log("No i klops!" + response);
-            console.dir(arguments);
-        })
     }
 });
