@@ -24,11 +24,10 @@ function editPaymentCategory(id, callback) {
 $(document).ready(function () {
     $("#paymentMetsList").on('click', ".deleteBtn", function () {
         var button = $(this);
-        var categoryData = getDataAboutCategory('Expense', button);
+        var categoryData = getDataAboutCategory('Payment', button);
         let url = "/Expenses/getExpensesByPaymentsAjax";
         getAssignedTransactionsFromDB(url, categoryData.id, function (transactions) {
             if (transactions.length == 0) {
-                console.log(transactions);
                 displayDeleteConfirmModal(categoryData);
             } else {
                 appendExpenseTransactionsToModal(categoryData.id, transactions);
@@ -69,12 +68,10 @@ $(document).ready(function () {
             e.preventDefault();
             editPaymentCategory(transactionId, function (result) {
                 if (result == true) {
-                    let container = rowToDelete.parent();
-                    rowToDelete.next().children().hide();
-                    rowToDelete.next().children().remove();
+                    rowToDelete.next().remove();
+                    rowToDelete.prev().remove();
                     rowToDelete.remove();
-                    if ($(container[0].id + " div").length == 0) {
-                        console.log('No juz ni ma');
+                    if ($("#transactionsWrapper div").length == 0) {
                         $('#alterTransactionsModal').modal('hide');
                     }
                 }
@@ -91,14 +88,13 @@ $(document).ready(function () {
 
         $('#alterTransactionsModal').on('click', ".confirmBtn", function () {
             //function in deleteTransaction.js file
-            deleteTransactionEntry(transactionType, transactionId, function (result) {
+            deleteTransactionEntry('Expense', transactionId, function (result) {
                 if (result == true) {
-                    let container = rowToDelete.parent();
                     rowToDelete.next().children().hide();
                     rowToDelete.next().children().remove();
                     rowToDelete.remove();
-                    if ($(container[0].id + " div").length == 0) {
-                        console.log('No juz ni ma');
+                    rowToDelete.prev();
+                    if ($("#transactionsWrapper div").length == 0) {
                         $('#alterTransactionsModal').modal('hide');
                     }
                 }

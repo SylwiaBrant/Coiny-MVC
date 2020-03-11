@@ -54,7 +54,7 @@ class Settings extends Authenticated{
         echo json_encode($categories);
     }
 
-    public function getPaymentMethodsAjax(){
+    public function getPaymentCategoriesAjax(){
         $methods = Category::getPaymentMethods();
         echo json_encode($methods);
     }
