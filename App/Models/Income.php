@@ -143,19 +143,16 @@ class Income extends \Core\Model{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } 
 
-    public function editIncomeEntry(){
-        $sql ='UPDATE income_categories SET money=:money, date=:date,
-            category_id = (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), 
-            comment=:comment WHERE id=:income_id'; 
+    public function editIncomeCategory(){
+        $sql ='UPDATE incomes SET category_id = (SELECT id FROM income_categories 
+        WHERE name=:category AND user_id=:user_id) WHERE id=:transactionId'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
-        $stmt->bindValue(':income_id', $this->incomeId, PDO::PARAM_INT);
-        $stmt->bindValue(':money', $this->money);
-        $stmt->bindValue(':date', $this->incomeDate, PDO::PARAM_STR);            
-        $stmt->bindValue(':category', $this->incomeCategory, PDO::PARAM_STR);
-        $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT); 
+        $stmt->bindValue(':transactionId', $this->id, PDO::PARAM_INT);           
+        $stmt->bindValue(':category', $this->name, PDO::PARAM_STR);
         $stmt->execute();
+        
         return $stmt->rowCount();
     }
 

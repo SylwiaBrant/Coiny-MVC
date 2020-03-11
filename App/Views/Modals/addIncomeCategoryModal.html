@@ -1,0 +1,23 @@
+<div class="modal fade" id="addIncomeCategoryModal" data-keyboard="false" data-backdrop="static" tabindex="-1"
+    role="dialog" aria-labelledby="addIncomeCategoryLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addIncomeCategoryLabel">Dodaj kategorię</h5>
+            </div>
+            <div class="modal-body">
+                <form method="post" id="addIncomeCategoryForm">
+                    <div class="form-group">
+                        <label for="name" class="col-form-label">Nazwa
+                            kategorii</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Nazwa">
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <input type="submit" class="mainBtn" id="submitAdd" value="DODAJ">
+                        <button type="button" class="mainBtn cancel cancelBtn" data-dismiss="modal">ANULUJ</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

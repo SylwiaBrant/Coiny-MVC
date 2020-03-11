@@ -180,6 +180,19 @@ class Expense extends \Core\Model{
         return $stmt->rowCount();
     }
 
+    public function editExpensePayment(){
+        $sql ='UPDATE expenses SET payment_method_id = (SELECT id FROM payment_methods 
+        WHERE name=:category AND user_id=:user_id) WHERE id=:transactionId'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT); 
+        $stmt->bindValue(':transactionId', $this->id, PDO::PARAM_INT);           
+        $stmt->bindValue(':category', $this->name, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->rowCount();
+    }
+
     public function deleteEntry(){
         $sql ='DELETE FROM expenses WHERE id=:id'; 
         $db = static::getDB();

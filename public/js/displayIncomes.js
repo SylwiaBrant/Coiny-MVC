@@ -49,12 +49,17 @@ $(document).ready(function () {
 
     function displayIncomes(incomes) {
         $.each(incomes, function (i, income) {
+            var comment;
+            if (income.comment == null) {
+                comment = "<td class='comment'>brak</td>";
+            } else {
+                comment = "<td class='comment'>" + income.comment + "</td>";
+            }
             var row = "<tr data-catId='" + income.id + "'>" +
                 "<td class='category'>" + income.name + "</td>" +
                 "<td class='category'>" + income.date + "</td>" +
                 "<td class='blockedFunds'><strong>" + income.money + "</strong></td>" +
-                "<td class='blockedFunds'>" + income.comment + "</td>" +
-                "</tr>";
+                comment + "</tr>";
             $('#incomesTable tbody').append(row);
         });
     }

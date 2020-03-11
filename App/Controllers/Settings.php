@@ -109,7 +109,7 @@ class Settings extends Authenticated{
 
         public function addPaymentCategoryAjax(){
             $category =  new Category($_POST);
-            $result = $category->addPaymentMethod();  
+            $result = $category->addPaymentCategory();  
             echo json_encode($result);
         }
     }

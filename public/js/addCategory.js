@@ -1,31 +1,37 @@
 $(document).ready(function () {
     $("#newIncomeCategory").on('click', function () {
-        $('#addCategoryModal').children().find('#fundsBlockCheckbox').parent().hide();
-        $('#addCategoryModal').children().find('#blockedFunds').parent().hide();
-        $('#addCategoryModal').modal('toggle');
-        categoryIsValid('#addCategoryForm', 'Income', '#incomeCatsList');
+        $('#addIncomeCategoryModal').modal('toggle');
+        categoryIsValid('#addIncomeCategoryForm', 'Income', '#incomeCatsList');
     });
 
     $("#newExpenseCategory").on('click', function () {
-        $('#addCategoryModal').modal('toggle');
-        categoryIsValid('#addCategoryForm', 'Expense', '#expenseCatsList');
+        $('#addExpenseCategoryModal').modal('toggle');
+        categoryIsValid('#addExpenseCategoryForm', 'Expense', '#expenseCatsList');
     });
 
     $("#newPaymentMethod").on('click', function () {
-        $('#addCategoryModal').modal('toggle');
-        categoryIsValid('#addCategoryForm', 'Payment', '#paymentMetsList');
+        $('#addPaymentCategoryModal').modal('toggle');
+        categoryIsValid('#addPaymentCategoryForm', 'Payment', '#paymentMetsList');
     });
 
-    $('#fundsBlockCheckbox').on('click', function (e) {
+    $('#addExpenseCategoryModal').on('click', '#fundsBlockCheckbox', function () {
         if ($(this).is(':checked')) {
-            $('#blockedFunds').attr('disabled', false);
+            $('#addExpenseCategoryForm #blockedFunds').attr('disabled', false);
         } else {
-            $('#blockedFunds').attr('disabled', true);
+            $('#addExpenseCategoryForm #blockedFunds').attr('disabled', true);
         }
     });
 
-    function categoryIsValid(action, parent) {
-        var validator = $('#addCategoryModal').validate({
+    $('#addPaymentCategoryModal').on('click', '#fundsBlockCheckbox', function () {
+        if ($(this).is(':checked')) {
+            $('#addPaymentCategoryForm #blockedFunds').attr('disabled', false);
+        } else {
+            $('#addPaymentCategoryForm #blockedFunds').attr('disabled', true);
+        }
+    });
+
+    function categoryIsValid(form, action, parent) {
+        var validator = $(form).validate({
             rules: {
                 name: {
                     required: true,
@@ -81,8 +87,6 @@ $(document).ready(function () {
         $(".cancel").click(function () {
             validator.resetForm();
             $(this).find('form').trigger('reset');
-            $('#addCategoryModal #fundsBlockCheckbox').show();
-            $('#addCategoryModal #blockedFunds').show();
             $('#blockedFunds').attr('disabled', true);
         });
     }

@@ -10,7 +10,7 @@ $(document).ready(function () {
         confirmEdit(data);
     });
 
-    $("#paymentCatsList").on('click', ".editBtn", function () {
+    $("#paymentMetsList").on('click', ".editBtn", function () {
         let button = $(this);
         let data = {};
         data.transactionType = 'Payment';
@@ -32,7 +32,7 @@ $(document).ready(function () {
     function confirmEdit(data) {
         $('#updateForm').find('#id').val(data.categoryId);
         $('#updateForm').find('#name').val(data.category);
-        $('#updateForm').find('#blockedFunds').val(data.blockedFunds);
+        $('#updateForm').find('#blockedFunds').val(parseInt(data.blockedFunds));
         if (data.blockedFunds == true) {
             $('#fundsBlockCheckbox').attr("checked", true);
         } else {
@@ -61,8 +61,6 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 let data = $(form).serializeArray();
-                console.log(data);
-                console.log(categoryData.transactionType);
                 $.ajax({
                     url: "/Settings/edit" + categoryData.transactionType + "CategoryAjax",
                     type: "POST",
@@ -82,7 +80,7 @@ $(document).ready(function () {
                             $('#updateForm').trigger('reset');
                         }
                         else {
-                            console.log("Lipa! Nie edytowano rekordu" + response);
+                            console.log("Nie edytowano rekordu" + response);
                             console.dir(arguments);
                         }
                     }

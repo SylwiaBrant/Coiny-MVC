@@ -140,14 +140,11 @@ class Category extends \Core\Model{
         return $this->insertCategoryIntoDB('expense_categories');
     }
 
-    public function addPaymentMethod(){
+    public function addPaymentCategory(){
         return $this->insertCategoryIntoDB('payment_methods');
     }
 
     public function insertCategoryIntoDB($table){
-        if(empty($this->blockedFunds)){
-            $this->blockedFunds = NULL;
-        }
         $sql = 'INSERT INTO '.$table.' (user_id, name, blocked_funds) 
                 VALUES (:user_id, :name, :blocked_funds)'; 
         $db = static::getDB();

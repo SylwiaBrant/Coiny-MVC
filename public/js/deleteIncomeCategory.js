@@ -66,9 +66,9 @@ $(document).ready(function () {
             rowToDelete.next().show();
         });
 
-        $('#alterTransactionsModal').on('click', '#submitEditIncome', function () {
+        $('#alterTransactionsModal').on('click', '#submitEditIncome', function (e) {
             e.preventDefault();
-            editTransactionCategory(transactionType, transactionId, function (result) {
+            editIncomeCategory(transactionId, function (result) {
                 if (result == true) {
                     let container = rowToDelete.parent();
                     rowToDelete.next().children().hide();
