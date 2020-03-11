@@ -61,23 +61,23 @@ class Settings extends Authenticated{
 /** Functions deleting single user category
  * @return int - number of affected rows
  */
-        public function removeIncomeCategoryAjax(){
-            $Category =  new Category($_POST);
-            $result = $Category->removeIncomeCategory();  
-            echo json_encode($result);
-        }
+    public function removeIncomeCategoryAjax(){
+        $category =  new Category($_POST);
+        $result = $category->removeIncomeCategory();  
+        echo json_encode($result);
+    }
 
-        public function removeExpenseCategoryAjax(){
-            $Category =  new Category($_POST);
-            $result = $Category->removeExpenseCategory();  
-            echo json_encode($result);
-        }
+    public function removeExpenseCategoryAjax(){
+        $category =  new Category($_POST);
+        $result = $category->removeExpenseCategory();  
+        echo json_encode($result);
+    }
 
-        public function removePaymentMethodAjax(){
-            $Category =  new Category($_POST);
-            $result = $Category->removePaymentMethod();  
-            echo json_encode($result);
-        }
+    public function removePaymentCategoryAjax(){
+        $category =  new Category($_POST);
+        $result = $category->removePaymentCategory();  
+        echo json_encode($result);
+    }
 /** Functions updating single user category 
  *  @return int - number of affected rows
 */
@@ -89,7 +89,7 @@ class Settings extends Authenticated{
 
         public function editPaymentCategoryAjax(){
             $category =  new Category($_POST);
-            $result = $category->editPaymentMethod();  
+            $result = $category->editPaymentCategory();  
             echo json_encode($result);
         }
 /** Functions adding single new user category

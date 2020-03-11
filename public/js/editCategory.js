@@ -1,13 +1,23 @@
 $(document).ready(function () {
     $("#expenseCatsList").on('click', ".editBtn", function () {
         let button = $(this);
-        let data = getEditData(button, 'Expense');
+        let data = {};
+        data.transactionType = 'Expense';
+        data.category = button.parents().eq(1).siblings('.category').text();
+        data.blockedFunds = +(button.parents().eq(1).siblings('.blockedFunds').text());
+        data.toEdit = button.closest('tr');
+        data.categoryId = data.toEdit.data('catid');
         confirmEdit(data);
     });
 
     $("#paymentCatsList").on('click', ".editBtn", function () {
         let button = $(this);
-        let data = getEditData(button, 'Payment');
+        let data = {};
+        data.transactionType = 'Payment';
+        data.category = button.parents().eq(1).siblings('.category').text();
+        data.blockedFunds = +(button.parents().eq(1).siblings('.blockedFunds').text());
+        data.toEdit = button.closest('tr');
+        data.categoryId = data.toEdit.data('catid');
         confirmEdit(data);
     });
 
@@ -18,16 +28,6 @@ $(document).ready(function () {
             $('#editModal #blockedFunds').attr('disabled', true);
         }
     });
-
-    function getEditData(button, transactionType) {
-        let data = {};
-        data.transactionType = transactionType;
-        data.category = button.parents().eq(1).siblings('.category').text();
-        data.blockedFunds = +(button.parents().eq(1).siblings('.blockedFunds').text());
-        data.toEdit = button.closest('tr');
-        data.categoryId = data.toEdit.data('catid');
-        return data;
-    }
 
     function confirmEdit(data) {
         $('#updateForm').find('#id').val(data.categoryId);
@@ -43,7 +43,6 @@ $(document).ready(function () {
     }
 
     function editIsValid(categoryData) {
-        //   let transactionType = ;
         var validator = $('#updateForm').validate({
             rules: {
                 name: {
@@ -75,6 +74,7 @@ $(document).ready(function () {
                         console.log("Sukces!" + response);
                         if (response == true) {
                             let categoryName = $('#updateForm #name').val();
+                            console.log(categoryData.toEdit);
                             categoryData.toEdit.find('td.category').html(categoryName);
                             let blockedFunds = $('#updateForm #blockedFunds').val();
                             categoryData.toEdit.find('td.blockedFunds').html(blockedFunds);
@@ -96,7 +96,10 @@ $(document).ready(function () {
 
         $(".cancel").click(function () {
             validator.resetForm();
-            $(this).find('form').trigger('reset');
         });
     }
+    $('#editModal').on('hidden.bs.modal', function () {
+        $(this).find('form').trigger('reset');
+        $(this).find('#blockedFunds').attr('disabled', true);
+    });
 });

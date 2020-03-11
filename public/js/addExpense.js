@@ -1,19 +1,19 @@
 $(document).ready(function () {
-    $('addExpenseForm').validate({
+    $('#addExpenseForm').validate({
         rules: {
             money: {
                 required: true,
                 number: true,
                 step: 0.01
             },
-            incomeDate: {
+            expenseDate: {
                 required: true,
                 date: true,
             },
-            category: {
+            expenseCategory: {
                 required: true,
             },
-            method: {
+            paymentMethod: {
                 required: true,
             },
             comment: {
@@ -49,7 +49,7 @@ $(document).ready(function () {
             $.ajax({
                 url: "/Expenses/addExpenseAjax",
                 type: "POST",
-                dataType: 'json',
+                dataType: "json",
                 data: data
             }).done(function (response) {
                 if (response == true) {

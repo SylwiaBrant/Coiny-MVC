@@ -14,8 +14,8 @@ class Invoices extends Authenticated{
    */
   public function incomeInvoicesAction(){
     $period = Date::getThisMonth();
-    $invoices = new Invoice($period);
-    $invoices->getIncomeInvoicesFromDB();
+    $invoice = new Invoice($period);
+    $invoices = $invoice->getIncomeInvoicesFromDB();
     View::renderTemplate('Invoices/incomeInvoices.html', [
       'invoices' => $invoices]); 
   }
@@ -25,37 +25,37 @@ class Invoices extends Authenticated{
      */
   public function expenseInvoicesAction(){
     $period = Date::getThisMonth();
-    $invoices = new Invoice($period);
-    $invoices->getExpenseInvoicesFromDB();
+    $invoice = new Invoice($period);
+    $invoices = $invoice->getExpenseInvoicesFromDB();
     View::renderTemplate('Invoices/expenseInvoices.html', [
       'invoices' => $invoices]); 
   }
 
     public function showThisWeekIncomeInvoicesAjax(){
       $period = Date::getThisWeek();
-      $invoices = new Invoice($period);
-      $invoices->getIncomeInvoicesFromDB();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getIncomeInvoicesFromDB();
       echo json_encode($invoices);
     }
 
     public function showThisMonthIncomeInvoicesAjax(){
       $period = Date::getThisMonth();
-      $invoices = new Invoice($period);
-      $invoices->getIncomeInvoicesFromDB();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getIncomeInvoicesFromDB();
       echo json_encode($invoices);
     }
 
     public function showLastMonthIncomeInvoicesAjax(){
       $period = Date::getLastMonth();
-      $invoices = new Invoice($period);
-      $invoices->getIncomeInvoicesFromDB();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getIncomeInvoicesFromDB();
       echo json_encode($invoices);
     }
       
     public function showChosenPeriodIncomeInvoicesAjax(){
       $period = Date::getChosenPeriod($_POST);
-      $invoices = new Invoice($period);
-      $invoices->getIncomeInvoicesFromDB();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getIncomeInvoicesFromDB();
       echo json_encode($invoices);
     }
 
@@ -65,29 +65,29 @@ class Invoices extends Authenticated{
      */
     public function showThisWeekExpenseInvoicesAjax(){
       $period = Date::getThisWeek();
-      $invoices = new Invoice($period);
-      $invoices->getExpenseInvoicesFromDB();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getExpenseInvoicesFromDB();
       echo json_encode($invoices);
     }
 
     public function showThisMonthExpenseInvoicesAjax(){
       $period = Date::getThisMonth();
-      $invoices = new Invoice($period);
-      $invoices->getExpenseInvoicesFromDB();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getExpenseInvoicesFromDB();
       echo json_encode($invoices);
     }
 
     public function showLastMonthExpenseInvoicesAjax(){
-      $period = Date::getLastMonth($period);
-      $invoices = new Invoice($period);
-      $invoices->getExpenseInvoicesFromDB();
+      $period = Date::getLastMonth();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getExpenseInvoicesFromDB();
       echo json_encode($invoices);
     }
 
     public function showChosenPeriodExpenseInvoicesAjax(){
       $period = Date::getChosenPeriod($_POST);
-      $invoices = new Invoice($period);
-      $invoices->getExpenseInvoicesFromDB();
+      $invoice = new Invoice($period);
+      $invoices = $invoice->getExpenseInvoicesFromDB();
       echo json_encode($invoices);
     }
 }

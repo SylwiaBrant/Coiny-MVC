@@ -48,7 +48,7 @@ $(document).ready(function () {
                 $.ajax({
                     url: url,
                     type: "POST",
-                    dataType: 'json',
+                    dataType: "json",
                     cache: false,
                     data: data
                 }).done(function (response) {

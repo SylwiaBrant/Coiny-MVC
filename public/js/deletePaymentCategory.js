@@ -1,3 +1,26 @@
+function editPaymentCategory(id, callback) {
+    let url = "/Expenses/editExpensePaymentAjax";
+    let category = $('#updatePaymentForm #category').val();
+    $.ajax({
+        url: url,
+        type: "POST",
+        dataType: "json",
+        cache: false,
+        data: { id: id, name: category }
+    }).done(function (response) {
+        if (response > 0) {
+            console.log("Sukces!" + response);
+            callback(response);
+        } else {
+            console.log("Nie edytowano rekordu" + response);
+            console.dir(arguments);
+        }
+    }).fail(function (response) {
+        console.log(response);
+        console.dir(arguments);
+    });
+}
+
 $(document).ready(function () {
     $("#paymentMetsList").on('click', ".deleteBtn", function () {
         var button = $(this);
@@ -17,23 +40,20 @@ $(document).ready(function () {
     // Path for NOT ready for deletion categories with assigned transactions in DB
     // Display transactions and give option to either change the category or delete whole transaction entry
 
-    function confirmDeleteCollapse(transactionType, controller) {
+    function confirmDeleteCollapse(transactionType) {
         let rowToDelete;
-        var transactionId;
+        let transactionId;
         $('#alterTransactionsModal').on('click', ".editTransactionBtn", function () {
-            var button = $(this);
+            let button = $(this);
             rowToDelete = button.parents().eq(1);
             transactionId = rowToDelete.data('transactionid');
             categoryId = rowToDelete.data('categoryid');
-            console.log(transactionType);
             rowToDelete.next().children().html($('#editPaymentCategoryBlock').html());
             let selectElement = rowToDelete.next().find('#category');
-            console.log(selectElement);
             getCategoriesAjax(transactionType, function (categories) {
                 //remove currently set category from options and append rest for user's choice
                 for (var i = 0; i < categories.length; i++) {
                     if (categories[i].id == categoryId) {
-                        console.log(categories[i].id);
                         categories.splice(i, 1);
                     }
                 }
@@ -43,6 +63,22 @@ $(document).ready(function () {
                 });
             });
             rowToDelete.next().show();
+        });
+
+        $('#alterTransactionsModal').on('click', '#submitEditPayment', function () {
+            e.preventDefault();
+            editTransactionCategory(transactionType, transactionId, function (result) {
+                if (result == true) {
+                    let container = rowToDelete.parent();
+                    rowToDelete.next().children().hide();
+                    rowToDelete.next().children().remove();
+                    rowToDelete.remove();
+                    if ($(container[0].id + " div").length == 0) {
+                        console.log('No juz ni ma');
+                        $('#alterTransactionsModal').modal('hide');
+                    }
+                }
+            });
         });
 
         $('#alterTransactionsModal').on('click', ".deleteBtn", function () {
@@ -77,24 +113,13 @@ $(document).ready(function () {
         $('#confirmModal').modal('toggle');
         $("#confirmModal").on('click', "#confirmBtn", function (e) {
             e.preventDefault();
-            deleteCategory(categoryData);
+            let url = "/Settings/removePaymentCategoryAjax";
+            deleteCategory(url, categoryData.id, function (callback) {
+                if (callback > 0) {
+                    $('#confirmModal').modal('hide');
+                    categoryData.rowToDelete.remove();
+                }
+            });
         });
-    }
-
-    function deleteCategory(categoryData) {
-        let url = "/Settings/remove" + categoryData.transaction + "CategoryAjax";
-        $.ajax({
-            url: url,
-            type: "POST",
-            dataType: 'json',
-            data: { categoryId: categoryData.id }
-        }).done(function (response) {
-            console.log(response);
-            $('#confirmModal').modal('hide');
-            categoryData.rowToDelete.remove();
-        }).fail(function (response) {
-            console.log("No i klops!" + response);
-            console.dir(arguments);
-        })
     }
 });
