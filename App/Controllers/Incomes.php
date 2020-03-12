@@ -10,11 +10,11 @@ use \App\Models\Date;
  */
 class Incomes extends Authenticated{
     
-      /**
-       * Show incomes
-       * @return void
-       */
-  
+    /**
+     * Show incomes
+     * @return table of incomes
+     */
+
     public function indexAction(){
         $period = Date::getThisMonth();
         $incomes = new Income($period);
@@ -74,6 +74,12 @@ class Incomes extends Authenticated{
         $categories = $category->getIncomeCategories();
         View::renderTemplate('Incomes/new.html', [
             'incomeCategories' => $categories]);
+    }
+
+    public function editIncomeAjax(){
+        $income = new Income($_POST);
+        $result = $income->editIncome();
+        echo json_encode($result);
     }
 
     public function editIncomeCategoryAjax(){

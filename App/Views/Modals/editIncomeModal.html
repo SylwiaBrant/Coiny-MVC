@@ -1,6 +1,6 @@
-<div class="modal fade" id="editIncomeModal" tabindex="-1" role="dialog" aria-labelledby="editIncomeModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="editIncomeModal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="editIncomeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content px-2 px-sm-4">
             <div class="modal-header justify-content-center ml-2">
                 <h4 class="modal-title">Edytuj przychód</h4>
@@ -27,8 +27,7 @@
                     </div>
                     <div class="form-group">
                         <label for="comment">KOMENTARZ (opcjonalnie)</label>
-                        <textarea id="comment" class="form-control inputSlot" rows="4" name="comment">
-                    </textarea>
+                        <textarea id="comment" class="form-control inputSlot" rows="4" name="comment"></textarea>
                     </div>
                     <div class="d-flex row justify-content-around pt-4">
                         <input type="submit" class="mainBtn" name="submit" value="EDYTUJ">

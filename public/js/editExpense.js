@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#addExpenseForm').validate({
+    $('#updateExpenseForm').validate({
         rules: {
             money: {
                 required: true,

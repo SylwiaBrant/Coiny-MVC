@@ -75,8 +75,25 @@ class Income extends \Core\Model{
         }
     }
 
+    public function editIncome(){
+        $sql ='UPDATE incomes SET money = :money, date = :date, 
+        category_id = (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id),
+        comment = :comment WHERE id=:transactionId'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT); 
+        $stmt->bindValue(':money', $this->money);
+        $stmt->bindValue(':date', $this->incomeDate, PDO::PARAM_STR);
+        $stmt->bindValue(':category', $this->incomeCategory, PDO::PARAM_STR);
+        $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);           
+        $stmt->bindValue(':transactionId', $this->id, PDO::PARAM_INT); 
+        $stmt->execute();
+        
+        return $stmt->rowCount();
+    }
+
     public function getIncomesFromDB(){
-        $sql = 'SELECT i.date, i.money, ic.name, i.comment 
+        $sql = 'SELECT i.id, i.date, i.money, ic.name, i.comment 
             FROM incomes AS i INNER JOIN income_categories AS ic WHERE i.user_id=:user_id 
             AND i.user_id = ic.user_id AND i.category_id=ic.id AND date BETWEEN :startingDate 
             AND :endingDate ORDER BY date DESC';

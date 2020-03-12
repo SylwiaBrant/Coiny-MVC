@@ -567,12 +567,12 @@ display: none;
     border-radius: 2px;
     background-color: transparent;
 }
-
+.settingsBtn:focus {outline:none;} .settingsBtn::-moz-focus-inner {border:0;} 
  .settingsBtn:hover{
 
     background-color:rgb(213, 214, 214);
  }
  .settingsBtn:active{
 
-    background-color:rgb(204, 204, 204);
+    background-color:rgb(174, 182, 192);
  }

@@ -41,8 +41,6 @@ class Home extends Authenticated
         $data['incomesSum'] = number_format($incomesSum, 2, ',', ' ');
         $data['expensesSum'] = number_format($expensesSum, 2, ',', ' ');
         $data['balance'] = number_format($balance, 2, ',', ' ');
-        $data['incomeCategoriesSums'] = $income->getSumsByCategory($period);
-        $data['expenseCategoriesSums'] = $expense->getSumsByCategory($period);
         $data['lastIncomes'] = $income->getLastTransactionPerCategory();
         $data['lastExpenses'] = $expense->getLastTransactionPerCategory();
         return $data;
@@ -52,22 +50,11 @@ class Home extends Authenticated
         $period = Date::getThisMonth();
         $income = new Income();
         $expense = new Expense();
-        $invoice = new Invoice();
-        $invoices = $invoice->getDueInvoices();
-        $incomesSum = $income->getIncomesSumFromDB($period);
-        $expensesSum= $expense->getExpensesSumFromDB($period);
         $incomeCategoriesSums = $income->getSumsByCategory($period);
         $expenseCategoriesSums = $expense->getSumsByCategory($period);
-        $lastIncomes = $income->getLastTransactionPerCategory();
-        $lastExpenses = $expense->getLastTransactionPerCategory();
         $response = array(
-            'invoices' => $invoices,
-            'incomesSum' => $incomesSum,
-            'expensesSum' => $expensesSum,
             'incomeCategoriesSums' => $incomeCategoriesSums,
             'expenseCategoriesSums' => $expenseCategoriesSums,
-            'lastIncomes' => $lastIncomes,
-            'lastExpenses' => $lastExpenses
         );
         echo json_encode($response);
     }
