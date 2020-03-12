@@ -70,36 +70,6 @@ function appendExpenseTransactionsToModal(categoryId, transactions) {
     });
 }
 
-function displayDeleteConfirmModal(categoryData) {
-    $("#confirmFormId").val(categoryData.id);
-    let question = "Czy na pewno chcesz usunąć kategorię <strong>" + categoryData.category + "</strong>?"
-    $('#question').html(question);
-    $('#confirmModal').modal('toggle');
-    $("#confirmModal").on('click', "#confirmBtn", function (e) {
-        e.preventDefault();
-        deleteCategory(categoryData, function () {
-            if (callback == true) {
-                $('#confirmModal').modal('hide');
-                categoryData.rowToDelete.remove();
-            }
-        });
-    });
-}
-
-function getCategoriesAjax(transactionType, callback) {
-    $.ajax({
-        url: "/Settings/get" + transactionType + "CategoriesAjax",
-        type: "POST",
-        cache: false,
-        dataType: 'json'
-    }).done(function (categories) {
-        callback(categories);
-    }).fail(function (jqXHR, textStatus) {
-        console.log("No i klops!" + jqXHR + textStatus);
-        console.dir(arguments);
-    });
-}
-
 function getAssignedTransactionsFromDB(url, id, callback) {
     $.ajax({
         url: url,
@@ -114,6 +84,22 @@ function getAssignedTransactionsFromDB(url, id, callback) {
         console.log("No i klops!" + response);
         console.dir(arguments);
     })
+}
+
+function displayDeleteConfirmModal(categoryData) {
+    $("#confirmFormId").val(categoryData.id);
+    let question = "Czy na pewno chcesz usunąć kategorię <strong>" + categoryData.category + "</strong>?"
+    $('#question').html(question);
+    $('#confirmModal').modal('toggle');
+    $("#confirmModal").on('click', "#confirmBtn", function (e) {
+        e.preventDefault();
+        deleteCategory(categoryData, function () {
+            if (callback == true) {
+                $('#confirmModal').modal('hide');
+                categoryData.rowToDelete.remove();
+            }
+        });
+    });
 }
 
 function deleteCategory(url, id, callback) {

@@ -55,11 +55,15 @@ $(document).ready(function () {
             } else {
                 comment = "<td class='comment'>" + income.comment + "</td>";
             }
-            var row = "<tr data-catId='" + income.id + "'>" +
-                "<td class='category'>" + income.name + "</td>" +
-                "<td class='category'>" + income.date + "</td>" +
-                "<td class='blockedFunds'><strong>" + income.money + "</strong></td>" +
-                comment + "</tr>";
+            var row = "<tr data-catid='" + income.id + "'>" +
+                "<td class='incomeCategory'>" + income.name + "</td>" +
+                "<td class='incomeDate'>" + income.date + "</td>" +
+                "<td class='money'><strong>" + income.money + "</strong></td>" +
+                comment +
+                "<td>" +
+                "<button type='button' class='settingsBtn editIncomeBtn'><i class='icon-edit'></i></button>" +
+                "<button type='button' class='settingsBtn deleteIncomeBtn'><i class='icon-trash'></i></button></td>" +
+                "</tr>";
             $('#incomesTable tbody').append(row);
         });
     }

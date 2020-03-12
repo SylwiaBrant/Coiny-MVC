@@ -1,7 +1,6 @@
 {% block title %}Coiny - Przychody{% endblock %}
 {% extends 'base.html' %}
 {% block body %}
-
 <div class="container-fluid mainContent justify-content-center">
     <div id="choiceMenuWrapper" class="row align-items-center">
         <div class="col-lg">
@@ -45,7 +44,7 @@
             <tbody>
                 {% if incomes is not empty %}
                 {% for income in incomes %}
-                <tr>
+                <tr data-catid="{{ income.id }}">
                     <td>{{ income.name }}</td>
                     <td>{{ income.date }}</td>
                     <td><strong>{{ income.money }}</strong></td>
@@ -54,6 +53,10 @@
                     {% else %}
                     <td>brak</td>
                     {% endif %}
+                    <td>
+                        <button type="button" class="settingsBtn editIncomeBtn"><i class="icon-edit"></i></button>
+                        <button type="button" class="settingsBtn deleteIncomeBtn"><i class="icon-trash"></i></button>
+                    </td>
                 </tr>
                 {% endfor %}
                 {% endif %}
@@ -61,7 +64,13 @@
         </table>
     </div>
 </div>
+'
+{% include '/Modals/editIncomeModal.html' %}
+{% include '/Modals/confirmModal.html' %}
 {% endblock %}
 {% block footer %}
 <script src="/js/displayIncomes.js"></script>
+<script src="/js/editIncome.js"></script>
+<script src="/js/deleteTransaction.js"></script>
+<script src="/js/getCategories.js"></script>
 {% endblock %}
