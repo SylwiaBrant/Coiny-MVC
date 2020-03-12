@@ -6,7 +6,6 @@ use \Core\View;
 
 /**
  * Signup controller
- *
  * PHP version 7.0
  */
 class Expense extends \Core\Model{
@@ -40,19 +39,18 @@ class Expense extends \Core\Model{
     public function save(){
         $this->validate();
         if(empty($this->errors)){
-            $user_id= $_SESSION['user_id'];
             $sql = "INSERT INTO expenses VALUES ('', :user_id, :money, :date, 
             (SELECT id FROM payment_methods WHERE name=:payment_method AND user_id=:user_id), 
             (SELECT id FROM expense_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
             $db = static::getDB();
             $stmt = $db->prepare($sql);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
             $stmt->bindValue(':date', $this->expenseDate, PDO::PARAM_STR); 
             $stmt->bindValue(':payment_method', $this->paymentMethod, PDO::PARAM_STR);  
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);          
+            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);          
             $stmt->bindValue(':category', $this->expenseCategory, PDO::PARAM_STR);
-            $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);
             $stmt->bindValue(':invoice_id', NULL, PDO::PARAM_STR);
             return $stmt->execute();
@@ -106,7 +104,7 @@ class Expense extends \Core\Model{
             AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
@@ -123,7 +121,7 @@ class Expense extends \Core\Model{
             AND :endingDate GROUP BY ec.name DESC'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
         $stmt->execute();
@@ -137,7 +135,7 @@ class Expense extends \Core\Model{
             ec.user_id=e.user_id AND ec.user_id=:user_id GROUP BY ec.name'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);   
     }
@@ -169,6 +167,19 @@ class Expense extends \Core\Model{
 
     public function editExpenseCategory(){
         $sql ='UPDATE expenses SET category_id = (SELECT id FROM expense_categories 
+        WHERE name=:category AND user_id=:user_id) WHERE id=:transactionId'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT); 
+        $stmt->bindValue(':transactionId', $this->id, PDO::PARAM_INT);           
+        $stmt->bindValue(':category', $this->name, PDO::PARAM_STR);
+        $stmt->execute();
+        
+        return $stmt->rowCount();
+    }
+
+    public function editExpensePayment(){
+        $sql ='UPDATE expenses SET payment_method_id = (SELECT id FROM payment_methods 
         WHERE name=:category AND user_id=:user_id) WHERE id=:transactionId'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);

@@ -16,7 +16,6 @@ function editExpenseCategory(id, callback) {
             console.dir(arguments);
         }
     }).fail(function (response) {
-        console.log(data);
         console.log(response);
         console.dir(arguments);
     });
@@ -29,7 +28,6 @@ $(document).ready(function () {
         let url = "/Expenses/getExpensesByCategoryAjax";
         getAssignedTransactionsFromDB(url, categoryData.id, function (transactions) {
             if (transactions.length == 0) {
-                console.log(transactions);
                 displayDeleteConfirmModal(categoryData);
             } else {
                 appendExpenseTransactionsToModal(categoryData.id, transactions);
@@ -70,13 +68,11 @@ $(document).ready(function () {
         $('#alterTransactionsModal').on('click', '#submitEditExpense', function (e) {
             e.preventDefault();
             editExpenseCategory(transactionId, function (result) {
-                if (result > 0) {
-                    let container = rowToDelete.parent();
-                    rowToDelete.next().children().hide();
-                    rowToDelete.next().children().remove();
+                if (result == true) {
+                    rowToDelete.next().remove();
+                    rowToDelete.prev().remove();
                     rowToDelete.remove();
-                    if ($(container[0].id + " div").length == 0) {
-                        console.log('No juz ni ma');
+                    if ($("#transactionsWrapper div").length == 0) {
                         $('#alterTransactionsModal').modal('hide');
                     }
                 }
@@ -95,12 +91,10 @@ $(document).ready(function () {
             //function in deleteTransaction.js file
             deleteTransactionEntry('Expense', transactionId, function (result) {
                 if (result == true) {
-                    let container = rowToDelete.parent();
-                    rowToDelete.next().children().hide();
-                    rowToDelete.next().children().remove();
+                    rowToDelete.next().remove();
+                    rowToDelete.prev().remove();
                     rowToDelete.remove();
-                    if ($(container[0].id + " div").length == 0) {
-                        console.log('No juz ni ma');
+                    if ($("#transactionsWrapper div").length == 0) {
                         $('#alterTransactionsModal').modal('hide');
                     }
                 }
@@ -117,7 +111,7 @@ $(document).ready(function () {
             e.preventDefault();
             let url = "/Settings/removeExpenseCategoryAjax";
             deleteCategory(url, categoryData.id, function (callback) {
-                if (callback > 0) {
+                if (callback == true) {
                     $('#confirmModal').modal('hide');
                     categoryData.rowToDelete.remove();
                 }

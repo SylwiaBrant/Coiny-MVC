@@ -15,12 +15,18 @@ function getDataAboutCategory(transaction, button) {
 
 function appendIncomeTransactionsToModal(categoryId, transactions) {
     $.each(transactions, function (i, t) {
+        var comment;
+        if (transactions[i].comment == null) {
+            comment = "<td class='comment'><i>brak komentarza</i></td>";
+        } else {
+            comment = "<td class='comment'>" + transactions[i].comment + "</td>";
+        }
         var row = "<hr><div class='row align-items-center' data-transactionId='" + transactions[i].transactionId +
             "' data-categoryId='" + categoryId + "'>" +
             "<div class='col'>" +
             "<div class='row'>" + transactions[i].date + "</div>" +
             "<div class='row'>" + transactions[i].name + "</div>" +
-            "<div class='row'>" + transactions[i].comment + "</div>" +
+            comment +
             "</div>" +
             "<div class='col-3'>" + transactions[i].money + "</div>" +
             "<div class='col-4 btn-group' aria-label='buttonsGroup'>" +
@@ -36,12 +42,18 @@ function appendIncomeTransactionsToModal(categoryId, transactions) {
 
 function appendExpenseTransactionsToModal(categoryId, transactions) {
     $.each(transactions, function (i, t) {
+        var comment;
+        if (transactions[i].comment == null) {
+            comment = "<td class='comment'><i>brak komentarza</i></td>";
+        } else {
+            comment = "<td class='comment'>" + transactions[i].comment + "</td>";
+        }
         var row = "<hr><div class='row align-items-center' data-transactionId='" + transactions[i].transactionId +
             "' data-categoryId='" + categoryId + "'>" +
             "<div class='col'>" +
             "<div class='row'>" + transactions[i].date + "</div>" +
             "<div class='row'>" + transactions[i].category + "</div>" +
-            "<div class='row'>" + transactions[i].comment + "</div>" +
+            comment +
             "</div>" +
             "<div class='col-3'>" +
             "<div class='row'>" + transactions[i].money + "</div>" +

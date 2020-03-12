@@ -96,6 +96,11 @@ class Expenses extends Authenticated{
         echo json_encode($result);
     }
 
+    public function editExpensePaymentAjax(){
+        $expense = new Expense($_POST);
+        $result = $expense->editExpensePayment();
+        echo json_encode($result);
+    }
     public function deleteEntryAjax(){
         $expense = new Expense($_POST);
         $result = $expense->deleteEntry();

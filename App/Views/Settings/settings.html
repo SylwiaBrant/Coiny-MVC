@@ -4,9 +4,10 @@
 <div class="container-fluid mainContent justify-content-center">
     <div class="text-center">
         <h1>Ustawienia</h1>
-        <!--    <form method="post" id="updateExpenseForm" action="/Expenses/editExpenseCategoryAjax">
+    </div>
+    <!--  <form method="post" id="updateExpenseForm" action="/Expenses/addPaymentCategoryAjax">
             <div class="form-group">
-                <label for="category">KATEGORIA</label>
+                <label for="category">ID</label>
                 <input id="category" type="number" class="form-control custom-select inputSlot" name="id">
                 </input>
             </div>
@@ -20,7 +21,6 @@
                 <button type="button" class="mainBtn cancelEditBtn cancelBtn">ANULUJ</button>
             </div>
         </form>-->
-    </div>
     <div class="accordion" id="settingsCategories">
         <div class="card">
             <div class="card-header" id="headingIncomes">
@@ -178,7 +178,9 @@
     </div>
 </div>
 
-{% include '/Modals/addCategoryModal.html'%}
+{% include '/Modals/addIncomeCategoryModal.html'%}
+{% include '/Modals/addExpenseCategoryModal.html'%}
+{% include '/Modals/addPaymentCategoryModal.html'%}
 {% include '/Modals/editCategoryModal.html'%}
 {% include '/Modals/confirmModal.html'%}
 {% include '/Modals/alterTransactionsModal.html'%}

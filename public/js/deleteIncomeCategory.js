@@ -28,7 +28,6 @@ $(document).ready(function () {
         let url = "/Incomes/getIncomesByCategoryAjax";
         getAssignedTransactionsFromDB(url, categoryData.id, function (transactions) {
             if (transactions.length == 0) {
-                console.log(transactions);
                 displayDeleteConfirmModal(categoryData);
             } else {
                 appendIncomeTransactionsToModal(categoryData.id, transactions);
@@ -66,16 +65,14 @@ $(document).ready(function () {
             rowToDelete.next().show();
         });
 
-        $('#alterTransactionsModal').on('click', '#submitEditIncome', function () {
+        $('#alterTransactionsModal').on('click', '#submitEditIncome', function (e) {
             e.preventDefault();
-            editTransactionCategory(transactionType, transactionId, function (result) {
+            editIncomeCategory(transactionId, function (result) {
                 if (result == true) {
-                    let container = rowToDelete.parent();
-                    rowToDelete.next().children().hide();
-                    rowToDelete.next().children().remove();
+                    rowToDelete.next().remove();
+                    rowToDelete.prev().remove();
                     rowToDelete.remove();
-                    if ($(container[0].id + " div").length == 0) {
-                        console.log('No juz ni ma');
+                    if ($("#transactionsWrapper div").length == 0) {
                         $('#alterTransactionsModal').modal('hide');
                     }
                 }
@@ -88,18 +85,17 @@ $(document).ready(function () {
             transactionId = rowToDelete.data('transactionid');
             rowToDelete.next().children().html($('#confrimTransactionDeletion').html());
             rowToDelete.next().show();
+            console.log('Row to delete: ', rowToDelete = button.parents().eq(1));
         });
 
         $('#alterTransactionsModal').on('click', ".confirmBtn", function () {
             //function in deleteTransaction.js file
             deleteTransactionEntry(transactionType, transactionId, function (result) {
                 if (result == true) {
-                    let container = rowToDelete.parent();
-                    rowToDelete.next().children().hide();
-                    rowToDelete.next().children().remove();
+                    rowToDelete.next().remove();
+                    rowToDelete.prev().remove();
                     rowToDelete.remove();
-                    if ($(container[0].id + " div").length == 0) {
-                        console.log('No juz ni ma');
+                    if ($("#transactionsWrapper div").length == 0) {
                         $('#alterTransactionsModal').modal('hide');
                     }
                 }

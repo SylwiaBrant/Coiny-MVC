@@ -54,7 +54,7 @@ class Settings extends Authenticated{
         echo json_encode($categories);
     }
 
-    public function getPaymentMethodsAjax(){
+    public function getPaymentCategoriesAjax(){
         $methods = Category::getPaymentMethods();
         echo json_encode($methods);
     }
@@ -109,7 +109,7 @@ class Settings extends Authenticated{
 
         public function addPaymentCategoryAjax(){
             $category =  new Category($_POST);
-            $result = $category->addPaymentMethod();  
+            $result = $category->addPaymentCategory();  
             echo json_encode($result);
         }
     }

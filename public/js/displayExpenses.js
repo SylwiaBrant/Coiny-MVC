@@ -49,14 +49,18 @@ $(document).ready(function () {
 
     function displayExpenses(expenses) {
         $.each(expenses, function (i, expense) {
-            console.log(expense);
+            var comment;
+            if (expense.comment == null) {
+                comment = "<td class='comment'>brak</td>";
+            } else {
+                comment = "<td class='comment'>" + expense.comment + "</td>";
+            }
             var row = "<tr data-catId='" + expense.id + "'>" +
                 "<td class='category'>" + expense.category + "</td>" +
                 "<td class='date'>" + expense.date + "</td>" +
                 "<td class='method'>" + expense.method + "</td>" +
                 "<td class='money'><strong>" + expense.money + "</strong></td>" +
-                "<td class='comment'>" + expense.comment + "</td>" +
-                "</tr>";
+                comment + "</tr>";
             $('#expensesTable tbody').append(row);
         });
     }

@@ -76,6 +76,12 @@ class Incomes extends Authenticated{
             'incomeCategories' => $categories]);
     }
 
+    public function editIncomeCategoryAjax(){
+        $income = new Income($_POST);
+        $result = $income->editIncomeCategory();
+        echo json_encode($result);
+    }
+
     public function deleteEntryAjax(){
         $income = new Income($_POST);
         $result = $income->deleteEntry();
