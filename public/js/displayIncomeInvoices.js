@@ -55,13 +55,17 @@ $(document).ready(function () {
             } else {
                 comment = "<td class='comment'>" + invoice.comment + "</td>";
             }
-            var row = "<tr data-catId='" + invoice.id + "'>" +
+            var row = "<tr data-invoiceid='" + invoice.id + "'>" +
                 "<td class='number'>" + invoice.number + "</td>" +
                 "<td class='contractor'>" + invoice.contractor + "</td>" +
                 "<td class='date'>" + invoice.date + "</td>" +
                 "<td class='paymentDate'>" + invoice.payment_date + "</td>" +
                 "<td class='money'><strong>" + invoice.money + "</strong></td>" +
-                comment + "</tr>";
+                comment +
+                "<td>" +
+                "<button type='button' class='settingsBtn editInvoiceBtn'><i class='icon-edit'></i></button>" +
+                "<button type='button' class='settingsBtn deleteInvoiceBtn'><i class='icon-trash'></i></button></td>" +
+                "</tr>";
             $('#invoicesTable tbody').append(row);
         });
     }

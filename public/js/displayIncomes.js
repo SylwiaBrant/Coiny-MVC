@@ -34,7 +34,7 @@ $(document).ready(function () {
             $.ajax({
                 url: url,
                 type: "POST",
-                dataType: 'json',
+                dataType: "json",
                 data: data
             }).done(function (incomes) {
                 $('#incomesTable tbody > tr').remove();
@@ -55,9 +55,9 @@ $(document).ready(function () {
             } else {
                 comment = "<td class='comment'>" + income.comment + "</td>";
             }
-            var row = "<tr data-catid='" + income.id + "'>" +
-                "<td class='incomeCategory'>" + income.name + "</td>" +
-                "<td class='incomeDate'>" + income.date + "</td>" +
+            var row = "<tr data-transid='" + income.id + "'>" +
+                "<td class='category'>" + income.name + "</td>" +
+                "<td class='date'>" + income.date + "</td>" +
                 "<td class='money'><strong>" + income.money + "</strong></td>" +
                 comment +
                 "<td>" +

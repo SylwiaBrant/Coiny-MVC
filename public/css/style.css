@@ -130,6 +130,7 @@ rgb(192, 117, 47), rgb(201, 45, 45)*/
 /*----------------------MAIN NAVIGATION STYLES------------------------*/
 
 .main-menu{
+    padding-top: 10px;
     float: left;
     position: fixed; 
     min-width: 250px;
@@ -382,9 +383,6 @@ label{
 .inputSlot{
     background-color: inherit;
 }
-input:focus ~ label{
-    
-}
 
 .formWrapper{
     margin: auto;
@@ -442,7 +440,7 @@ display: none;
 }
 
 #periodFormWrapper{
-    width: 460px;
+    width: 470px;
 }
 
 @media screen and (max-width: 495px) {
@@ -521,7 +519,7 @@ display: none;
 	table td::before { 
         position: absolute;
         top: 5px;
-        left: 6px;
+        left: 10px;
         width: 100%;
         padding-right: 40px;
         white-space: nowrap;
@@ -546,12 +544,6 @@ display: none;
     .invoiceTable td:nth-of-type(4):before { content: "Data płatności"; }
     .invoiceTable td:nth-of-type(5):before { content: "Kontrahent"; }
     .invoiceTable td:nth-of-type(6):before { content: "Komentarz"; }
-    td:empty {
-        visibility: hidden;
-      }
-      td:before:empty {
-        display: none;
-      }
 }
 
 /*----------------------SETTINGS PAGE STYLES------------------------*/
@@ -568,11 +560,23 @@ display: none;
     background-color: transparent;
 }
 .settingsBtn:focus {outline:none;} .settingsBtn::-moz-focus-inner {border:0;} 
- .settingsBtn:hover{
+.settingsBtn:hover{background-color:rgb(213, 214, 214);}
+.settingsBtn:active{background-color:rgb(174, 182, 192);}
 
-    background-color:rgb(213, 214, 214);
+.limitedFunds{
+    position: relative;
+    margin-bottom: 10px;
+    background-color: rgb(199, 199, 199);
+    height: 25px;
+    width: 100%;
+    border-radius: 5px;
  }
- .settingsBtn:active{
-
-    background-color:rgb(174, 182, 192);
+ 
+ .limitedFunds > span{
+	display: block;
+    background-image: linear-gradient(to bottom right, #F3BD91, #E78E97);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 5px;
  }

@@ -41,22 +41,27 @@
                     <th scope="col">Data płatności</th>
                     <th scope="col">Kwota</th>
                     <th scope="col">Komentarz</th>
+                    <th scope="col">Edytuj/Usuń</th>
                 </tr>
             </thead>
             <tbody>
                 {% if invoices is not empty %}
                 {% for invoice in invoices %}
-                <tr>
-                    <td>{{ invoice.number }}</td>
-                    <td>{{ invoice.contractor }}</td>
+                <tr data-invoiceId="{{invoice.id}}">
+                    <td class="invoiceNumber">{{ invoice.number }}</td>
+                    <td class="contractor">{{ invoice.contractor }}</td>
                     <td>{{ invoice.date }}</td>
-                    <td>{{ invoice.payment_date }}</td>
+                    <td class="paymentDate">{{ invoice.payment_date }}</td>
                     <td><strong>{{ invoice.money }}</strong></td>
                     {% if invoice.comment is not null %}
                     <td>{{ invoice.comment }}</td>
                     {% else %}
                     <td>brak</td>
                     {% endif %}
+                    <td>
+                        <button type="button" class="settingsBtn editIncomeBtn"><i class="icon-edit"></i></button>
+                        <button type="button" class="settingsBtn deleteIncomeBtn"><i class="icon-trash"></i></button>
+                    </td>
                 </tr>
                 {% endfor %}
                 {% endif %}
@@ -64,7 +69,10 @@
         </table>
     </div>
 </div>
+{% include '/Modals/editInvoiceModal.html' %}
+{% include '/Modals/confirmModal.html' %}
 {% endblock %}
 {% block footer %}
 <script src="/js/displayIncomeInvoices.js"></script>
+<script src="/js/editInvoice.js"></script>
 {% endblock %}

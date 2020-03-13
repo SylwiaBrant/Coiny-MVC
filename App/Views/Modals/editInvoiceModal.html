@@ -1,0 +1,34 @@
+<div class="modal fade" id="editInvoiceModal" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="editInvoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content px-2 px-sm-4">
+            <div class="modal-header justify-content-center ml-2">
+                <h4 class="modal-title">EDYTUJ FAKTURĘ</h4>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body mx-2">
+                <form method="post" id="editInvoiceForm">
+                    <div class="form-group">
+                        <input type="hidden" class="form-control" id="invoiceId" name="invoiceId">
+                    </div>
+                    <div class="form-group">
+                        <label for="invoiceNumber">NUMER FAKTURY</label>
+                        <input id="invoiceNumber" class="form-control inputSlot" type="text" name="invoiceNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="contractor">KONTRAHENT</label>
+                        <input id="contractor" class="form-control inputSlot" type="text" name="contractor">
+                    </div>
+                    <div class="form-group">
+                        <label for="invoicePayDate">TERMIN PŁATNOŚCI</label>
+                        <input id="invoicePayDate" class="form-control inputSlot" type="date" name="invoicePayDate">
+                    </div>
+                    <div class="d-flex row justify-content-around pt-4">
+                        <button type="button" class="mainBtn cancelBtn" data-dismiss="modal">ANULUJ</button>
+                        <input type="submit" class="mainBtn" name="submit" value="EDYTUJ">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

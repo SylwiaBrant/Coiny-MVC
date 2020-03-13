@@ -1,7 +1,6 @@
 {% block title %}Coiny - Wydatki{% endblock %}
 {% extends 'base.html' %}
 {% block body %}
-
 <div class="container-fluid mainContent justify-content-center align-items-top">
     <div id="choiceMenuWrapper" class="row align-items-top">
         <div class="col-lg">
@@ -47,13 +46,20 @@
                 {% if expenses is not empty %}
                 {% for expense in expenses %}
                 <tr>
-                    <td>{{ expense.category }}</td>
-                    <td>{{ expense.date }}</td>
-                    <td>{{ expense.method }}</td>
-                    <td><strong>{{ expense.money }}</strong></td>
-                    <td>{{ expense.name }}</td>
-                    <td>{{ expense.comment }}</td>
-                    <td></td>
+                <tr data-catid="{{ expense.id }}">
+                    <td class="expenseCategory">{{ expense.category }}</td>
+                    <td class="expenseDate">{{ expense.date }}</td>
+                    <td class="paymentMethod">{{ expense.method }}</td>
+                    <td class="money"><strong>{{ expense.money }}</strong></td>
+                    {% if expense.comment is not null %}
+                    <td class="comment">{{ expense.comment }}</td>
+                    {% else %}
+                    <td class="comment">brak</td>
+                    {% endif %}
+                    <td>
+                        <button type="button" class="settingsBtn editExpenseBtn"><i class="icon-edit"></i></button>
+                        <button type="button" class="settingsBtn deleteExpenseBtn"><i class="icon-trash"></i></button>
+                    </td>
                 </tr>
                 {% endfor %}
                 {% endif %}
@@ -61,7 +67,12 @@
         </table>
     </div>
 </div>
+{% include '/Modals/editExpenseModal.html' %}
+{% include '/Modals/confirmModal.html' %}
 {% endblock %}
 {% block footer %}
 <script src="/js/displayExpenses.js"></script>
+<script src="/js/editExpense.js"></script>
+<script src="/js/deleteTransaction.js"></script>
+<script src="/js/getCategories.js"></script>
 {% endblock %}
