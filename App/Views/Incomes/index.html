@@ -1,8 +1,8 @@
 {% block title %}Coiny - Przychody{% endblock %}
 {% extends 'base.html' %}
 {% block body %}
-<div class="container-fluid mainContent justify-content-center">
-    <div id="choiceMenuWrapper" class="row align-items-center">
+<div class="container-fluid mainContent justify-content-center align-items-top">
+    <div id="choiceMenuWrapper" class="row align-items-top">
         <div class="col-lg">
             <form id="selectDefaultForm">
                 <select id="transactionsPeriod" class="custom-select" name="transactionsPeriod">
@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg">
             <form id="periodForm" method="post">
-                <div id="periodFormWrapper" class="form-row align-items-center ml-1 mt-2 mt-lg-0">
+                <div id="periodFormWrapper" class="form-row align-items-top ml-1 mt-2 mt-lg-0">
                     <label>OD</label>
                     <div class="form-group">
                         <input id="startingDate" class="form-control" type="date" name="startingDate">
@@ -45,13 +45,13 @@
                 {% if incomes is not empty %}
                 {% for income in incomes %}
                 <tr data-catid="{{ income.id }}">
-                    <td>{{ income.name }}</td>
-                    <td>{{ income.date }}</td>
-                    <td><strong>{{ income.money }}</strong></td>
+                    <td class="incomeCategory">{{ income.name }}</td>
+                    <td class="incomeDate">{{ income.date }}</td>
+                    <td class="money"><strong>{{ income.money }}</strong></td>
                     {% if income.comment is not null %}
-                    <td>{{ income.comment }}</td>
+                    <td class="comment">{{ income.comment }}</td>
                     {% else %}
-                    <td>brak</td>
+                    <td class="comment">brak</td>
                     {% endif %}
                     <td>
                         <button type="button" class="settingsBtn editIncomeBtn"><i class="icon-edit"></i></button>
@@ -64,7 +64,6 @@
         </table>
     </div>
 </div>
-'
 {% include '/Modals/editIncomeModal.html' %}
 {% include '/Modals/confirmModal.html' %}
 {% endblock %}

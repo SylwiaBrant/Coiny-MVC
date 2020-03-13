@@ -1,8 +1,8 @@
 function fillInputsWithData(row) {
-    let transactionId = row.data('catid');
+    let transactionId = row.data('transid');
     let money = row.find('.money').text();
-    let date = row.find('.incomeDate').text();
-    let category = row.find('.incomeCategory').text();
+    let date = row.find('.date').text();
+    let category = row.find('.category').text();
     let comment = row.find('.comment').text();
     if (comment == 'brak') {
         comment = '';
@@ -34,7 +34,7 @@ $(document).ready(function () {
         let row = $(this).closest('tr');
         getCategoriesAjax('Income', function (categories) {
             $.each(categories, function (i, category) {
-                var option = "<option data-catid='" + category.id + "'>" + category.name + "</option>";
+                var option = "<option data-transid='" + category.id + "'>" + category.name + "</option>";
                 $('#incomeCategory').append(option);
             });
         });
@@ -45,13 +45,11 @@ $(document).ready(function () {
                 console.log("Sukces!" + response);
                 updateTable(row);
                 $('#editIncomeForm').trigger("reset");
-                $('#editIncomeForm').trigger("reset");
             }
         });
     });
 
     function editIncomeInDB(callback) {
-        console.log('weszlo');
         $('#editIncomeForm').validate({
             rules: {
                 money: {

@@ -34,7 +34,7 @@ $(document).ready(function () {
             $.ajax({
                 url: url,
                 type: "POST",
-                dataType: 'json',
+                dataType: "json",
                 data: data
             }).done(function (expenses) {
                 $('#expensesTable tbody > tr').remove();
@@ -55,12 +55,16 @@ $(document).ready(function () {
             } else {
                 comment = "<td class='comment'>" + expense.comment + "</td>";
             }
-            var row = "<tr data-catId='" + expense.id + "'>" +
+            var row = "<tr data-transid='" + expense.id + "'>" +
                 "<td class='category'>" + expense.category + "</td>" +
                 "<td class='date'>" + expense.date + "</td>" +
-                "<td class='method'>" + expense.method + "</td>" +
+                "<td class='payment'>" + expense.method + "</td>" +
                 "<td class='money'><strong>" + expense.money + "</strong></td>" +
-                comment + "</tr>";
+                comment +
+                "<td>" +
+                "<button type='button' class='settingsBtn editExpenseBtn'><i class='icon-edit'></i></button>" +
+                "<button type='button' class='settingsBtn deleteExpenseBtn'><i class='icon-trash'></i></button></td>" +
+                "</tr>";
             $('#expensesTable tbody').append(row);
         });
     }
