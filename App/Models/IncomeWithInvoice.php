@@ -4,7 +4,6 @@ use PDO;
 use \Core\View;
 use \App\Models\Income;
 use \App\Models\Invoice;
-use \App\Flash;
 
 /**
  * Signup controller

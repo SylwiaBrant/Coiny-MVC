@@ -1,3 +1,3 @@
 --Reset hasła w serwisie Coiny--
-
+Z serwisu Coiny została wysłana na ten email prośba o link resetujący hasło. 
 Aby zresetować hasło, kliknij w link: {{ url }}

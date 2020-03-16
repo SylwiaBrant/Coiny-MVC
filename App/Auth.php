@@ -23,17 +23,6 @@ class Auth{
     }
 
     /**
-     * Get the current logged-in user, from the session or the remember_me cookie
-     * @return mixed The user model or null if not logged in
-     */
-    public static function getUser(){
-        if (isset($_SESSION['user_id'])){
-            return User::findByID($_SESSION['user_id']);
-        } else {
-            return static::loginFromRememberCookie();
-        }
-    }
-    /**
      * Log out the user
      * @return void
      */
@@ -72,7 +61,19 @@ class Auth{
     public static function getReturnToPage(){
         return $_SESSION['return_to'] ?? '/';
     }
-    
+
+    /**
+     * Get the current logged-in user, from the session or the remember_me cookie
+     * @return mixed The user model or null if not logged in
+     */
+    public static function getUser(){
+        if (isset($_SESSION['user_id'])){
+            return User::findByID($_SESSION['user_id']);
+        } else {
+            return static::loginFromRememberCookie();
+        }
+    }
+
     /**
      * Login the user from a remember_me cookie
      * @return mixed The user model if login cookie found, null otherwise
@@ -88,12 +89,13 @@ class Auth{
             }
         }
     }
+
     /**
      * Forget the remembered login, if present
      * @return void
      */
     public static function forgetLogin(){
-        $cookie =$_COOKIE['remember_me'] ?? false;
+        $cookie = $_COOKIE['remember_me'] ?? false;
         if($cookie){
             $remembered_login = RememberedLogin::findByToken($cookie);
             if($remembered_login){

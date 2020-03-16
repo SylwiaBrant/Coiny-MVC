@@ -19,11 +19,6 @@ class Category extends \Core\Model{
         foreach ($data as $key =>$value){
             $this->$key = $value;
         };
-    /*    if(isset($_POST['fundsBlockCheckbox'])){
-            $this->blockedFunds = $_POST['blockedFunds'];
-        }else{
-            $this->blockedFunds = NULL;
-        }*/
     }
     /**
      * Get income categories associated with user from DB

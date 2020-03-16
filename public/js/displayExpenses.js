@@ -59,7 +59,7 @@ $(document).ready(function () {
                 "<td class='category'>" + expense.category + "</td>" +
                 "<td class='date'>" + expense.date + "</td>" +
                 "<td class='payment'>" + expense.method + "</td>" +
-                "<td class='money'><strong>" + expense.money + "</strong></td>" +
+                "<td class='money'>" + expense.money + "</td>" +
                 comment +
                 "<td>" +
                 "<button type='button' class='settingsBtn editExpenseBtn'><i class='icon-edit'></i></button>" +

@@ -1,9 +1,9 @@
 function fillInputsWithData(row) {
     let transactionId = row.data('transid');
     let money = row.find('.money').text();
-    let date = row.find('.date').text();
-    let payment = row.find('.payment').text();
-    let category = row.find('.category').text();
+    let date = row.find('.expenseDate').text();
+    let payment = row.find('.paymentMethod').text();
+    let category = row.find('.expenseCategory').text();
     let comment = row.find('.comment').text();
     if (comment == 'brak') {
         comment = '';
@@ -26,10 +26,10 @@ function updateTable(row) {
     if (comment == '') {
         comment = 'brak';
     }
-    row.find('td.money').html(money);
+    row.find('td.money').text(money);
     row.find('td.expenseDate').html(date);
     row.find('td.paymentMethod').html(payment);
-    row.find('td.category').html(category);
+    row.find('td.expenseCategory').html(category);
     row.find('td.comment').html(comment);
 }
 
@@ -54,7 +54,8 @@ $(document).ready(function () {
             if (response == true) {
                 console.log("Sukces!" + response);
                 updateTable(row);
-                $('#editExpenseForm').trigger("reset");
+                $('#editExpenseForm').trigger('reset');
+                $('#editExpenseModal').modal('hide');
             }
         });
     });
@@ -84,6 +85,7 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 var data = $(form).serialize();
+                console.log(data);
                 $.ajax({
                     url: "/Expenses/editExpenseAjax",
                     type: "POST",

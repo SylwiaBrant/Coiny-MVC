@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Models;
-
 use PDO;
 use \App\Token;
 use \App\Mail;
@@ -184,8 +182,10 @@ class User extends \Core\Model
         if($user) {
             if($user->startPasswordReset()){
                 $user->sendPasswordResetEmail();
+                return true;
             }
         }
+        return false;
     }
     protected function startPasswordReset(){
         $token = new Token();

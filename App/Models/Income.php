@@ -5,7 +5,7 @@ use PDO;
 use \Core\View;
 
 /**
- * Signup controller
+ * Income controller
  *
  * PHP version 7.0
  */
@@ -88,7 +88,16 @@ class Income extends \Core\Model{
         $stmt->bindValue(':comment', $this->comment, PDO::PARAM_STR);           
         $stmt->bindValue(':transactionId', $this->id, PDO::PARAM_INT); 
         $stmt->execute();
-        
+        return $stmt->rowCount();
+    }
+
+    public function deleteIncome(){
+        $sql ='DELETE FROM incomes WHERE id=:id AND user_id=:user_id'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $stmt->execute();
         return $stmt->rowCount();
     }
 
@@ -103,25 +112,24 @@ class Income extends \Core\Model{
         $stmt->bindValue(':startingDate', $this->startingDate, PDO::PARAM_STR);
         $stmt->bindValue(':endingDate', $this->endingDate, PDO::PARAM_STR);
         $stmt->execute();
-
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }   
 
-    public function getIncomesSumFromDB($period){
+    public function getIncomesSumFromDB(){
         $sql = 'SELECT ROUND(SUM(money),2) as totalAmount FROM incomes 
             WHERE user_id=:user_id AND date BETWEEN :startingDate 
             AND :endingDate ORDER BY date DESC';
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
-        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
-        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
+        $stmt->bindValue(':startingDate', $this->startingDate, PDO::PARAM_STR);
+        $stmt->bindValue(':endingDate', $this->endingDate, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetch();
         return $row['totalAmount'];
     }
 
-    public function getSumsByCategory($period){
+    public function getSumsByCategory(){
         $sql ='SELECT ic.name, ROUND(SUM(i.money),2) AS money FROM incomes 
             AS i INNER JOIN income_categories AS ic WHERE 
             i.category_id=ic.id AND ic.user_id=i.user_id 
@@ -130,31 +138,28 @@ class Income extends \Core\Model{
         $db = static::getDB();
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_STR);
-        $stmt->bindValue(':startingDate', $period['startingDate'], PDO::PARAM_STR);
-        $stmt->bindValue(':endingDate', $period['endingDate'], PDO::PARAM_STR);
+        $stmt->bindValue(':startingDate', $this->startingDate, PDO::PARAM_STR);
+        $stmt->bindValue(':endingDate', $this->endingDate, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } 
 
     public function getLastTransactionPerCategory(){
-        $user_id = $_SESSION['user_id'];
         $sql ='SELECT ic.name,i.money, MAX(i.date) AS date, i.comment FROM incomes AS i 
             INNER JOIN income_categories AS ic WHERE i.category_id=ic.id 
             AND ic.user_id=i.user_id AND ic.user_id=:user_id GROUP BY ic.name'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);   
     }
 
     public function getIncomesByCategory(){
-        $user_id = $_SESSION['user_id'];
         $sql ='SELECT i.id AS transactionId, ic.id AS categoryId, ic.name, i.date, i.money, i.comment FROM incomes AS i 
                 INNER JOIN income_categories AS ic WHERE ic.id=:categoryId AND i.category_id=ic.id'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);
-
         $stmt->bindValue(':categoryId', $this->categoryId, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -168,17 +173,6 @@ class Income extends \Core\Model{
         $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT); 
         $stmt->bindValue(':transactionId', $this->id, PDO::PARAM_INT);           
         $stmt->bindValue(':category', $this->name, PDO::PARAM_STR);
-        $stmt->execute();
-        
-        return $stmt->rowCount();
-    }
-
-    public function deleteEntry(){
-        $sql ='DELETE FROM incomes WHERE id=:id AND user_id=:user_id'; 
-        $db = static::getDB();
-        $stmt = $db->prepare($sql);
-        $stmt->bindValue(':id', $this->id, PDO::PARAM_INT);
-        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->rowCount();
     }

@@ -50,17 +50,18 @@ $(document).ready(function () {
                 data: data
             }).done(function (response) {
                 if (response == true) {
-                    console.log("Sukces!" + response);
                     $(form).trigger("reset");
                     $('#invoiceDropdown').hide();
+                    addSuccessFlash('Przychód dodany pomyślnie.');
                 }
                 else {
-                    console.log("No tak średnio bym powiedziała." + response);
-                    console.dir(arguments);
+                    addFailFlash('Coś poszło nie tak...');
+                    /*  console.dir(response);*/
                 }
             }).fail(function (jqXHR, textStatus) {
-                console.log("No i klops!" + jqXHR + textStatus);
-                console.dir(arguments);
+                addFailFlash('Coś poszło nie tak...');
+                /*  console.log("No i klops!" + jqXHR + textStatus);
+                  console.dir(arguments);*/
             });
             return false;
         }

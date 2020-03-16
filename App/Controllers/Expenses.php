@@ -1,6 +1,5 @@
 <?php
 namespace App\Controllers;
-
 use \Core\View;
 use \App\Models\Expense;
 use \App\Models\ExpenseWithInvoice;
@@ -17,9 +16,9 @@ class Expenses extends Authenticated{
      */
     public function indexAction(){
         $period = Date::getThisMonth();
-        $expenses = new Expense();
+        $expenses = new Expense($period);
         View::renderTemplate('Expenses/index.html',[
-            'expenses' => $expenses->getExpensesFromDB($period)]);
+            'expenses' => $expenses->getExpensesFromDB()]);
     }
     /**
      * Show expenses
@@ -27,35 +26,30 @@ class Expenses extends Authenticated{
      */
     public function showThisWeekExpensesAjax(){
         $period = Date::getThisWeek();
-        $expense = new Expense();
-        $entries = $expense->getExpensesFromDB($period);
+        $expense = new Expense($period);
+        $entries = $expense->getExpensesFromDB();
         echo json_encode($entries);
-      }
+    }
 
     public function showThisMonthExpensesAjax(){
         $period = Date::getThisWeek();
-        $expense = new Expense();
-        $entries = $expense->getExpensesFromDB($period);
+        $expense = new Expense($period);
+        $entries = $expense->getExpensesFromDB();
         echo json_encode($entries);
     }
 
     public function showLastMonthExpensesAjax(){
         $period = Date::getLastMonth();
-        $expense = new Expense();
-        $entries = $expense->getExpensesFromDB($period);
+        $expense = new Expense($period);
+        $entries = $expense->getExpensesFromDB();
         echo json_encode($entries);
     }
 
     public function showChosenPeriodExpensesAjax(){
         $period = Date::getChosenPeriod($_POST);
-        if($period){
-            $expenses = new Expense();
-            $entries = $expense->getExpensesFromDB($period);
-            echo json_encode($entries);
-        } else {
-            Flash::addMessage('Proszę wpisać obie daty w formacie YYYY-MM-DD.', Flash::WARNING);
-            View::renderTemplate('Expenses/chosenPeriod.html',[]);
-        } 
+        $expenses = new Expense($period);
+        $entries = $expense->getExpensesFromDB();
+        echo json_encode($entries);
     }
 
     public function addExpenseAjax(){
@@ -90,6 +84,18 @@ class Expenses extends Authenticated{
         echo json_encode($result);
     }
 
+    public function getLimitedExpenseCategories($period){
+        $expense = new Expense($period);
+        $entries = $expense->getLimitedExpenseCategories();
+        echo json_encode($entries);
+    }
+
+    public function getLimitedPaymentMethods($period){
+        $expense = new Expense($period);
+        $entries = $expense->getLimitedPaymentMethods();
+        echo json_encode($entries);
+    }
+
     public function editExpenseCategoryAjax(){
         $expense = new Expense($_POST);
         $result = $expense->editExpenseCategory();
@@ -101,9 +107,16 @@ class Expenses extends Authenticated{
         $result = $expense->editExpensePayment();
         echo json_encode($result);
     }
-    public function deleteEntryAjax(){
+
+    public function editExpenseAjax(){
         $expense = new Expense($_POST);
-        $result = $expense->deleteEntry();
+        $result = $expense->editExpense();
+        echo json_encode($result);
+    }
+
+    public function deleteExpenseAjax(){
+        $expense = new Expense($_POST);
+        $result = $expense->deleteExpense();
         echo json_encode($result);
     }
 }

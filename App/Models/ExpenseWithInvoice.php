@@ -5,7 +5,6 @@ use PDO;
 use \Core\View;
 use \App\Models\Expense;
 use \App\Models\Invoice;
-use \App\Flash;
 
 /**
  * Signup controller

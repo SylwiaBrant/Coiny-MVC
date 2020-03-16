@@ -1,7 +1,7 @@
 {% extends 'sign-base.html' %}
 {% block title %}Coiny - Zresetuj hasło{% endblock %}
 {% block body %}
-<div class="form-wrapper pt-5 mx-4 ml-md-0">
+<div class="formWrapper mx-4 ml-md-0">
     <div class="d-flex flex-row justify-content-between">
         <h2>Zresetuj hasło</h2>
     </div>
@@ -14,13 +14,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"><img src="/img/114-user.png"></span>
                         </div>
-                        <input class="form-control inputSlot" name="email" type="email" placeholder="Email" value= "{{email}}">
+                        <input class="form-control inputSlot" name="email" type="email" placeholder="Email"
+                            value="{{email}}">
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-center mt-3">
                 <input class="mainBtn" type="submit" name="submit" value="Wyślij">
-            </div> 
+            </div>
         </form>
     </div>
 </div>
