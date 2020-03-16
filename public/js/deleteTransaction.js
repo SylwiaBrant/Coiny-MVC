@@ -1,6 +1,6 @@
 function deleteTransactionEntry(transactionType, transactionId, callback) {
     console.log('No i wyszło: ', transactionType, transactionId);
-    let url = "/" + transactionType + "s/deleteEntryAjax";
+    let url = "/" + transactionType + "s/delete" + transactionType + "Ajax";
     $.ajax({
         url: url,
         type: "POST",
@@ -20,7 +20,7 @@ $(document).ready(function () {
     $('#incomesTable').on('click', '.deleteIncomeBtn', function () {
         let row = $(this).closest('tr');
         console.log(row);
-        let transactionId = row.data('catid');
+        let transactionId = row.data('transid');
         let question = "Czy na pewno chcesz usunąć wpis?"
         $('#question').html(question);
         $('#confirmModal').modal('toggle');
@@ -29,7 +29,7 @@ $(document).ready(function () {
 
     $('#expensesTable').on('click', '.deleteExpenseBtn', function () {
         let row = $(this).closest('tr');
-        let transactionId = row.data('catid');
+        let transactionId = row.data('transid');
         let question = "Czy na pewno chcesz usunąć wpis?"
         $('#question').html(question);
         $('#confirmModal').modal('toggle');

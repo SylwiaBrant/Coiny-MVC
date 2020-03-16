@@ -45,14 +45,9 @@ class Incomes extends Authenticated{
         
     public function showChosenPeriodIncomesAjax(){
         $period = Date::getChosenPeriod($_POST);
-        if($period){
-            $incomes = new Income($period);
-            $entries = $incomes->getIncomesFromDB();
-            echo json_encode($entries);
-        }else {
-            Flash::addMessage('Proszę wpisać obie daty w formacie YYYY-MM-DD.', Flash::WARNING);
-            View::renderTemplate('Incomes/chosenPeriod.html',[]);
-        }
+        $incomes = new Income($period);
+        $entries = $incomes->getIncomesFromDB();
+        echo json_encode($entries);
     }
     
     public function addIncomeAjax(){
@@ -82,21 +77,21 @@ class Incomes extends Authenticated{
         echo json_encode($result);
     }
 
-    public function editIncomeCategoryAjax(){
+    public function deleteIncomeAjax(){
         $income = new Income($_POST);
-        $result = $income->editIncomeCategory();
-        echo json_encode($result);
-    }
-
-    public function deleteEntryAjax(){
-        $income = new Income($_POST);
-        $result = $income->deleteEntry();
+        $result = $income->deleteIncome();
         echo json_encode($result);
     }
 
     public function getIncomesByCategoryAjax(){
         $income = new Income($_POST);
         $result = $income->getIncomesByCategory();
+        echo json_encode($result);
+    }
+
+    public function editIncomeCategoryAjax(){
+        $income = new Income($_POST);
+        $result = $income->editIncomeCategory();
         echo json_encode($result);
     }
 }

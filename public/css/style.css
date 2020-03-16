@@ -5,17 +5,34 @@ body{
    margin: 0;
    padding: 0;
 }
+
 .alert{
-    position: fixed; 
-    z-index: 2;
-    width: 100vw;
-    border-bottom: 1px solid;
+    display: block;
+    font-weight: 600;
+    width: 100%;
+    width: inherit;
+    box-shadow: 0 0 10px rgb(16, 19, 24);
+    border-radius: 0;
+    border: none;
+    min-height: 40px;
+}
+
+.alert.success{
+    background: linear-gradient(to bottom right, rgb(98, 151, 126),rgb(152, 236, 140));
+}
+
+.alert.fail{
+    background: linear-gradient(to bottom right, rgb(151, 98, 98),rgb(236, 140, 140));
+}
+
+button.close{
+    padding: 0 1rem;
 }
 .container-fluid.entryPage{
     background-color:  rgb(28, 37, 56);
     min-height: 100vh;
-
 }
+
 .container.entryPage{
     background-color: white;
     min-height: 100vh;
@@ -88,12 +105,10 @@ h2{
  }
 
 h4{
-    color: rgb(218, 98, 61);
+    font-weight: 600;
+    font-size: 1.2em;
+    margin-bottom: 0;
 }
-/*
-rgb(219, 163, 59), rgb(204, 57, 81)
-rgb(231, 193, 68), rgb(231, 68, 95)
-rgb(192, 117, 47), rgb(201, 45, 45)*/
 
 .info-board{
     background-color: rgb(255, 255, 255);
@@ -322,21 +337,17 @@ img.icon{
     min-width: 100px;
     padding: 5px 10px 5px 10px;
     box-shadow: 0 0 5px rgb(16, 19, 24);
+    background-image: linear-gradient(rgb(58, 72, 92), rgb(26, 40, 65));
+}
+
+.secondaryBtn:hover{
+    background-image: linear-gradient(rgb(70, 88, 112), rgb(34, 46, 68)); ;
+}
+
+.secondaryBtn:active{
     background-image: linear-gradient(rgb(43, 59, 80), rgb(8, 17, 34));
 }
-.secondaryBtn:hover{
-    background-color: rgb(44, 72, 97);
-}
-/*
-[type="button"]{
-    border: none;
-    border-radius: 20px;
-    padding-bottom: 0.1em;
-    color: whitesmoke;
-    background-image: linear-gradient(to top right, rgb(51, 69, 90), rgb(34, 42, 59));
-    cursor: pointer;
-}
-*/
+
 a{
     text-decoration: none;
     color: inherit;
@@ -354,15 +365,17 @@ a:hover{
 /*----------------------FORM STYLES------------------------*/
 /* Remove default form styling */
 
-textarea:hover, 
 textarea:active, 
 textarea:focus, 
 label:focus{
-    outline: 0px;
-    -webkit-appearance:none;
+    outline: none;
+    -webkit-appearance: none; 
     box-shadow: none !important;
+    border: 2px solid rgb(218, 98, 61) !important;
     background-color: inherit !important;
+
 }
+
 
 input[type=number] {
     -moz-appearance:textfield;
@@ -393,13 +406,12 @@ label{
 }
 
 .form-control{
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid rgb(114, 124, 133);
+    border-radius: 5px;
+    border: 1px solid rgb(114, 124, 133);
 }
 
-option{
-    background: inherit;
+.form-check{
+    padding-left: 0px;
 }
 
 input.form-control.inputSlot:focus, 
@@ -408,14 +420,12 @@ input.form-control.inputSlot:active:focus,
 select.form-control.inputSlot:focus, 
 select.form-control.inputSlot.active:focus, 
 select.form-control.inputSlot:active:focus
-textarea.form-control.inputSlot:focus, 
 textarea.form-control.inputSlot.active:focus, 
 textarea.form-control.inputSlot:active:focus{
     box-shadow: none;
-    border: none;
     outline: none;
     background: inherit;
-    border-bottom: 2px solid rgb(218, 98, 61);
+    border: 2px solid rgb(218, 98, 61);
     color: rgb(25, 44, 61);
 }
 
@@ -490,6 +500,9 @@ display: none;
 }
 
 /*----------------------GLOBAL TABLE STYLES------------------------*/
+td.money{
+    font-weight: 700;
+}
 
 @media screen and (max-width: 768px){
     table, thead, tbody, th, td, tr {
@@ -517,10 +530,6 @@ display: none;
         margin-left: 130px;
     }
     
-    .table td .money{
-        font-weight: 500;
-    }
-
 	table td::before { 
         position: absolute;
         top: 5px;
@@ -577,6 +586,8 @@ display: none;
 .settingsBtn:focus {outline:none;} .settingsBtn::-moz-focus-inner {border:0;} 
 .settingsBtn:hover{background-color:rgb(213, 214, 214);}
 .settingsBtn:active{background-color:rgb(174, 182, 192);}
+
+/*----------------------SETTINGS LIMIT BARS------------------------*/
 
 .limitedFunds{
     position: relative;

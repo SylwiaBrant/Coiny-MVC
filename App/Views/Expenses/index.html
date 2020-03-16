@@ -1,7 +1,13 @@
 {% block title %}Coiny - Wydatki{% endblock %}
 {% extends 'base.html' %}
+{% block footer %}
+<script src="/js/displayExpenses.js"></script>
+<script src="/js/editExpense.js"></script>
+<script src="/js/deleteTransaction.js"></script>
+<script src="/js/getCategories.js"></script>
+{% endblock %}
 {% block body %}
-<div class="container-fluid mainContent justify-content-center align-items-top">
+<div class="container-fluid mainContent justify-content-center">
     <div id="choiceMenuWrapper" class="row align-items-top">
         <div class="col-lg">
             <form id="selectDefaultForm">
@@ -46,7 +52,7 @@
                 {% if expenses is not empty %}
                 {% for expense in expenses %}
                 <tr>
-                <tr data-catid="{{ expense.id }}">
+                <tr data-transid="{{ expense.id }}">
                     <td class="expenseCategory">{{ expense.category }}</td>
                     <td class="expenseDate">{{ expense.date }}</td>
                     <td class="paymentMethod">{{ expense.method }}</td>
@@ -69,10 +75,4 @@
 </div>
 {% include '/Modals/editExpenseModal.html' %}
 {% include '/Modals/confirmModal.html' %}
-{% endblock %}
-{% block footer %}
-<script src="/js/displayExpenses.js"></script>
-<script src="/js/editExpense.js"></script>
-<script src="/js/deleteTransaction.js"></script>
-<script src="/js/getCategories.js"></script>
 {% endblock %}

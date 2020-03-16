@@ -1,5 +1,5 @@
+{% block title %}Coiny - Bilans{% endblock %}
 {% extends "base.html" %}
-{% block title %}Coiny{% endblock %}
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
     <div class="row justify-content-around">
@@ -40,160 +40,68 @@
                 {% else %}
                 <p class="incomeBox">W ciągu najbliższych 7 dni przypada termin płatności faktur:</p>
                 {% for invoice in invoices %}
-                <div class="row">
+                <div class='row align-items-center'>
                     <div class="col-1">
                         <p>#{{loop.index}}</p>
                     </div>
-                    <div class="col-3">
-                        <p>{{invoice.number}}</p>
-                    </div>
-                    <div class="col-3">
-                        <p>{{invoice.payment_date}}</p>
-                    </div>
-                    <div class="col-3">
-                        <p>{{invoice.contractor}}</p>
-                    </div>
-                    <div class="col-2">
-                        <p>{{invoice.money}}</p>
+                    <div class="col-11">
+                        <div class="row">
+                            <div class='col-md-3'>{{invoice.number}}</div>
+                            <div class='col-md-6'>{{invoice.contractor}}</div>
+                            <div class='col-md-3'>{{invoice.money}}</div>
+                        </div>
+                        <div class="row">
+                            <p class="col-12"><strong>Data płatności: {{invoice.payment_date}}</strong></p>
+                        </div>
                     </div>
                 </div>
+                <hr>
                 {% endfor %}
                 {% endif %}
             </div>
             <div class="info-board mb-3">
                 <h3>Fundusze z limitem</h3>
                 <hr>
-                <div class="limitedFunds">
-                    <!--<span class="moneySpent" style="width: %"></span>-->
+                <div id="limitedFunds">
                 </div>
-                <div class="limitedFunds">
-                    <span class="moneySpent" style="width: 25%"></span>
-                </div>
-                <div class="limitedFunds">
-                    <span class="moneySpent" style="width: 25%"></span>
-                </div>
-
             </div>
-        </div>
-        <div>
-            <h3>Ostatnie transakcje</h3>
-            <hr>
-            <table class="table bg-light table-striped incomeTable">
-                <thead>
-                    <tr>
-                        <th scope="col">Rodzaj przychodu</th>
-                        <th scope="col">Data</th>
-                        <th scope="col">Kwota</th>
-                        <th scope="col">Komentarz</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for lastIncome in lastIncomes %}
-                    <tr>
-                        <td>{{ lastIncome.name }}</td>
-                        <td>{{ lastIncome.date }}</td>
-                        <td>{{ lastIncome.money }}</td>
-                        <td>{{ lastIncome.comment }}</td>
-                    </tr>
-                    {% endfor %}
-                    {% for lastExpense in lastExpenses %}
-                    <tr>
-                        <td>{{ lastExpense.name }}</td>
-                        <td>{{ lastExpense.date }}</td>
-                        <td>{{ lastExpense.money }}</td>
-                        <td>{{ lastExpense.comment }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="info-board mb-3">
+                <h3>Ostatnie transakcje</h3>
+                <hr>
+                <table class="table bg-light table-striped incomeTable">
+                    <thead>
+                        <tr>
+                            <th scope="col">Rodzaj przychodu</th>
+                            <th scope="col">Data</th>
+                            <th scope="col">Kwota</th>
+                            <th scope="col">Komentarz</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lastIncome in lastIncomes %}
+                        <tr>
+                            <td>{{ lastIncome.name }}</td>
+                            <td>{{ lastIncome.date }}</td>
+                            <td>{{ lastIncome.money }}</td>
+                            <td>{{ lastIncome.comment }}</td>
+                        </tr>
+                        {% endfor %}
+                        {% for lastExpense in lastExpenses %}
+                        <tr>
+                            <td>{{ lastExpense.name }}</td>
+                            <td>{{ lastExpense.date }}</td>
+                            <td>{{ lastExpense.money }}</td>
+                            <td>{{ lastExpense.comment }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 {% endblock %}
 {% block footer %}
 <script src="/js/node_modules/chart.js/dist/Chart.js"></script>
-<script>
-    $(document).ready(function () {
-        Chart.defaults.global.maintainAspectRatio = false;
-        var transactionsData;
-        let invoices;
-        let incomeCategoriesSums;
-        let expenseCategoriesSums;
-        let incomesSum;
-        let expensesSum;
-
-        $.ajax({
-            url: "/Home/getIncomeCategoriesSums",
-            method: 'POST',
-            dataType: 'json'
-        }).done(function (response) {
-            invoices = response['invoices'];
-            incomesSum = response['incomesSum'];
-            expensesSum = response['expensesSum'];
-            incomeCategoriesSums = response['incomeCategoriesSums'];
-            expenseCategoriesSums = response['expenseCategoriesSums'];
-            setPieChartData(incomeCategoriesSums, '#incomesPie', 'Przychody wg. kategorii');
-            setPieChartData(expenseCategoriesSums, '#expensesPie', 'Wydatki wg. kategorii');
-
-        }).fail(function (response) {
-            console.log('no lipa');
-        });
-
-        function setPieChartData(sums, canvas, title) {
-            var labels = sums.map(function (e) {
-                return e.name;
-            });
-            var data = sums.map(function (e) {
-                return e.money;
-            });
-            var pieConfig = {
-                type: 'doughnut',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: [
-                            'rgba(92, 104, 152, 0.7)',
-                            'rgba(243, 210, 172, 0.7)',
-                            'rgba(204, 119, 147, 0.7)',
-                            'rgba(129, 208, 233, 0.7)',
-                            'rgba(0, 48, 65, 0.7)',
-                            'rgba(142, 38, 72, 0.7)',
-                            'rgba(224, 138, 123, 0.7)',
-                            'rgba(179, 218, 97, 0.7)',
-                        ],
-                        borderColor: [
-                            'rgba(255, 255, 255, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    title: {
-                        display: true,
-                        fontFamily: 'Helvetica',
-                        fontSize: 16,
-                        text: title,
-                        fontColor: '#212529'
-                    },
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        align: 'left',
-                        labels: {
-                            boxWidth: 15
-                        }
-                    }
-                }
-            };
-            renderChart(canvas, pieConfig);
-        }
-        function renderChart(canvas, config) {
-            let ctx = $(canvas)[0].getContext('2d');
-            let chart = new Chart(ctx, config);
-        }
-    });
-</script>
+<script src="/js/displayCharts.js"></script>
 {% endblock %}

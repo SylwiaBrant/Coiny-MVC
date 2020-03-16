@@ -1,9 +1,13 @@
-{% block title %}Coiny - Przychody{% endblock %}
+{% block title %}Coiny - Faktury wystawione{% endblock %}
 {% extends 'base.html' %}
+{% block footer %}
+<script src="/js/displayIncomeInvoices.js"></script>
+<script src="/js/editInvoice.js"></script>
+<script src="/js/deleteInvoice.js"></script>
+{% endblock %}
 {% block body %}
-
 <div class="container-fluid mainContent justify-content-center">
-    <div id="choiceMenuWrapper" class="row align-items-center">
+    <div id="choiceMenuWrapper" class="row align-items-top">
         <div class="col-lg">
             <form id="selectDefaultForm">
                 <select id="transactionsPeriod" class="custom-select" name="transactionsPeriod">
@@ -15,7 +19,7 @@
         </div>
         <div class="col-lg">
             <form id="periodForm" method="post">
-                <div id="periodFormWrapper" class="form-row align-items-center ml-1 mt-2 mt-lg-0">
+                <div id="periodFormWrapper" class="form-row align-items-top ml-1 mt-2 mt-lg-0">
                     <label>OD</label>
                     <div class="form-group">
                         <input id="startingDate" class="form-control" type="date" name="startingDate">
@@ -71,9 +75,4 @@
 </div>
 {% include '/Modals/editInvoiceModal.html' %}
 {% include '/Modals/confirmModal.html' %}
-{% endblock %}
-{% block footer %}
-<script src="/js/displayIncomeInvoices.js"></script>
-<script src="/js/editInvoice.js"></script>
-<script src="/js/deleteInvoice.js"></script>
 {% endblock %}

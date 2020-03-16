@@ -1,8 +1,8 @@
 function fillInputsWithData(row) {
     let transactionId = row.data('transid');
     let money = row.find('.money').text();
-    let date = row.find('.date').text();
-    let category = row.find('.category').text();
+    let date = row.find('.incomeDate').text();
+    let category = row.find('.incomeCategory').text();
     let comment = row.find('.comment').text();
     if (comment == 'brak') {
         comment = '';
@@ -25,7 +25,7 @@ function updateTable(row) {
     }
     row.find('td.money').html(money);
     row.find('td.incomeDate').html(date);
-    row.find('td.category').html(category);
+    row.find('td.incomeCategory').html(category);
     row.find('td.comment').html(comment);
 }
 
@@ -42,9 +42,10 @@ $(document).ready(function () {
         $('#editIncomeModal').modal('show');
         editIncomeInDB(function (response) {
             if (response == true) {
-                console.log("Sukces!" + response);
+                /*console.log("Sukces!" + response);*/
                 updateTable(row);
                 $('#editIncomeForm').trigger("reset");
+                $('#editIncomeModal').modal('hide');
             }
         });
     });
@@ -70,7 +71,6 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 var data = $(form).serialize();
-                console.log(data);
                 $.ajax({
                     url: "/Incomes/editIncomeAjax",
                     type: "POST",
@@ -78,11 +78,11 @@ $(document).ready(function () {
                     cache: false,
                     data: data
                 }).done(function (response) {
-                    console.log(response);
-                    callback(response);
+                    /*console.log(response);
+                     callback(response);*/
                 }).fail(function (jqXHR, textStatus) {
-                    console.log("No i klops!" + jqXHR + textStatus);
-                    console.dir(arguments);
+                    /*console.log("No i klops!" + jqXHR + textStatus);
+                    console.dir(arguments);*/
                 });
                 return false;
             }

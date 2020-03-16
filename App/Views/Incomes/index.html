@@ -1,7 +1,13 @@
 {% block title %}Coiny - Przychody{% endblock %}
 {% extends 'base.html' %}
+{% block footer %}
+<script src="/js/displayIncomes.js"></script>
+<script src="/js/editIncome.js"></script>
+<script src="/js/deleteTransaction.js"></script>
+<script src="/js/getCategories.js"></script>
+{% endblock %}
 {% block body %}
-<div class="container-fluid mainContent justify-content-center align-items-top">
+<div class="container-fluid mainContent justify-content-center">
     <div id="choiceMenuWrapper" class="row align-items-top">
         <div class="col-lg">
             <form id="selectDefaultForm">
@@ -44,7 +50,7 @@
             <tbody>
                 {% if incomes is not empty %}
                 {% for income in incomes %}
-                <tr data-catid="{{ income.id }}">
+                <tr data-transid="{{ income.id }}">
                     <td class="incomeCategory">{{ income.name }}</td>
                     <td class="incomeDate">{{ income.date }}</td>
                     <td class="money"><strong>{{ income.money }}</strong></td>
@@ -66,10 +72,4 @@
 </div>
 {% include '/Modals/editIncomeModal.html' %}
 {% include '/Modals/confirmModal.html' %}
-{% endblock %}
-{% block footer %}
-<script src="/js/displayIncomes.js"></script>
-<script src="/js/editIncome.js"></script>
-<script src="/js/deleteTransaction.js"></script>
-<script src="/js/getCategories.js"></script>
 {% endblock %}

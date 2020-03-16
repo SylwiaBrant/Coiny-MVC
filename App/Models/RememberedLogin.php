@@ -1,6 +1,5 @@
 <?php 
 namespace App\Models;
-
 use PDO;
 use \App\Token;
 /** 
@@ -22,7 +21,8 @@ class RememberedLogin extends \Core\Model{
         $stmt->bindValue(':token_hash', $token_hash, PDO::PARAM_STR);
         $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $stmt->fetch();
     }
 
     /**
@@ -51,7 +51,6 @@ class RememberedLogin extends \Core\Model{
         $stmt = $db->prepare($sql);
         $stmt->bindValue(':token_hash', $this->token_hash, PDO::PARAM_STR);
         $stmt->execute();
-        
     }
 }
 

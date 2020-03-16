@@ -55,15 +55,15 @@ $(document).ready(function () {
                 if (response == true) {
                     $(form).trigger("reset");
                     $('#invoiceDropdown').hide();
-                    console.log("Sukces!" + response);
+                    addSuccessFlash('#addExpenseForm', 'Wydatek dodany pomyślnie.');
                 }
                 else {
-                    console.log("No tak średnio bym powiedziała." + response);
-                    console.dir(arguments);
+                    addFailFlash('Coś poszło nie tak...');
                 }
             }).fail(function (jqXHR, textStatus) {
-                console.log("No i klops!" + jqXHR + textStatus);
-                console.dir(arguments);
+                addFailFlash('#addExpenseForm', 'Coś poszło nie tak...');
+                /*   console.log("No i klops!" + jqXHR + textStatus);
+                    console.dir(arguments);*/
             });
             return false;
         }
