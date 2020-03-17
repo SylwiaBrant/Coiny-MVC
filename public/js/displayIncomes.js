@@ -10,10 +10,10 @@ $(document).ready(function () {
         }).done(function (incomes) {
             $('#incomesTable tbody > tr').remove();
             displayIncomes(incomes);
-            console.log(incomes);
-        }).fail(function (incomes) {
-            console.log("No i klops!" + incomes);
-            console.dir(arguments);
+            /*console.log(incomes);*/
+        }).fail(function (jqXHR, textStatus) {
+            /*console.log("No i klops!" + jqXHR + textStatus);
+            console.dir(arguments);*/
         });
     });
 
@@ -39,9 +39,9 @@ $(document).ready(function () {
             }).done(function (incomes) {
                 $('#incomesTable tbody > tr').remove();
                 displayIncomes(incomes);
-            }).fail(function (incomes) {
-                console.log("No i klops!" + incomes);
-                console.dir(arguments);
+            }).fail(function (jqXHR, textStatus) {
+                /*console.log("No i klops!" + jqXHR + textStatus);
+                console.dir(arguments);*/
             });
             return false;
         }

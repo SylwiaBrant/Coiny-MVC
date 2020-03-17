@@ -10,10 +10,10 @@ $(document).ready(function () {
         }).done(function (expenses) {
             $('#expensesTable tbody > tr').remove();
             displayExpenses(expenses);
-            console.log(expenses);
+            /*console.log(expenses);*/
         }).fail(function (expenses) {
-            console.log("No i klops!" + expenses);
-            console.dir(arguments);
+            /*console.log("No i klops!" + expenses);
+             console.dir(arguments);*/
         });
     });
 
@@ -39,9 +39,9 @@ $(document).ready(function () {
             }).done(function (expenses) {
                 $('#expensesTable tbody > tr').remove();
                 displayExpenses(expenses);
-            }).fail(function (expenses) {
-                console.log("No i klops!" + expenses);
-                console.dir(arguments);
+            }).fail(function (jqXHR, textStatus) {
+                /*console.log("No i klops!" + jqXHR + textStatus);
+                console.dir(arguments);*/
             });
             return false;
         }

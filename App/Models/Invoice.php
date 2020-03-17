@@ -123,6 +123,7 @@ class Invoice extends \Core\Model{
     }
 
     public function deleteInvoiceInDB($table){
+
         $sql ='DELETE FROM '.$table.' WHERE id=:id AND user_id=:user_id'; 
         $db = static::getDB();
         $stmt = $db->prepare($sql);

@@ -59,6 +59,18 @@ class Invoices extends Authenticated{
       echo json_encode($invoices);
     }
 
+    public function editIncomeInvoiceAjaxAction(){
+      $invoice = new Invoice($_POST);
+      $result = $invoice->editIncomeInvoice();
+      echo json_encode($result);
+    }
+
+    public function deleteIncomeInvoiceAjax(){
+      $invoice = new Invoice($_POST);
+      $result = $invoice->deleteIncomeInvoice();
+      echo json_encode($result);
+    }
+
     /**
      * Show expense invoices
      * @return void
@@ -91,27 +103,15 @@ class Invoices extends Authenticated{
       echo json_encode($invoices);
     }
 
-    public function editIncomeInvoiceAjaxAction(){
-      $invoice = new Invoice($_POST);
-      $invoices = $invoice->editIncomeInvoice();
-      echo json_encode($invoices);
-    }
-
     public function editExpenseInvoiceAjax(){
       $invoice = new Invoice($_POST);
       $invoices = $invoice->editExpenseInvoice();
-      echo json_encode($invoices);
-    }
-
-    public function deleteIncomeInvoiceAjax(){
-      $invoice = new Invoice($_POST);
-      $invoices = $invoice->deleteIncomeInvoice();
       echo json_encode($result);
     }
 
     public function deleteExpenseInvoiceAjax(){
       $invoice = new Invoice($_POST);
-      $invoices = $invoice->deleteExpenseInvoice();
+      $result = $invoice->deleteExpenseInvoice();
       echo json_encode($result);
     }
 }

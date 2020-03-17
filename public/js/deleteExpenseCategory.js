@@ -9,15 +9,15 @@ function editExpenseCategory(id, callback) {
         data: { id: id, name: category }
     }).done(function (response) {
         if (response > 0) {
-            console.log("Sukces!" + response);
+            /*console.log("Sukces!" + response);*/
             callback(response);
         } else {
-            console.log("Nie edytowano rekordu" + response);
-            console.dir(arguments);
+            /*console.log("Nie edytowano rekordu" + response); 
+            console.dir(arguments);*/
         }
-    }).fail(function (response) {
-        console.log(response);
-        console.dir(arguments);
+    }).fail(function (jqXHR, textStatus) {
+        /*console.log("No i klops!" + jqXHR + textStatus);
+        console.dir(arguments);*/
     });
 }
 

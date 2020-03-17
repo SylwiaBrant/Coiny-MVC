@@ -52,15 +52,15 @@ $(document).ready(function () {
                 if (response == true) {
                     $(form).trigger("reset");
                     $('#invoiceDropdown').hide();
-                    addSuccessFlash('Przychód dodany pomyślnie.');
+                    addSuccessFlash('#addIncomeForm', 'Przychód dodany pomyślnie.');
                 }
                 else {
-                    addFailFlash('Coś poszło nie tak...');
-                    /*  console.dir(response);*/
+                    addFailFlash('#addIncomeForm', 'Coś poszło nie tak...');
+                    /*console.dir(response);*/
                 }
             }).fail(function (jqXHR, textStatus) {
                 addFailFlash('Coś poszło nie tak...');
-                /*  console.log("No i klops!" + jqXHR + textStatus);
+                /*console.log("No i klops!" + jqXHR + textStatus);
                   console.dir(arguments);*/
             });
             return false;

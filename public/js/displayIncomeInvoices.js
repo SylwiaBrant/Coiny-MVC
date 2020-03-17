@@ -10,9 +10,9 @@ $(document).ready(function () {
         }).done(function (response) {
             $('#invoicesTable tbody > tr').remove();
             displayInvoices(response);
-        }).fail(function (response) {
-            console.log("No i klops!" + response);
-            console.dir(arguments);
+        }).fail(function (jqXHR, textStatus) {
+            /*console.log("No i klops!" + jqXHR + textStatus);
+            console.dir(arguments);*/
         });
     });
 
@@ -39,9 +39,9 @@ $(document).ready(function () {
             }).done(function (i) {
                 $('#invoicesTable tbody > tr').remove();
                 displayInvoices(i);
-            }).fail(function (i) {
-                console.log("No i klops!" + i);
-                console.dir(arguments);
+            }).fail(function (jqXHR, textStatus) {
+                /*console.log("No i klops!" + jqXHR + textStatus);
+                console.dir(arguments);*/
             });
             return false;
         }

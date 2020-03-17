@@ -3,6 +3,15 @@
 {% block body %}
 <div class="container-fluid mainContent justify-content-center">
     <div class="text-center">
+        <!-- <form method="post" action="/Invoices/deleteIncomeInvoiceAjax">
+            <div class="form-group">
+                <label>Id:</label>
+                <input id="invoiceId" class="form-control inputSlot" name="invoiceId" type="number">
+            </div>
+            <div class="d-flex justify-content-center mt-3">
+                <input class="mainBtn" type="submit" name="submit" value="Wyślij">
+            </div>
+        </form>-->
         <h1>Ustawienia</h1>
     </div>
     <div class="accordion" id="settingsCategories">
@@ -159,6 +168,32 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+            <div class="card-header" id="headingDeleteAccount">
+                <h2 class="mb-0">
+                    <button id="deleteAccountBtn" class="btn btn-link collapsed" type="button" data-toggle="collapse"
+                        data-target="#deleteAccount" aria-expanded="false" aria-controls="deleteAccount">
+                        Usuń konto
+                    </button>
+                </h2>
+            </div>
+            <div id="deleteAccount" class="collapse" aria-labelledby="headingDeleteAccount"
+                data-parent="#settingsCategories">
+                <div class="card-body formWrapper">
+                    <h3>Czy na pewno chcesz usunąć konto?</h3>
+                    <p>Utracisz:</p>
+                    <ul>
+                        <li>Przychody</li>
+                        <li>Wydatki</li>
+                        <li>Faktury</li>
+                        <li>Zapisane ustawienia</li>
+                    </ul>
+                    <div class="row justify-content-center text-center">
+                        <a class="mainBtn cancelBtn" href="/Account/deleteAccount">Potwierdzam</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% include '/Modals/addIncomeCategoryModal.html'%} {% include '/Modals/addExpenseCategoryModal.html'%}
@@ -173,6 +208,7 @@
 <script src="/js/deleteExpenseCategory.js"></script>
 <script src="/js/deletePaymentCategory.js"></script>
 <script src="/js/deleteTransaction.js"></script>
+<script src="/js/getCategories.js"></script>
 <script src="/js/resetPassword.js"></script>
 <script>
 </script>

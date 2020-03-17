@@ -69,10 +69,9 @@ $(document).ready(function () {
                     data: data
                 }).done(function (response) {
                     if (response > 0) {
-                        console.log("Sukces!" + response);
+                        /*console.log("Sukces!" + response);*/
                         if (response == true) {
                             let categoryName = $('#updateForm #name').val();
-                            console.log(categoryData.toEdit);
                             categoryData.toEdit.find('td.category').html(categoryName);
                             let blockedFunds = $('#updateForm #blockedFunds').val();
                             categoryData.toEdit.find('td.blockedFunds').html(blockedFunds);
@@ -80,13 +79,13 @@ $(document).ready(function () {
                             $('#updateForm').trigger('reset');
                         }
                         else {
-                            console.log("Nie edytowano rekordu" + response);
-                            console.dir(arguments);
+                            /*console.log("Nie edytowano rekordu" + response);
+                            console.dir(arguments);*/
                         }
                     }
-                }).fail(function (response) {
-                    console.log("No i klops!" + response);
-                    console.dir(arguments);
+                }).fail(function (jqXHR, textStatus) {
+                    /*console.log("No i klops!" + jqXHR + textStatus);
+                    console.dir(arguments);*/
                 });
                 return false;
             }

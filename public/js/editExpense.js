@@ -52,7 +52,6 @@ $(document).ready(function () {
         $('#editExpenseModal').modal('show');
         editExpenseInDB(function (response) {
             if (response == true) {
-                console.log("Sukces!" + response);
                 updateTable(row);
                 $('#editExpenseForm').trigger('reset');
                 $('#editExpenseModal').modal('hide');
@@ -61,7 +60,6 @@ $(document).ready(function () {
     });
 
     function editExpenseInDB(callback) {
-        console.log('weszlo');
         $('#editExpenseForm').validate({
             rules: {
                 money: {
@@ -85,7 +83,6 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 var data = $(form).serialize();
-                console.log(data);
                 $.ajax({
                     url: "/Expenses/editExpenseAjax",
                     type: "POST",
@@ -93,11 +90,11 @@ $(document).ready(function () {
                     cache: false,
                     data: data
                 }).done(function (response) {
-                    console.log(response);
+                    /*console.log(response);*/
                     callback(response);
                 }).fail(function (jqXHR, textStatus) {
-                    console.log("No i klops!" + jqXHR + textStatus);
-                    console.dir(arguments);
+                    /*console.log("No i klops!" + jqXHR + textStatus);
+                    console.dir(arguments);*/
                 });
                 return false;
             }

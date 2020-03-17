@@ -19,48 +19,6 @@
       "src": "entypo"
     },
     {
-      "uid": "11d74f891bce30f1bdf73d3259d59ed5",
-      "css": "user",
-      "code": 61537,
-      "src": "mfglabs"
-    },
-    {
-      "uid": "7997220c4eb58edae98e04de570089c2",
-      "css": "lock",
-      "code": 62738,
-      "src": "mfglabs"
-    },
-    {
-      "uid": "630529f03c319c01101aa167181b650e",
-      "css": "tag",
-      "code": 59392,
-      "src": "elusive"
-    },
-    {
-      "uid": "8c9fbdd92132007cf2f5e13b7ecb38f0",
-      "css": "credit-card-1",
-      "code": 59397,
-      "src": "elusive"
-    },
-    {
-      "uid": "f279f25007794fa6837ff78fe94b216e",
-      "css": "money",
-      "code": 61654,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "531bc468eecbb8867d822f1c11f1e039",
-      "css": "calendar",
-      "code": 59394,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "9cc990bbcac7aa8504078b3f49df79b1",
-      "css": "commenting-o",
-      "code": 62075,
-      "src": "fontawesome"
-    },
-    {
       "uid": "59ba4f90d2ca2a843f4f930b03270362",
       "css": "plus-circle",
       "code": 59398,
@@ -73,10 +31,28 @@
       "src": "iconic"
     },
     {
-      "uid": "829c06a0a3b73b02a6224f4bbb73d99c",
-      "css": "home",
+      "uid": "440e148d0e21100118eae7036bcd2067",
+      "css": "up-open",
+      "code": 61445,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "7b16b22168e762c88333f465da862098",
+      "css": "ok",
+      "code": 59392,
+      "src": "websymbols"
+    },
+    {
+      "uid": "8da3ac534210aae9c0f0e13804c1df97",
+      "css": "cancel",
       "code": 59393,
-      "src": "elusive"
+      "src": "websymbols"
+    },
+    {
+      "uid": "d9be617b7f2fe7843118ca2d3a1b8cca",
+      "css": "down-open",
+      "code": 61444,
+      "src": "mfglabs"
     }
   ]
 }

@@ -78,12 +78,12 @@ function getAssignedTransactionsFromDB(url, id, callback) {
         cache: false,
         data: { categoryId: id }
     }).done(function (response) {
-        console.log(response);
+        /*console.log(response);*/
         callback(response);
-    }).fail(function (response) {
-        console.log("No i klops!" + response);
-        console.dir(arguments);
-    })
+    }).fail(function (jqXHR, textStatus) {
+        /*console.log("No i klops!" + jqXHR + textStatus);
+        console.dir(arguments);*/
+    });
 }
 
 function displayDeleteConfirmModal(categoryData) {
@@ -110,12 +110,12 @@ function deleteCategory(url, id, callback) {
         cache: false,
         data: { categoryId: id }
     }).done(function (response) {
-        console.log(response);
+        /*console.log(response);*/
         callback(response);
-    }).fail(function (response) {
-        console.log("No i klops!" + response);
-        console.dir(arguments);
-    })
+    }).fail(function (jqXHR, textStatus) {
+        /*console.log("No i klops!" + jqXHR + textStatus);
+        console.dir(arguments);*/
+    });
 }
 
 $(document).ready(function () {

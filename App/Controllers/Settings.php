@@ -21,10 +21,6 @@ class Settings extends Authenticated{
             ]);
     }
 
-    public function resetPassword(){
-
-    }
-
     /** Functions fetching all user assigned categories 
      *  @return array
     */

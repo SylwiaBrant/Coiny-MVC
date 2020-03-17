@@ -7,13 +7,13 @@ $(document).ready(function () {
         incomeCategoriesSums = response['incomeCategoriesSums'];
         expenseCategoriesSums = response['expenseCategoriesSums'];
         expenseLimits = response['expenseLimits'];
-        console.log(response);
         paymentLimits = response['paymentLimits'];
         renderProgressBars(expenseLimits, paymentLimits);
         setPieChartData(incomeCategoriesSums, '#incomesPie', 'Przychody wg. kategorii');
         setPieChartData(expenseCategoriesSums, '#expensesPie', 'Wydatki wg. kategorii');
-    }).fail(function (response) {
-        console.log('no lipa');
+    }).fail(function (jqXHR, textStatus) {
+        /*console.log("No i klops!" + jqXHR + textStatus);
+        console.dir(arguments);*/
     });
 
     function setPieChartData(sums, canvas, title) {

@@ -45,7 +45,6 @@ $(document).ready(function () {
         },
         submitHandler: function (form) {
             var data = $(form).serialize();
-            console.log(data);
             $.ajax({
                 url: "/Expenses/addExpenseAjax",
                 type: "POST",
@@ -62,7 +61,7 @@ $(document).ready(function () {
                 }
             }).fail(function (jqXHR, textStatus) {
                 addFailFlash('#addExpenseForm', 'Coś poszło nie tak...');
-                /*   console.log("No i klops!" + jqXHR + textStatus);
+                /*console.log("No i klops!" + jqXHR + textStatus);
                     console.dir(arguments);*/
             });
             return false;
