@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'fontello';
-  src: url('../font/fontello.eot?43757488');
-  src: url('../font/fontello.eot?43757488#iefix') format('embedded-opentype'),
-       url('../font/fontello.woff2?43757488') format('woff2'),
-       url('../font/fontello.woff?43757488') format('woff'),
-       url('../font/fontello.ttf?43757488') format('truetype'),
-       url('../font/fontello.svg?43757488#fontello') format('svg');
+  src: url('../font/fontello.eot?81687830');
+  src: url('../font/fontello.eot?81687830#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff2?81687830') format('woff2'),
+       url('../font/fontello.woff?81687830') format('woff'),
+       url('../font/fontello.ttf?81687830') format('truetype'),
+       url('../font/fontello.svg?81687830#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?43757488#fontello') format('svg');
+    src: url('../font/fontello.svg?81687830#fontello') format('svg');
   }
 }
 */
@@ -55,15 +55,11 @@
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
  
-.icon-tag:before { content: '\e800'; } /* '' */
-.icon-home:before { content: '\e801'; } /* '' */
-.icon-calendar:before { content: '\e802'; } /* '' */
+.icon-ok:before { content: '\e800'; } /* '' */
+.icon-cancel:before { content: '\e801'; } /* '' */
 .icon-edit:before { content: '\e803'; } /* '' */
 .icon-trash:before { content: '\e804'; } /* '' */
-.icon-credit-card-1:before { content: '\e805'; } /* '' */
 .icon-plus-circle:before { content: '\e806'; } /* '' */
 .icon-minus-circle:before { content: '\e807'; } /* '' */
-.icon-user:before { content: '\f061'; } /* '' */
-.icon-money:before { content: '\f0d6'; } /* '' */
-.icon-commenting-o:before { content: '\f27b'; } /* '' */
-.icon-lock:before { content: '\f512'; } /* '' */
+.icon-down-open:before { content: '\f004'; } /* '' */
+.icon-up-open:before { content: '\f005'; } /* '' */

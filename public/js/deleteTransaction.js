@@ -1,5 +1,4 @@
 function deleteTransactionEntry(transactionType, transactionId, callback) {
-    console.log('No i wyszło: ', transactionType, transactionId);
     let url = "/" + transactionType + "s/delete" + transactionType + "Ajax";
     $.ajax({
         url: url,
@@ -8,18 +7,17 @@ function deleteTransactionEntry(transactionType, transactionId, callback) {
         cache: false,
         data: { id: transactionId }
     }).done(function (response) {
-        console.log(response);
+        /*console.log(response);*/
         callback(response);
-    }).fail(function (response) {
-        console.log("No i klops!" + response);
-        console.dir(arguments);
-    })
+    }).fail(function (jqXHR, textStatus) {
+        /*console.log("No i klops!" + jqXHR + textStatus);
+        console.dir(arguments);*/
+    });
 }
 
 $(document).ready(function () {
     $('#incomesTable').on('click', '.deleteIncomeBtn', function () {
         let row = $(this).closest('tr');
-        console.log(row);
         let transactionId = row.data('transid');
         let question = "Czy na pewno chcesz usunąć wpis?"
         $('#question').html(question);

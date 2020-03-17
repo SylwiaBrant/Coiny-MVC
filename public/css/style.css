@@ -7,22 +7,31 @@ body{
 }
 
 .alert{
+    position: fixed; 
+    z-index: 2;
+    width: 100vw;
+    border-bottom: 1px solid;
+}
+
+.ajaxAlert{
+    border-bottom: none;
+    position: relative;
+    color: white;
     display: block;
     font-weight: 600;
     width: 100%;
     width: inherit;
-    box-shadow: 0 0 10px rgb(16, 19, 24);
-    border-radius: 0;
-    border: none;
+    box-shadow: 0 0 5px rgb(99, 99, 99);
+    border-radius: 5px;
     min-height: 40px;
 }
 
-.alert.success{
-    background: linear-gradient(to bottom right, rgb(98, 151, 126),rgb(152, 236, 140));
+.ajaxAlert.success{
+    background:  rgb(102, 165, 97);
 }
 
-.alert.fail{
-    background: linear-gradient(to bottom right, rgb(151, 98, 98),rgb(236, 140, 140));
+.ajaxAlert.fail{
+    background: rgb(207, 67, 67);
 }
 
 button.close{
@@ -81,7 +90,7 @@ a.link{
 }
 
 a:hover {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 .imgBanner{
@@ -101,7 +110,7 @@ h2{
  .formWrapper h2{
     background-image: linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
     -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
+    background-clip: text;
  }
 
 h4{
@@ -256,18 +265,20 @@ a.dropdown-toggle{
 .balance{
     background-image: linear-gradient(to bottom right, #DC8BA3, #BE8BDC);
 }
+
 .totalIncomesBox h3{
     font-weight: 600;
     font-size: 1.2em;
     color: white;
 }
+
 .totalIncomesBox p.incomeBox{
     font-size: 1.1em;
     line-height: 1.2em;
     color: white;
 }
-.totalIncomesBox p.incomeBoxInt{
 
+.totalIncomesBox p.incomeBoxInt{
     font-size: 1.8em;
     margin-bottom: 0;
     color: white;
@@ -291,7 +302,7 @@ a.dropdown-toggle{
 .mainBtn.cancelBtn{
     font-weight: 700;
     -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
+    background-clip: text;
     background-color: rgb(88, 88, 88);
 }
 
@@ -504,12 +515,19 @@ td.money{
     font-weight: 700;
 }
 
-@media screen and (max-width: 768px){
-    table, thead, tbody, th, td, tr {
+@media screen and (max-width: 800px){
+    .incomeTable table, .expenseTable table, .invoiceTable table,
+    .incomeTable thead, .expenseTable thead, .invoiceTable thead,
+    .incomeTable tbody, .expenseTable tbody, .invoiceTable tbody,
+    .incomeTable th, .expenseTable th, .invoiceTable th,
+    .incomeTable tr, .expenseTable tr, .invoiceTable tr,
+    .incomeTable td, .expenseTable td, .invoiceTable td {
         display: block;
     }
 
-    thead tr {
+    .incomeTable thead tr,
+    .expenseTable thead tr,
+    .invoiceTable thead tr{
         position: absolute;
         top: -9999px;
         left: -9999px;
@@ -517,7 +535,9 @@ td.money{
 
     tr { border: 1px solid #ccc; }
 
-    .table td { 
+    .table.incomeTable td,
+    .table.expenseTable td,
+    .table.invoiceTable td { 
         border: none;
         position: relative;
         padding-left: 20px;
@@ -530,7 +550,9 @@ td.money{
         margin-left: 130px;
     }
     
-	table td::before { 
+    .table.incomeTable td::before,
+    .table.expenseTable td::before,
+    .table.invoiceTable td::before { 
         position: absolute;
         top: 5px;
         left: 10px;
@@ -540,13 +562,7 @@ td.money{
         margin-left: -100px;
     }
 
-    table.invoiceTable td::before { 
-        position: absolute;
-        top: 5px;
-        left: 10px;
-        width: 100%;
-        padding-right: 40px;
-        white-space: nowrap;
+    .table.invoiceTable td::before { 
         margin-left: -130px;
     }
 
@@ -587,6 +603,14 @@ td.money{
 .settingsBtn:hover{background-color:rgb(213, 214, 214);}
 .settingsBtn:active{background-color:rgb(174, 182, 192);}
 
+.btn-link{
+    color: rgb(8, 17, 34);
+    font-size: 0.9em;
+    font-weight: 600;
+}
+.btn-link:hover, .btn-link:active, .btn-link:focus{
+    text-decoration: none;
+}
 /*----------------------SETTINGS LIMIT BARS------------------------*/
 
 .limitedFunds{

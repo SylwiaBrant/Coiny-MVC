@@ -1,25 +1,23 @@
 function deleteInvoice(invoiceType, invoiceId, callback) {
-    console.log('No i wyszło: ', invoiceType, invoiceId);
     let url = "/Invoices/delete" + invoiceType + "Ajax";
     $.ajax({
         url: url,
         type: "POST",
         dataType: "json",
         cache: false,
-        data: { id: invoiceId }
+        data: { invoiceId: invoiceId }
     }).done(function (response) {
-        console.log(response);
+        /*console.log(response);*/
         callback(response);
-    }).fail(function (response) {
-        console.log("No i klops!" + response);
-        console.dir(arguments);
+    }).fail(function (jqXHR, textStatus) {
+        /*console.log("No i klops!" + jqXHR + textStatus);
+        console.dir(arguments);*/
     })
 }
 
 $(document).ready(function () {
     $('#invoicesTable').on('click', '.deleteIncomeBtn', function () {
         let row = $(this).closest('tr');
-        console.log(row);
         let invoiceId = row.data('invoiceid');
         let question = "Czy na pewno chcesz usunąć fakturę?"
         $('#question').html(question);

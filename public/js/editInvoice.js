@@ -8,16 +8,12 @@ function fillInputsWithData(row) {
     $('#editInvoiceForm').find('#invoiceNumber').val(invoiceNumber);
     $('#editInvoiceForm').find('#invoicePayDate').val(paymentDate);
     $('#editInvoiceForm').find('#contractor').val(contractor);
-    console.log(invoiceId, invoiceNumber, paymentDate, contractor);
 }
 
 function updateTable(row) {
     let invoiceNumber = $('#editInvoiceForm #invoiceNumber').val();
     let paymentDate = $('#editInvoiceForm #invoicePayDate').val();
     let contractor = $('#editInvoiceForm #contractor').val();
-    console.log(invoiceNumber);
-    console.log(paymentDate);
-    console.log(contractor);
     row.find('td.invoiceNumber').html(invoiceNumber);
     row.find('td.paymentDate').html(paymentDate);
     row.find('td.contractor').html(contractor);
@@ -26,13 +22,11 @@ function updateTable(row) {
 $(document).ready(function () {
     $('#invoicesTable').on('click', '.editIncomeBtn', function () {
         let row = $(this).closest('tr');
-        console.log(row);
         fillInputsWithData(row);
         $('#editInvoiceModal').modal('show');
         let url = "/Invoices/editIncomeInvoiceAjax";
         editInvoiceInDB(url, function (response) {
             if (response == true) {
-                console.log("Sukces!" + response);
                 updateTable(row);
                 $('#editInvoiceModal').modal('hide');
                 $('#editInvoiceForm').trigger('reset');
@@ -42,13 +36,11 @@ $(document).ready(function () {
 
     $('#invoicesTable').on('click', '.editExpenseBtn', function () {
         let row = $(this).closest('tr');
-        console.log(row);
         fillInputsWithData(row);
         $('#editInvoiceModal').modal('show');
         let url = "/Invoices/editExpenseInvoiceAjax";
         editInvoiceInDB(url, function (response) {
             if (response == true) {
-                console.log("Sukces!" + response);
                 updateTable(row);
                 $('#editInvoiceModal').modal('hide');
                 $('#editInvoiceForm').trigger('reset');
@@ -75,7 +67,6 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 var data = $(form).serialize();
-                console.log(data);
                 $.ajax({
                     url: url,
                     type: "POST",
@@ -83,11 +74,11 @@ $(document).ready(function () {
                     cache: false,
                     data: data
                 }).done(function (response) {
-                    console.log(response);
+                    /*console.log(response);*/
                     callback(response);
                 }).fail(function (jqXHR, textStatus) {
-                    console.log("No i klops!" + jqXHR + textStatus);
-                    console.dir(arguments);
+                    /*console.log("No i klops!" + jqXHR + textStatus);
+                    console.dir(arguments);*/
                 });
                 return false;
             }

@@ -294,4 +294,16 @@ class User extends \Core\Model
         $stmt->bindValue(':hashed_token', $hashed_token, PDO::PARAM_STR);   
         $stmt->execute();
     } 
+    /**
+     * Delete user account
+     * @return void
+     */
+    public function delete(){
+        $user_id = $_SESSION['user_id'];
+        $sql = 'DELETE FROM users WHERE user_id=:user_id';
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);   
+        return $stmt->execute();
+    } 
 }

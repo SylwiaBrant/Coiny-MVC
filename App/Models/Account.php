@@ -2,7 +2,7 @@
 namespace App\Models;
 
 use PDO;
-//use \App\Models\User;
+use App\Models\User;
 /** 
  * Account model
  * PHP version 7.4.2

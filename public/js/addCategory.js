@@ -49,7 +49,6 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 let data = $(form).serializeArray();
-                console.log(data);
                 let url = "/Settings/add" + action + "CategoryAjax";
                 $.ajax({
                     url: url,
@@ -59,7 +58,7 @@ $(document).ready(function () {
                     data: data
                 }).done(function (response) {
                     if (response > 0) {
-                        console.log("Sukces!" + response);
+                        /*console.log("Sukces!" + response);*/
                         $('.modal').modal('hide');
                         if (action == 'Income') {
                             appendIncome(response, parent, data);
@@ -73,12 +72,12 @@ $(document).ready(function () {
                         }
                     }
                     else {
-                        console.log("Lipa! Nie edytowano rekordu" + response);
-                        console.dir(arguments);
+                        /*console.log("Lipa! Nie edytowano rekordu" + response);
+                        console.dir(arguments);*/
                     }
-                }).fail(function (response) {
-                    console.log("No i klops!" + response);
-                    console.dir(arguments);
+                }).fail(function (jqXHR, textStatus) {
+                    /*console.log("No i klops!" + jqXHR + textStatus);
+                    console.dir(arguments);*/
                 });
                 return false;
             }

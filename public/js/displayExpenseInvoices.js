@@ -12,10 +12,10 @@ $(document).ready(function () {
         }).done(function (invoices) {
             $('#invoicesTable tbody > tr').remove();
             displayInvoices(invoices);
-            console.log(invoices);
+            /*console.log(invoices);*/
         }).fail(function (invoices) {
-            console.log("No i klops!" + invoices);
-            console.dir(arguments);
+            /*console.log("No i klops!" + invoices);
+            console.dir(arguments);*/
         });
     });
 
@@ -42,8 +42,8 @@ $(document).ready(function () {
                 $('#invoicesTable tbody > tr').remove();
                 displayInvoices(invoices);
             }).fail(function (invoices) {
-                console.log("No i klops!" + invoices);
-                console.dir(arguments);
+                /*console.log("No i klops!" + invoices);
+                console.dir(arguments);*/
             });
             return false;
         }
