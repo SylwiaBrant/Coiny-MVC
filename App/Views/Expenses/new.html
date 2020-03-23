@@ -1,6 +1,7 @@
 {% block title %}Coiny - Dodaj wydatek{% endblock %}
 {% extends 'base.html' %}
 {% block footer %}
+<script src="/js/getCategories.js"></script>
 <script src="/js/addExpense.js"></script>
 {% endblock %}
 {% block body %}
@@ -24,6 +25,7 @@
                 <div class="form-group">
                     <label for="paymentMethod">METODA PŁATNOŚCI</label>
                     <select id="paymentMethod" class="form-control custom-select inputSlot" name="paymentMethod">
+                        <option>Wybierz metodę płatności</option>
                         {% for method in paymentMethods %}
                         <option>{{method.name}}</option>
                         {% endfor %}
@@ -32,6 +34,7 @@
                 <div class="form-group">
                     <label for="expenseCategory">RODZAJ WYDATKU</label>
                     <select id="expenseCategory" class="form-control custom-select inputSlot" name="expenseCategory">
+                        <option>Wybierz kategorię</option>
                         {% for category in expenseCategories %}
                         <option>{{category.name}}</option>
                         {% endfor %}

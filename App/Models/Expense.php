@@ -241,4 +241,32 @@ class Expense extends \Core\Model{
         
         return $stmt->rowCount();
     }
+
+    public function getThisMonthExpenseSum(){
+        $sql ='SELECT ROUND(SUM(e.money),2) AS money FROM expenses 
+            AS e INNER JOIN expense_categories AS ec WHERE e.user_id=:user_id AND ec.name=:category
+            AND e.category_id=ec.id AND date BETWEEN DATE_SUB(CURDATE(), 
+            INTERVAL (DAY(CURDATE())-1) DAY) AND LAST_DAY(NOW()) GROUP BY ec.name'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);      
+        $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row['money'];
+    }
+
+    public function getThisMonthPaymentSum(){
+        $sql ='SELECT ROUND(SUM(e.money),2) AS money FROM expenses 
+            AS e INNER JOIN payment_methods AS pm WHERE e.user_id=:user_id AND pm.name=:category
+            AND e.payment_method_id=pm.id AND date BETWEEN DATE_SUB(CURDATE(), 
+            INTERVAL (DAY(CURDATE())-1) DAY) AND LAST_DAY(NOW()) GROUP BY pm.name'; 
+        $db = static::getDB();
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);      
+        $stmt->bindValue(':category', $this->category, PDO::PARAM_STR);
+        $stmt->execute();
+        $row = $stmt->fetch();
+        return $row['money'];
+    }
 }

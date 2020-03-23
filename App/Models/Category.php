@@ -140,6 +140,11 @@ class Category extends \Core\Model{
     }
 
     public function insertCategoryIntoDB($table){
+        if(empty($_POST['blockedFunds'])){
+            $this->blockedFunds= NULL;
+        }else{
+            $this->blockedFunds = $_POST['blockedFunds'];
+        }
         $sql = 'INSERT INTO '.$table.' (user_id, name, blocked_funds) 
                 VALUES (:user_id, :name, :blocked_funds)'; 
         $db = static::getDB();

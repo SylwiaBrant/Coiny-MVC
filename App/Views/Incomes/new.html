@@ -24,6 +24,7 @@
                 <div class="form-group">
                     <label for="category">KATEGORIA</label>
                     <select id="incomeCategory" class="form-control custom-select inputSlot" name="incomeCategory">
+                        <option>Wybierz kategorię</option>
                         {% for category in incomeCategories %}
                         <option>{{category.name}}</option>
                         {% endfor %}

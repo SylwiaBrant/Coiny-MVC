@@ -49,7 +49,9 @@ $(document).ready(function () {
             },
             submitHandler: function (form) {
                 let data = $(form).serializeArray();
+                console.log(data);
                 let url = "/Settings/add" + action + "CategoryAjax";
+                console.log(url);
                 $.ajax({
                     url: url,
                     type: "POST",
@@ -72,12 +74,12 @@ $(document).ready(function () {
                         }
                     }
                     else {
-                        /*console.log("Lipa! Nie edytowano rekordu" + response);
-                        console.dir(arguments);*/
+                        console.log("Lipa! Nie edytowano rekordu" + response);
+                        console.dir(arguments);
                     }
                 }).fail(function (jqXHR, textStatus) {
-                    /*console.log("No i klops!" + jqXHR + textStatus);
-                    console.dir(arguments);*/
+                    console.log("No i klops!" + jqXHR + textStatus);
+                    console.dir(arguments);
                 });
                 return false;
             }
