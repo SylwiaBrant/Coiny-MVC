@@ -1,24 +1,5 @@
 
 $(document).ready(function () {
-    $('#transactionsPeriod').on('change', function (e) {
-        $('input[type=date]', '#periodForm').val('');
-        let action = $('#transactionsPeriod option:selected').val();
-        let url = "/Invoices/" + action + "Ajax";
-        $.ajax({
-            url: url,
-            type: "POST",
-            dataType: "json",
-            cache: false,
-        }).done(function (invoices) {
-            $('#invoicesTable tbody > tr').remove();
-            displayInvoices(invoices);
-            /*console.log(invoices);*/
-        }).fail(function (invoices) {
-            /*console.log("No i klops!" + invoices);
-            console.dir(arguments);*/
-        });
-    });
-
     $('#periodForm').validate({
         rules: {
             startingDate: {

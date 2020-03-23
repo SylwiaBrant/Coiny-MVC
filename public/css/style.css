@@ -6,37 +6,10 @@ body{
    padding: 0;
 }
 
-.alert{
-    position: fixed; 
-    z-index: 2;
-    width: 100vw;
-    border-bottom: 1px solid;
-}
-
-.ajaxAlert{
-    border-bottom: none;
-    position: relative;
-    color: white;
-    display: block;
-    font-weight: 600;
-    width: 100%;
-    width: inherit;
-    box-shadow: 0 0 5px rgb(99, 99, 99);
-    border-radius: 5px;
-    min-height: 40px;
-}
-
-.ajaxAlert.success{
-    background:  rgb(102, 165, 97);
-}
-
-.ajaxAlert.fail{
-    background: rgb(207, 67, 67);
-}
-
 button.close{
     padding: 0 1rem;
 }
+
 .container-fluid.entryPage{
     background-color:  rgb(28, 37, 56);
     min-height: 100vh;
@@ -109,8 +82,16 @@ h2{
 
  .formWrapper h2{
     background-image: linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
-    -webkit-text-fill-color: transparent;
+    background-image: -o-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    background-image: -moz-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    background-image: -webkit-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    background-image: -ms-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+
+    background: -webkit-gradient(linear, left top, right bottom, from(rgb(219, 163, 59)), to(rgb(204, 57, 81)));
+    
     background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
  }
 
 h4{
@@ -133,6 +114,7 @@ h4{
 .info-board p{
     margin-bottom: 5px;
 }
+
 @media screen and (max-width: 768px) {
     .mainContent {
         padding-left: 85px;
@@ -150,6 +132,43 @@ h4{
 .row {
     margin: 0;
     padding: 0;
+}
+/*----------------------GLOBAL ALERT STYLES------------------------*/
+.alert{
+    position: fixed; 
+    z-index: 2;
+    width: 100vw;
+    border-bottom: 1px solid;
+}
+
+.ajaxAlert{
+    border-bottom: none;
+    position: relative;
+    color: white;
+    display: block;
+    font-weight: 600;
+    width: 100%;
+    box-shadow: 0 0 5px rgb(99, 99, 99);
+    border-radius: 5px;
+    min-height: 40px;
+}
+
+.ajaxAlert.success{
+    background:  rgb(102, 165, 97);
+}
+
+.ajaxAlert.fail{
+    background: rgb(207, 67, 67);
+}
+
+.overloadWarning{
+    box-sizing: border-box;
+    padding: 5px;
+    margin-top: 5px;
+    color: rgb(158, 15, 15);
+    border: 1px solid rgb(158, 15, 15);
+    border-radius: 5px;
+    font-size: 0.8em;
 }
 /*----------------------MAIN NAVIGATION STYLES------------------------*/
 

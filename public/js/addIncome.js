@@ -12,6 +12,7 @@ $(document).ready(function () {
             },
             incomeCategory: {
                 required: true,
+                validCategory: true
             },
             comment: {
                 maxlength: 400,
@@ -59,7 +60,7 @@ $(document).ready(function () {
                     /*console.dir(response);*/
                 }
             }).fail(function (jqXHR, textStatus) {
-                addFailFlash('Coś poszło nie tak...');
+                addFailFlash('#addIncomeForm', 'Coś poszło nie tak...');
                 /*console.log("No i klops!" + jqXHR + textStatus);
                   console.dir(arguments);*/
             });
@@ -73,4 +74,14 @@ $(document).ready(function () {
         }
         else { $('#invoiceDropdown').hide(); }
     });
+
+    $.validator.addMethod('validCategory',
+        function (value, element) {
+            if (value == 'Wybierz kategorię') {
+                return false;
+            }
+            return true;
+        },
+        'Wybierz kategorię.'
+    );
 });

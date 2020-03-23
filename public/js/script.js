@@ -6,6 +6,11 @@ function addSuccessFlash(form, message) {
     "</button>" +
     "</div>";
   $(form + ' .mainBtn').parents().eq(1).prepend(alert);
+  setTimeout(function () {
+    $("#successAlert").slideUp('fast', function () {
+      $('#successAlert').remove();
+    });
+  }, 3000);
 }
 
 function addFailFlash(form, message) {
@@ -15,7 +20,12 @@ function addFailFlash(form, message) {
     "<span aria-hidden='true'>& times;</span>" +
     "</button>" +
     "</div>";
-  $(form + ' .mainBtn').prepend(alert);
+  $(form + ' .mainBtn').parents().eq(1).prepend(alert);
+  setTimeout(function () {
+    $("#failAlert").slideUp('fast', function () {
+      $('#failAlert').remove();
+    });
+  }, 3000);
 }
 
 $(document).ready(function () {
@@ -28,9 +38,8 @@ $(document).ready(function () {
     $(this).find('form').trigger('reset');
   });
 
-  $('.alert').on('click', 'button.close', function () {
-    $('.alert').addClass('d-none');
-    $('.alert #message').empty();
+  $('.ajaxAlert').on('click', 'button.close', function () {
+    $('.ajaxAlert').remove();
   })
 });
 

@@ -119,5 +119,17 @@ class Expenses extends Authenticated{
         $result = $expense->deleteExpense();
         echo json_encode($result);
     }
+
+    public function getThisMonthExpenseSum(){
+        $expense = new Expense($_POST);
+        $result = $expense->getThisMonthExpenseSum();
+        echo json_encode($result);
+    }
+
+    public function getThisMonthPaymentSum(){
+        $expense = new Expense($_POST);
+        $result = $expense->getThisMonthPaymentSum();
+        echo json_encode($result);
+    }
 }
 ?>

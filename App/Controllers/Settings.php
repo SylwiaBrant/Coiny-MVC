@@ -13,7 +13,7 @@ class Settings extends Authenticated{
      * @return void
      */
     public function indexAction(){
-        View::renderTemplate('settings/settings.html', [
+        View::renderTemplate('Settings/settings.html', [
             'user' => Auth::getUser(),
             'incomeCategories' => $this->getIncomeCategories(),
             'expenseCategories' => $this->getExpenseCategories(),
