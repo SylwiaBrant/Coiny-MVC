@@ -86,9 +86,7 @@ h2{
     background-image: -moz-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
     background-image: -webkit-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
     background-image: -ms-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
-
     background: -webkit-gradient(linear, left top, right bottom, from(rgb(219, 163, 59)), to(rgb(204, 57, 81)));
-    
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -316,13 +314,17 @@ a.dropdown-toggle{
     padding: 5px 10px 5px 10px;
     box-shadow: 0 0 5px rgb(16, 19, 24);
     background-image: linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    background-image: -o-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    background-image: -moz-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    background-image: -webkit-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
+    background-image: -ms-linear-gradient(to bottom right, rgb(219, 163, 59), rgb(204, 57, 81));
 }
 
-.mainBtn.cancelBtn{
+.mainBtn .cancelBtn{
     font-weight: 700;
-    -webkit-text-fill-color: transparent;
     background-clip: text;
-    background-color: rgb(88, 88, 88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .mainBtn:hover{
@@ -342,12 +344,9 @@ a.dropdown-toggle{
 }
 @media screen and (max-width: 500px){
     .mainBtn{
+        position: relative;
         max-width: 90%;
         width: 90%;
-    }
-    .btnGroup [type='submit'],.btnGroup [type='button']{
-        margin-left: 0;
-        margin-right: 0;
     }
 }
 img.icon{   
@@ -440,7 +439,7 @@ label{
     border: 1px solid rgb(114, 124, 133);
 }
 
-.form-check{
+.transactionFormWrapper .form-check{
     padding-left: 0px;
 }
 

@@ -56,7 +56,7 @@ $(document).ready(function () {
                 comment = "<td class='comment'>" + invoice.comment + "</td>";
             }
             var row = "<tr data-invoiceid='" + invoice.id + "'>" +
-                "<td class='number'>" + invoice.number + "</td>" +
+                "<td class='invoiceNumber'>" + invoice.number + "</td>" +
                 "<td class='contractor'>" + invoice.contractor + "</td>" +
                 "<td class='date'>" + invoice.date + "</td>" +
                 "<td class='paymentDate'>" + invoice.payment_date + "</td>" +

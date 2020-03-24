@@ -3,19 +3,17 @@ $(document).ready(function () {
     let expenseCats = $.ajax({
         url: "/Settings/getExpenseCategoriesAjax",
         type: "POST",
-        cache: false,
         dataType: "json"
     });
     let paymentCats = $.ajax({
         url: "/Settings/getPaymentCategoriesAjax",
         type: "POST",
-        cache: false,
         dataType: "json"
     });
     $.when(expenseCats, paymentCats).then(function (expenseCats, paymentCats) {
+        console.log(expenseCats, paymentCats);
         addExpense(expenseCats, paymentCats);
     });
-
 
     function addExpense(expenseCats, paymentCats) {
         $('#addExpenseForm').validate({
@@ -70,6 +68,7 @@ $(document).ready(function () {
                     url: "/Expenses/addExpenseAjax",
                     type: "POST",
                     dataType: "json",
+                    cache: false,
                     data: data
                 }).done(function (response) {
                     if (response == true) {
@@ -115,8 +114,11 @@ $(document).ready(function () {
         $('#expenseCategory').on('change', function () {
             $('#expenseWarning').remove();
             let expenseCategory = $('#expenseCategory').val();
+            console.log(expenseCategory);
             if ($('#money').val() != '' && expenseCategory != 'Wybierz kategorię') {
+
                 let expenseLimit = parseInt(getCategoryLimit(expenseCats, expenseCategory));
+                console.log(expenseCats, expenseCategory, expenseLimit, $('#money').val());
                 checkExpenseLimit(expenseCategory, expenseLimit);
             }
         });
@@ -135,6 +137,7 @@ $(document).ready(function () {
         if (expenseLimit) {
             getThisMonthExpenseSum(expenseCategory, function (expenseSum) {
                 let expenseSumValue = parseInt($('#money').val()) + parseInt(expenseSum);
+                console.log(expenseSumValue);
                 if (expenseSumValue > expenseLimit) {
                     let overloadValue = expenseSumValue - expenseLimit;
                     $('#expenseCategory').parent().append("<p class='overloadWarning' id='expenseWarning'>" +
@@ -160,8 +163,10 @@ $(document).ready(function () {
     }
 
     function getCategoryLimit(categories, category) {
+        console.log('getCategoryLimit=', categories, category)
         for (var i = 0; i < categories.length; i++) {
             if (categories[0][i].name == category) {
+                console.log(categories[0][i].blocked_funds);
                 return categories[0][i].blocked_funds;
             }
         }
@@ -172,7 +177,6 @@ $(document).ready(function () {
         $.ajax({
             url: "/Expenses/getThisMonthExpenseSum",
             type: "POST",
-            cache: false,
             dataType: "json",
             data: { category: expenseCategory }
         }).done(function (response) {
@@ -188,7 +192,6 @@ $(document).ready(function () {
         $.ajax({
             url: "/Expenses/getThisMonthPaymentSum",
             type: "POST",
-            cache: false,
             dataType: "json",
             data: { category: paymentMethod }
         }).done(function (response) {

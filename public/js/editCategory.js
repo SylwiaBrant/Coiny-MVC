@@ -31,7 +31,7 @@ $(document).ready(function () {
 
     function confirmEdit(data) {
         $('#updateForm').find('#id').val(data.categoryId);
-        $('#updateForm').find('#name').val(data.category);
+        $('#updateForm').find('#name').val($.trim(data.category));
         $('#updateForm').find('#blockedFunds').val(parseInt(data.blockedFunds));
         if (data.blockedFunds == true) {
             $('#fundsBlockCheckbox').attr("checked", true);

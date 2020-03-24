@@ -2,7 +2,7 @@ function fillInputsWithData(row) {
     let invoiceId = row.data('invoiceid');
     let invoiceNumber = row.find('.invoiceNumber').text();
     let paymentDate = row.find('.paymentDate').text();
-    let contractor = row.find('.contractor').text();
+    let contractor = row.find('.contractor').text().trim();
 
     $('#editInvoiceForm').find('#invoiceId').val(invoiceId);
     $('#editInvoiceForm').find('#invoiceNumber').val(invoiceNumber);
