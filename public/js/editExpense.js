@@ -2,9 +2,9 @@ function fillInputsWithData(row) {
     let transactionId = row.data('transid');
     let money = row.find('.money').text();
     let date = row.find('.expenseDate').text();
-    let payment = row.find('.paymentMethod').text();
-    let category = row.find('.expenseCategory').text();
-    let comment = row.find('.comment').text();
+    let payment = row.find('.paymentMethod').text().trim();
+    let category = row.find('.expenseCategory').text().trim();
+    let comment = row.find('.comment').text().trim();
     if (comment == 'brak') {
         comment = '';
     }
@@ -26,7 +26,7 @@ function updateTable(row) {
     if (comment == '') {
         comment = 'brak';
     }
-    row.find('td.money').text(money);
+    row.find('td.money').html(money);
     row.find('td.expenseDate').html(date);
     row.find('td.paymentMethod').html(payment);
     row.find('td.expenseCategory').html(category);

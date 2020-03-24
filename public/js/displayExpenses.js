@@ -13,7 +13,7 @@ $(document).ready(function () {
             /*console.log(expenses);*/
         }).fail(function (expenses) {
             /*console.log("No i klops!" + expenses);
-             console.dir(arguments);*/
+            console.dir(arguments);*/
         });
     });
 
@@ -39,6 +39,7 @@ $(document).ready(function () {
             }).done(function (expenses) {
                 $('#expensesTable tbody > tr').remove();
                 displayExpenses(expenses);
+                /*console.log(expenses);*/
             }).fail(function (jqXHR, textStatus) {
                 /*console.log("No i klops!" + jqXHR + textStatus);
                 console.dir(arguments);*/
@@ -56,9 +57,9 @@ $(document).ready(function () {
                 comment = "<td class='comment'>" + expense.comment + "</td>";
             }
             var row = "<tr data-transid='" + expense.id + "'>" +
-                "<td class='category'>" + expense.category + "</td>" +
-                "<td class='date'>" + expense.date + "</td>" +
-                "<td class='payment'>" + expense.method + "</td>" +
+                "<td class='expenseCategory'>" + expense.category + "</td>" +
+                "<td class='expenseDate'>" + expense.date + "</td>" +
+                "<td class='paymentMethod'>" + expense.method + "</td>" +
                 "<td class='money'>" + expense.money + "</td>" +
                 comment +
                 "<td>" +

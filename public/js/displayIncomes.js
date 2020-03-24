@@ -56,8 +56,8 @@ $(document).ready(function () {
                 comment = "<td class='comment'>" + income.comment + "</td>";
             }
             var row = "<tr data-transid='" + income.id + "'>" +
-                "<td class='category'>" + income.name + "</td>" +
-                "<td class='date'>" + income.date + "</td>" +
+                "<td class='incomeCategory'>" + income.name + "</td>" +
+                "<td class='incomeDate'>" + income.date + "</td>" +
                 "<td class='money'>" + income.money + "</td>" +
                 comment +
                 "<td>" +

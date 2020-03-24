@@ -104,7 +104,7 @@ $(document).ready(function () {
     function appendName(id, parent, data) {
         let row = "<tr data-catId='" + id + "'>" +
             "<td class='category'>" + data[0].value + "</td>" +
-            "<td class='category'>" + '' + "</td>" +
+            "<td class='blockedFunds'>" + '' + "</td>" +
             "<td><div class='btn-group' role='group' aria-label='buttonsGroup'>" +
             "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +
             "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +
@@ -115,7 +115,7 @@ $(document).ready(function () {
     function appendNameAndLimit(id, parent, data) {
         let row = "<tr data-catId='" + id + "'>" +
             "<td class='category'>" + data[0].value + "</td>" +
-            "<td class='category'>" + data[2].value + "</td>" +
+            "<td class='blockedFunds'>" + data[2].value + "</td>" +
             "<td><div class='btn-group' role='group' aria-label='buttonsGroup'>" +
             "<button type='button' class='settingsBtn editBtn'><i class='icon-edit'></i></button>" +
             "<button type='button' class='settingsBtn deleteBtn'><i class='icon-trash'></i></button>" + "</td>" +

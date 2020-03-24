@@ -32,7 +32,7 @@ class Expenses extends Authenticated{
     }
 
     public function showThisMonthExpensesAjax(){
-        $period = Date::getThisWeek();
+        $period = Date::getThisMonth();
         $expense = new Expense($period);
         $entries = $expense->getExpensesFromDB();
         echo json_encode($entries);

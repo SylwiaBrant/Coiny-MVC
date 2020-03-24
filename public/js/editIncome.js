@@ -2,8 +2,8 @@ function fillInputsWithData(row) {
     let transactionId = row.data('transid');
     let money = row.find('.money').text();
     let date = row.find('.incomeDate').text();
-    let category = row.find('.incomeCategory').text();
-    let comment = row.find('.comment').text();
+    let category = row.find('.incomeCategory').text().trim();
+    let comment = row.find('.comment').text().trim();
     if (comment == 'brak') {
         comment = '';
     }
