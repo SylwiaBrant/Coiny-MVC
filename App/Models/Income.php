@@ -39,10 +39,11 @@ class Income extends \Core\Model{
     public function save(){
         $this->validate();
         if(empty($this->errors)){
-            $sql = "INSERT INTO incomes VALUES ('', :user_id, :money, :date,
+            $sql = "INSERT INTO incomes VALUES (:id, :user_id, :money, :date,
                 (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
             $db = static::getDB();
             $stmt = $db->prepare($sql);
+            $stmt->bindValue(':id', NULL, PDO::PARAM_INT);
             $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
             $stmt->bindValue(':date', $this->incomeDate, PDO::PARAM_STR);            

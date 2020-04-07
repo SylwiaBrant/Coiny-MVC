@@ -48,8 +48,9 @@ class IncomeWithInvoice extends \Core\Model{
                 $db = static::getDB();
                 $db->beginTransaction();
 
-                $sql_add_invoice = "INSERT INTO income_invoices VALUES ('', :user_id, :number, :payment_date, :contractor)";  
+                $sql_add_invoice = "INSERT INTO income_invoices VALUES (:i_id, :user_id, :number, :payment_date, :contractor)";  
                 $stmt = $db->prepare($sql_add_invoice);
+                $stmt->bindValue(':i_id', NULL, PDO::PARAM_INT);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':number', $this->invoice->invoiceNumber, PDO::PARAM_STR);
                 $stmt->bindValue(':payment_date', $this->invoice->invoicePayDate, PDO::PARAM_STR);            
@@ -58,9 +59,10 @@ class IncomeWithInvoice extends \Core\Model{
 
                 $invoice_id = $db->lastInsertId();
 
-                $sql_add_income = "INSERT INTO incomes VALUES ('', :user_id, :money, :date,
+                $sql_add_income = "INSERT INTO incomes VALUES (:id, :user_id, :money, :date,
                     (SELECT id FROM income_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
                 $stmt = $db->prepare($sql_add_income);
+                $stmt->bindValue(':id', NULL, PDO::PARAM_INT);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':money', $this->income->money);
                 $stmt->bindValue(':date', $this->income->incomeDate, PDO::PARAM_STR);            

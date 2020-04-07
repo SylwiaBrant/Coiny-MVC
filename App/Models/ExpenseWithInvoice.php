@@ -50,8 +50,9 @@ class ExpenseWithInvoice extends \Core\Model{
                 $db = static::getDB();
                 $db->beginTransaction();
 
-                $sql_add_invoice = "INSERT INTO expense_invoices VALUES ('', :user_id, :number, :payment_date, :contractor)";  
+                $sql_add_invoice = "INSERT INTO expense_invoices VALUES (:i_id, :user_id, :number, :payment_date, :contractor)";  
                 $stmt = $db->prepare($sql_add_invoice);
+                $stmt->bindValue(':i_id', NULL, PDO::PARAM_INT);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':number', $this->invoice->invoiceNumber, PDO::PARAM_STR);
                 $stmt->bindValue(':payment_date', $this->invoice->invoicePayDate, PDO::PARAM_STR);            
@@ -60,10 +61,11 @@ class ExpenseWithInvoice extends \Core\Model{
 
                 $invoice_id = $db->lastInsertId();
 
-                $sql_add_expense = "INSERT INTO expenses VALUES ('', :user_id, :money, :date, 
+                $sql_add_expense = "INSERT INTO expenses VALUES (:id, :user_id, :money, :date, 
                     (SELECT id FROM payment_methods WHERE user_id=:user_id AND name=:payment_method), 
                     (SELECT id FROM expense_categories WHERE user_id=:user_id AND name=:category), :comment, :invoice_id)";  
                 $stmt = $db->prepare($sql_add_expense);
+                $stmt->bindValue(':id', NULL, PDO::PARAM_INT);
                 $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
                 $stmt->bindValue(':money', $this->expense->money);
                 $stmt->bindValue(':date', $this->expense->expenseDate, PDO::PARAM_STR);   
