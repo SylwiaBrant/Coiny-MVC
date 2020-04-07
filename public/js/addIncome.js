@@ -44,6 +44,7 @@ $(document).ready(function () {
         },
         submitHandler: function (form) {
             var data = $(form).serialize();
+            console.log(data);
             $.ajax({
                 url: "/Incomes/addIncomeAjax",
                 type: "POST",
@@ -57,12 +58,12 @@ $(document).ready(function () {
                 }
                 else {
                     addFailFlash('#addIncomeForm', 'Coś poszło nie tak...');
-                    /*console.dir(response);*/
+                    console.dir(response);
                 }
             }).fail(function (jqXHR, textStatus) {
                 addFailFlash('#addIncomeForm', 'Coś poszło nie tak...');
-                /*console.log("No i klops!" + jqXHR + textStatus);
-                  console.dir(arguments);*/
+                console.log("No i klops!" + jqXHR + textStatus);
+                console.dir(arguments);
             });
             return false;
         }

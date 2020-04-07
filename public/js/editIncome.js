@@ -45,7 +45,7 @@ $(document).ready(function () {
                 /*console.log("Sukces!" + response);*/
                 updateTable(row);
                 $('#editIncomeForm').trigger("reset");
-                $('#editIncomeModal').modal('hide');
+                $('#editIncomeModal').modal("hide");
             }
         });
     });
@@ -78,8 +78,8 @@ $(document).ready(function () {
                     cache: false,
                     data: data
                 }).done(function (response) {
-                    /*console.log(response);
-                     callback(response);*/
+                    /*console.log(response);*/
+                    callback(response);
                 }).fail(function (jqXHR, textStatus) {
                     /*console.log("No i klops!" + jqXHR + textStatus);
                     console.dir(arguments);*/

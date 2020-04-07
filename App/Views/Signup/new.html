@@ -57,11 +57,13 @@
         <form method="post" action="/signup/create" id="registerForm">
             <div class="form-group">
                 <label>E-MAIL</label>
-                <input class="form-control inputSlot" type="email" name="email" value="{{user.email}}" required>
+                <input class="form-control inputSlot" type="email" name="email" value="{{user.email}}"
+                    placeholder="Email" required>
             </div>
             <div class="form-group">
                 <label>HASŁO</label>
-                <input class="form-control inputSlot" type="password" name="password" id="inputPassword" required>
+                <input class="form-control inputSlot" type="password" name="password" id="inputPassword"
+                    placeholder="Hasło" required>
             </div>
             <div class="d-flex justify-content-center mt-5">
                 <input class="mainBtn" type="submit" name="submit" value="ZAŁÓŻ KONTO">

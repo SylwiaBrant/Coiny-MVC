@@ -38,11 +38,12 @@ class Expense extends \Core\Model{
     public function save(){
         $this->validate();
         if(empty($this->errors)){
-            $sql = "INSERT INTO expenses VALUES ('', :user_id, :money, :date, 
+            $sql = "INSERT INTO expenses VALUES (:id, :user_id, :money, :date, 
             (SELECT id FROM payment_methods WHERE name=:payment_method AND user_id=:user_id), 
             (SELECT id FROM expense_categories WHERE name=:category AND user_id=:user_id), :comment, :invoice_id)";  
             $db = static::getDB();
             $stmt = $db->prepare($sql);
+            $stmt->bindValue(':id', NULL, PDO::PARAM_INT);
             $stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $stmt->bindValue(':money', $this->money);
             $stmt->bindValue(':date', $this->expenseDate, PDO::PARAM_STR); 

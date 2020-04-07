@@ -78,11 +78,12 @@ $(document).ready(function () {
                     }
                     else {
                         addFailFlash('Coś poszło nie tak...');
+                        console.dir(response);
                     }
                 }).fail(function (jqXHR, textStatus) {
                     addFailFlash('#addExpenseForm', 'Coś poszło nie tak...');
-                    /*console.log(jqXHR + textStatus);
-                    console.dir(arguments);*/
+                    console.log(jqXHR + textStatus);
+                    console.dir(arguments);
                 });
                 return false;
             }
@@ -116,7 +117,6 @@ $(document).ready(function () {
             let expenseCategory = $('#expenseCategory').val();
             console.log(expenseCategory);
             if ($('#money').val() != '' && expenseCategory != 'Wybierz kategorię') {
-
                 let expenseLimit = parseInt(getCategoryLimit(expenseCats, expenseCategory));
                 console.log(expenseCats, expenseCategory, expenseLimit, $('#money').val());
                 checkExpenseLimit(expenseCategory, expenseLimit);
@@ -164,7 +164,8 @@ $(document).ready(function () {
 
     function getCategoryLimit(categories, category) {
         console.log('getCategoryLimit=', categories, category)
-        for (var i = 0; i < categories.length; i++) {
+        for (let i = 0; i < categories[0].length; i++) {
+            console.log(categories[0][i].name);
             if (categories[0][i].name == category) {
                 console.log(categories[0][i].blocked_funds);
                 return categories[0][i].blocked_funds;
@@ -180,7 +181,12 @@ $(document).ready(function () {
             dataType: "json",
             data: { category: expenseCategory }
         }).done(function (response) {
-            callback(response);
+            if (response == true) {
+                callback(response);
+            } else {
+                callback(0);
+            }
+
         }).fail(function (jqXHR, textStatus) {
             /*console.log('Coś poszło nie tak...');
             console.log("No i klops!" + jqXHR + textStatus);

@@ -11,11 +11,8 @@
                 <div class="py-2">
                     <label>Podaj adres email, na który mamy przysłać kod do zmiany hasła:</label>
                     <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><img src="/img/114-user.png"></span>
-                        </div>
-                        <input class="form-control inputSlot" name="email" type="email" placeholder="Email"
-                            value="{{email}}">
+                        <input class="form-control inputSlot" type="email" name="email" value="{{user.email}}"
+                            placeholder="Email" required>
                     </div>
                 </div>
             </div>
